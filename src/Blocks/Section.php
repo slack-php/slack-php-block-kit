@@ -4,30 +4,40 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\Element;
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Partials\{Fields, MrkdwnText, PlainText, Text};
-use Jeremeamia\Slack\BlockKit\Type;
+use Jeremeamia\Slack\BlockKit\{Element, Exception, Inputs, Partials, Type};
 
-class Section extends Block
+class Section extends BlockElement
 {
-    /** @var Text */
+    /** @var Partials\Text */
     private $text;
 
-    /** @var Fields */
+    /** @var Partials\Fields */
     private $fields;
 
     /** @var Element */
     private $accessory;
 
-    public function setText(Text $text): self
+    /**
+     * @param string|null $blockId
+     * @param string|null $text
+     */
+    public function __construct(?string $blockId = null, ?string $text = null)
+    {
+        parent::__construct($blockId);
+
+        if (!empty($text)) {
+            $this->mrkdwnText($text);
+        }
+    }
+
+    public function setText(Partials\Text $text): self
     {
         $this->text = $text->setParent($this);
 
         return $this;
     }
 
-    public function setFields(Fields $fields): self
+    public function setFields(Partials\Fields $fields): self
     {
         $this->fields = $fields->setParent($this);
 
@@ -47,37 +57,48 @@ class Section extends Block
 
     public function plainText(string $text, bool $emoji = true): self
     {
-        $text = PlainText::new()->text($text)->emoji($emoji);
-
-        return $this->setText($text);
+        return $this->setText(new Partials\PlainText($text, $emoji));
     }
 
     public function mrkdwnText(string $text, bool $verbatim = false): self
     {
-        $text = MrkdwnText::new()->text($text)->verbatim($verbatim);
-
-        return $this->setText($text);
+        return $this->setText(new Partials\MrkdwnText($text, $verbatim));
     }
 
+    /**
+     * @param string[] $values
+     * @return Section
+     */
     public function fieldList(array $values): self
     {
-        $fields = Fields::new();
-        foreach ($values as $value) {
-            $fields->add(MrkdwnText::new()->text($value));
-        }
-
-        return $this->setFields($fields);
+        return $this->setFields(new Partials\Fields($values));
     }
 
     public function fieldMap(array $keyValuePairs): self
     {
-        $fields = Fields::new();
+        $fields = new Partials\Fields();
         foreach ($keyValuePairs as $key => $value) {
-            $fields->add(MrkdwnText::new()->text($key));
-            $fields->add(MrkdwnText::new()->text($value));
+            $fields->add(new Partials\MrkdwnText($key));
+            $fields->add(new Partials\MrkdwnText($value));
         }
 
         return $this->setFields($fields);
+    }
+
+    public function newImageAccessory(): Image
+    {
+        $accessory = new Image();
+        $this->setAccessory($accessory);
+
+        return $accessory;
+    }
+
+    public function newButtonAccessory(?string $actionId = null): Inputs\Button
+    {
+        $accessory = new Inputs\Button($actionId);
+        $this->setAccessory($accessory);
+
+        return $accessory;
     }
 
     public function validate(): void

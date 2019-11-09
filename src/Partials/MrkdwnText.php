@@ -7,7 +7,17 @@ namespace Jeremeamia\Slack\BlockKit\Partials;
 class MrkdwnText extends Text
 {
     /** @var bool */
-    private $verbatim = false;
+    private $verbatim;
+
+    /**
+     * @param string $text
+     * @param bool $verbatim
+     */
+    public function __construct(string $text, bool $verbatim = false)
+    {
+        $this->text($text);
+        $this->verbatim($verbatim);
+    }
 
     /**
      * @param bool $verbatim

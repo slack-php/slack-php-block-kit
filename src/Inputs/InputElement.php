@@ -2,14 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Actions;
+namespace Jeremeamia\Slack\BlockKit\Inputs;
 
 use Jeremeamia\Slack\BlockKit\Element;
 
-abstract class Action extends Element
+abstract class InputElement extends Element
 {
     /** @var string */
     private $actionId;
+
+    /**
+     * @param string|null $actionId
+     */
+    public function __construct(?string $actionId = null)
+    {
+        if (!empty($actionId)) {
+            $this->actionId($actionId);
+        }
+    }
 
     /**
      * @param string $actionId

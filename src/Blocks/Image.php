@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\{Exception, Surfaces\Surface};
+use Jeremeamia\Slack\BlockKit\{Exception, Surfaces\AppSurface};
 use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
-class Image extends Block
+class Image extends BlockElement
 {
     /** @var PlainText */
     private $title;
@@ -18,6 +18,24 @@ class Image extends Block
     /** @var string */
     private $altText;
 
+    /**
+     * @param string|null $blockId
+     * @param string|null $url
+     * @param string|null $altText
+     */
+    public function __construct(?string $blockId = null, ?string $url = null, ?string $altText = null)
+    {
+        parent::__construct($blockId);
+
+        if (!empty($url)) {
+            $this->url($url);
+        }
+
+        if (!empty($altText)) {
+            $this->altText($altText);
+        }
+    }
+
     public function setTitle(PlainText $title): self
     {
         $this->title = $title->setParent($this);
@@ -27,7 +45,7 @@ class Image extends Block
 
     public function title(string $text): self
     {
-        return $this->setTitle(PlainText::new()->text($text));
+        return $this->setTitle(new PlainText($text));
     }
 
     public function url(string $url): self
@@ -66,7 +84,7 @@ class Image extends Block
     {
         $data = parent::toArray();
 
-        $isBlock = $this->getParent() === null || $this->getParent() instanceof Surface;
+        $isBlock = $this->getParent() === null || $this->getParent() instanceof AppSurface;
         if ($isBlock && !empty($this->title)) {
             $data['title'] = $this->title->toArray();
         }

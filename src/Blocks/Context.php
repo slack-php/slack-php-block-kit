@@ -9,10 +9,22 @@ use Jeremeamia\Slack\BlockKit\Exception;
 use Jeremeamia\Slack\BlockKit\Type;
 use Jeremeamia\Slack\BlockKit\Partials\{MrkdwnText, PlainText};
 
-class Context extends Block
+class Context extends BlockElement
 {
     /** @var Element[] */
     private $elements = [];
+
+    /**
+     * @param string|null $blockId
+     * @param Element[] $elements
+     */
+    public function __construct(?string $blockId = null, array $elements = [])
+    {
+        parent::__construct($blockId);
+        foreach ($elements as $element) {
+            $this->add($element);
+        }
+    }
 
     public function add(Element $element): self
     {
@@ -31,17 +43,17 @@ class Context extends Block
 
     public function plainText(string $text, bool $emoji = true): self
     {
-        return $this->add(PlainText::new()->text($text)->emoji($emoji));
+        return $this->add(new PlainText($text, $emoji));
     }
 
     public function mrkdwnText(string $text, bool $verbatim = false): self
     {
-        return $this->add(MrkdwnText::new()->text($text)->verbatim($verbatim));
+        return $this->add(new MrkdwnText($text, $verbatim));
     }
 
     public function image(string $url, string $altText): self
     {
-        return $this->add(Image::new()->url($url)->altText($altText));
+        return $this->add(new Image(null, $url, $altText));
     }
 
     public function validate(): void

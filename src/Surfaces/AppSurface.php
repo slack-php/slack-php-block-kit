@@ -4,29 +4,24 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Blocks\{Block, Context, Divider, Image, Section};
-use Jeremeamia\Slack\BlockKit\{Exception, Element, Type};
+use Jeremeamia\Slack\BlockKit\Blocks\{BlockElement, Context, Divider, Image, Section};
+use Jeremeamia\Slack\BlockKit\{Exception, Element};
 
 /**
  * A Slack app surface is something within a Slack app that renders blocks from the block kit (e.g., a Message).
  *
  * There are currently three kinds of app surfaces: Message, Model, AppHome.
- *
- * @method Context context(string $blockId = '') Create a new Context block.
- * @method Divider divider(string $blockId = '') Create a new Divider block.
- * @method Image image(string $blockId = '') Create a new Image block.
- * @method Section section(string $blockId = '') Create a new Section block.
  */
-abstract class Surface extends Element
+abstract class AppSurface extends Element
 {
-    /** @var Block[] */
+    /** @var BlockElement[] */
     private $blocks = [];
 
     /**
-     * @param Block $block
+     * @param BlockElement $block
      * @return static
      */
-    public function add(Block $block): self
+    public function add(BlockElement $block): self
     {
         $this->blocks[] = $block->setParent($this);
 
@@ -34,29 +29,47 @@ abstract class Surface extends Element
     }
 
     /**
-     * @return Block[]
+     * @return BlockElement[]
      */
     public function getBlocks(): array
     {
         return $this->blocks;
     }
 
-    public function __call($type, $args)
+    public function newContext(?string $blockId = null): Context
     {
-        $class = Type::mapToClass($type);
-        if (!is_a($class, Block::class, true)) {
-            throw new Exception("Invalid block type: {$type}");
-        }
-
-        /** @var Block $block */
-        $block = new $class();
-        if (!empty($args[0]) && is_string($args[0])) {
-            $block->blockId($args[0]);
-        }
-
+        $block = new Context($blockId);
         $this->add($block);
 
         return $block;
+    }
+
+    public function newImage(?string $blockId = null): Image
+    {
+        $block = new Image($blockId);
+        $this->add($block);
+
+        return $block;
+    }
+
+    public function newSection(?string $blockId = null): Section
+    {
+        $block = new Section($blockId);
+        $this->add($block);
+
+        return $block;
+    }
+
+    public function divider(?string $blockId = null): self
+    {
+        return $this->add(new Divider($blockId));
+    }
+
+    public function text(string $text, ?string $blockId = null): self
+    {
+        $block = new Section($blockId, $text);
+
+        return $this->add($block);
     }
 
     public function validate(): void

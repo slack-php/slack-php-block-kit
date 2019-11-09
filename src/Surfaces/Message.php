@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
-class Message extends Surface
+class Message extends AppSurface
 {
     private const EPHEMERAL = 'ephemeral';
     private const IN_CHANNEL = 'in_channel';

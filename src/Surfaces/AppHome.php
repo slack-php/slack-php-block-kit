@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
-class AppHome extends Surface
+class AppHome extends AppSurface
 {
     // Nothing special.
 }

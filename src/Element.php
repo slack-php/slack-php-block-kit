@@ -43,7 +43,7 @@ abstract class Element implements JsonSerializable
      */
     public function getType(): string
     {
-        return Type::mapToType(static::class);
+        return Type::mapClass(static::class);
     }
 
     /**

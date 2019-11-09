@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit;
 
-use Jeremeamia\Slack\BlockKit\{Surfaces, Blocks, Partials, Actions};
+use Jeremeamia\Slack\BlockKit\{Blocks, Inputs, Partials, Surfaces};
 
 abstract class Type
 {
@@ -20,37 +20,26 @@ abstract class Type
     public const PLAINTEXT  = 'plain_text';
     public const SECTION    = 'section';
 
-    private static $types = [
-        self::BUTTON     => Actions\Button::class,
-        self::CONTEXT    => Blocks\Context::class,
-        self::DIVIDER    => Blocks\Divider::class,
-        self::FIELDS     => Partials\Fields::class,
-        self::APPHOME    => Surfaces\AppHome::class,
-        self::IMAGE      => Blocks\Image::class,
-        self::MRKDWNTEXT => Partials\MrkdwnText::class,
-        self::MESSAGE    => Surfaces\Message::class,
-        self::MODAL      => Surfaces\Modal::class,
-        self::PLAINTEXT  => Partials\PlainText::class,
-        self::SECTION    => Blocks\Section::class,
+    private static $typeMap = [
+        Inputs\Button::class       => self::BUTTON,
+        Blocks\Context::class      => self::CONTEXT,
+        Blocks\Divider::class      => self::DIVIDER,
+        Partials\Fields::class     => self::FIELDS,
+        Surfaces\AppHome::class    => self::APPHOME,
+        Blocks\Image::class        => self::IMAGE,
+        Partials\MrkdwnText::class => self::MRKDWNTEXT,
+        Surfaces\Message::class    => self::MESSAGE,
+        Surfaces\Modal::class      => self::MODAL,
+        Partials\PlainText::class  => self::PLAINTEXT,
+        Blocks\Section::class      => self::SECTION,
     ];
 
-    public static function mapToClass(string $type): string
+    public static function mapClass(string $class): string
     {
-        if (!isset(self::$types[$type])) {
-            throw new Exception("No such type: {$type}");
-        }
-
-        return self::$types[$type];
-    }
-
-    public static function mapToType(string $class): string
-    {
-        $types = array_flip(self::$types);
-
-        if (!isset($types[$class])) {
+        if (!isset(self::$typeMap[$class])) {
             throw new Exception("No type for class: {$class}");
         }
 
-        return $types[$class];
+        return self::$typeMap[$class];
     }
 }

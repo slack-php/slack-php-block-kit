@@ -6,7 +6,7 @@ namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
 use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
-class Modal extends Surface
+class Modal extends AppSurface
 {
     public function toArray(): array
     {

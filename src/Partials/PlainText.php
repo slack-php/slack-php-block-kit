@@ -7,7 +7,17 @@ namespace Jeremeamia\Slack\BlockKit\Partials;
 class PlainText extends Text
 {
     /** @var bool */
-    private $emoji = true;
+    private $emoji;
+
+    /**
+     * @param string $text
+     * @param bool $emoji
+     */
+    public function __construct(string $text, bool $emoji = true)
+    {
+        $this->text($text);
+        $this->emoji($emoji);
+    }
 
     /**
      * @param bool $emoji

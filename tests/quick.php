@@ -2,24 +2,26 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Actions\Button;
 use Jeremeamia\Slack\BlockKit\Slack;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$msg = Slack::message();
-$msg->section('init-block')
+$msg = Slack::newMessage();
+$msg->newSection('init-block')
     ->mrkdwnText('*foo* _bar_')
     ->fieldMap(['foo' => 'bar', 'fizz' => 'buzz'])
-    ->setAccessory(Button::new()->text('Click me!')->value('two')->actionId('my_btn'));
+    ->newButtonAccessory('my_btn')
+        ->text('Click me!')
+        ->value('two');
 $msg->divider();
-$msg->image('rails-image')
+$msg->newImage('rails-image')
+    ->title('This meeting has gone off the rails!')
     ->url('https://i.imgflip.com/3dezi8.jpg')
-    ->altText('A train that has come of the railroad tracks')
-    ->title('This meeting has gone off the rails!');
-$msg->context('my-context')
+    ->altText('A train that has come of the railroad tracks');
+$msg->newContext('my-context')
     ->image('https://i.imgflip.com/3dezi8.jpg', 'off the friggin rails again')
     ->mrkdwnText('*foo* _bar_');
+$msg->text('Hello!');
 
-echo Slack::rendererForJson()->render($msg) . "\n";
-echo Slack::rendererForKitBuilder()->render($msg) . "\n";
+echo Slack::newRenderer()->forJson()->render($msg) . "\n";
+echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";

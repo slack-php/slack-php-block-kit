@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
-class Divider extends Block
+class Divider extends BlockElement
 {
     public function validate(): void
     {

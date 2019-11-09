@@ -12,6 +12,20 @@ class Fields extends Element
     private $fields = [];
 
     /**
+     * @param Text[]|string[] $fields
+     */
+    public function __construct(array $fields = [])
+    {
+        foreach ($fields as $field) {
+            if (!$field instanceof Text) {
+                $field = new MrkdwnText($field);
+            }
+
+            $this->add($field);
+        }
+    }
+
+    /**
      * @param Text $field
      * @return self
      */

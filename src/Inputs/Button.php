@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Actions;
+namespace Jeremeamia\Slack\BlockKit\Inputs;
 
 use Jeremeamia\Slack\BlockKit\Exception;
 use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
-class Button extends Action
+class Button extends InputElement
 {
     /** @var PlainText */
     private $text;
@@ -24,7 +24,7 @@ class Button extends Action
 
     public function text(string $text): self
     {
-        return $this->setText(PlainText::new()->text($text));
+        return $this->setText(new PlainText($text));
     }
 
     public function value(string $value): self

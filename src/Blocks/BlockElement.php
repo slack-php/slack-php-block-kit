@@ -5,11 +5,22 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
 use Jeremeamia\Slack\BlockKit\Element;
+use Jeremeamia\Slack\BlockKit\Surfaces\AppSurface;
 
-abstract class Block extends Element
+abstract class BlockElement extends Element
 {
     /** @var string */
     private $blockId;
+
+    /**
+     * @param string|null $blockId
+     */
+    public function __construct(?string $blockId = null)
+    {
+        if (!empty($blockId)) {
+            $this->blockId($blockId);
+        }
+    }
 
     /**
      * @param string $blockId
