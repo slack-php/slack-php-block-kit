@@ -8,6 +8,7 @@ use Jeremeamia\Slack\BlockKit\{Blocks, Inputs, Partials, Surfaces};
 
 abstract class Type
 {
+    public const ACTIONS    = 'actions';
     public const BUTTON     = 'button';
     public const CONTEXT    = 'context';
     public const DIVIDER    = 'divider';
@@ -20,7 +21,12 @@ abstract class Type
     public const PLAINTEXT  = 'plain_text';
     public const SECTION    = 'section';
 
+    public const ACCESSORY_ELEMENTS = [Type::BUTTON, Type::IMAGE];
+    public const ACTION_ELEMENTS = [Type::BUTTON];
+    public const CONTEXT_ELEMENTS = [Type::IMAGE, Type::MRKDWNTEXT, Type::PLAINTEXT];
+
     private static $typeMap = [
+        Blocks\Actions::class       => self::ACTIONS,
         Inputs\Button::class       => self::BUTTON,
         Blocks\Context::class      => self::CONTEXT,
         Blocks\Divider::class      => self::DIVIDER,

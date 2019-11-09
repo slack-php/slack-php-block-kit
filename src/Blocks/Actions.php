@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\Element;
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Type;
-use Jeremeamia\Slack\BlockKit\Partials\{MrkdwnText, PlainText};
+use Jeremeamia\Slack\BlockKit\{Element, Exception, Inputs, Type};
 
-class Context extends BlockElement
+class Actions extends BlockElement
 {
-    private const MAX_ELEMENTS = 10;
+    private const MAX_ACTIONS = 5;
 
     /** @var Element[] */
     private $elements = [];
@@ -30,12 +27,12 @@ class Context extends BlockElement
 
     public function add(Element $element): self
     {
-        if (!in_array($element->getType(), Type::CONTEXT_ELEMENTS)) {
-            throw new Exception("Invalid context element type: {$element->getType()}");
+        if (!in_array($element->getType(), Type::ACTION_ELEMENTS)) {
+            throw new Exception("Invalid actions element type: {$element->getType()}");
         }
 
-        if (count($this->elements) >= self::MAX_ELEMENTS) {
-            throw new Exception('Context cannot have more than %d elements', [self::MAX_ELEMENTS]);
+        if (count($this->elements) >= self::MAX_ACTIONS) {
+            throw new Exception('Context cannot have more than %d elements', [self::MAX_ACTIONS]);
         }
 
         $this->elements[] = $element->setParent($this);
@@ -43,19 +40,12 @@ class Context extends BlockElement
         return $this;
     }
 
-    public function plainText(string $text, bool $emoji = true): self
+    public function newButton(?string $actionId = null): Inputs\Button
     {
-        return $this->add(new PlainText($text, $emoji));
-    }
+        $action = new Inputs\Button($actionId);
+        $this->add($action);
 
-    public function mrkdwnText(string $text, bool $verbatim = false): self
-    {
-        return $this->add(new MrkdwnText($text, $verbatim));
-    }
-
-    public function image(string $url, string $altText): self
-    {
-        return $this->add(new Image(null, $url, $altText));
+        return $action;
     }
 
     public function validate(): void

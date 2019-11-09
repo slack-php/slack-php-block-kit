@@ -46,7 +46,7 @@ class Section extends BlockElement
 
     public function setAccessory(Element $accessory): self
     {
-        if (!in_array($accessory->getType(), [Type::BUTTON, Type::IMAGE])) {
+        if (!in_array($accessory->getType(), Type::ACCESSORY_ELEMENTS)) {
             throw new Exception("Invalid section accessory type: {$accessory->getType()}");
         }
 

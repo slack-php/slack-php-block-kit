@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Blocks\{BlockElement, Context, Divider, Image, Section};
+use Jeremeamia\Slack\BlockKit\Blocks\{Actions, BlockElement, Context, Divider, Image, Section};
 use Jeremeamia\Slack\BlockKit\{Exception, Element};
 
 /**
@@ -34,6 +34,14 @@ abstract class AppSurface extends Element
     public function getBlocks(): array
     {
         return $this->blocks;
+    }
+
+    public function newActions(?string $blockId = null): Actions
+    {
+        $block = new Actions($blockId);
+        $this->add($block);
+
+        return $block;
     }
 
     public function newContext(?string $blockId = null): Context
