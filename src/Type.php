@@ -22,11 +22,11 @@ abstract class Type
     public const SECTION    = 'section';
 
     public const ACCESSORY_ELEMENTS = [Type::BUTTON, Type::IMAGE];
-    public const ACTION_ELEMENTS = [Type::BUTTON];
-    public const CONTEXT_ELEMENTS = [Type::IMAGE, Type::MRKDWNTEXT, Type::PLAINTEXT];
+    public const ACTION_ELEMENTS    = [Type::BUTTON];
+    public const CONTEXT_ELEMENTS   = [Type::IMAGE, Type::MRKDWNTEXT, Type::PLAINTEXT];
 
     private static $typeMap = [
-        Blocks\Actions::class       => self::ACTIONS,
+        Blocks\Actions::class      => self::ACTIONS,
         Inputs\Button::class       => self::BUTTON,
         Blocks\Context::class      => self::CONTEXT,
         Blocks\Divider::class      => self::DIVIDER,

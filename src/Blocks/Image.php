@@ -83,10 +83,14 @@ class Image extends BlockElement
     public function toArray(): array
     {
         $data = parent::toArray();
-
         $isBlock = $this->getParent() === null || $this->getParent() instanceof AppSurface;
+
         if ($isBlock && !empty($this->title)) {
             $data['title'] = $this->title->toArray();
+        }
+
+        if (!$isBlock) {
+            unset($data['block_id']);
         }
 
         $data['image_url'] = $this->url;

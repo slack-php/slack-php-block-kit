@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
 use Jeremeamia\Slack\BlockKit\Element;
-use Jeremeamia\Slack\BlockKit\Surfaces\AppSurface;
 
 abstract class BlockElement extends Element
 {

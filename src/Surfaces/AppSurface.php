@@ -14,6 +14,8 @@ use Jeremeamia\Slack\BlockKit\{Exception, Element};
  */
 abstract class AppSurface extends Element
 {
+    private const MAX_BLOCKS = 50;
+
     /** @var BlockElement[] */
     private $blocks = [];
 
@@ -23,6 +25,10 @@ abstract class AppSurface extends Element
      */
     public function add(BlockElement $block): self
     {
+        if (count($this->blocks) >= self::MAX_BLOCKS) {
+            throw new Exception('An App Surface cannot have more than %d blocks', [self::MAX_BLOCKS]);
+        }
+
         $this->blocks[] = $block->setParent($this);
 
         return $this;
