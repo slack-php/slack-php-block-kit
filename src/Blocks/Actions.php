@@ -48,6 +48,14 @@ class Actions extends BlockElement
         return $action;
     }
 
+    public function newDatePicker(?string $actionId = null): Inputs\DatePicker
+    {
+        $action = new Inputs\DatePicker($actionId);
+        $this->add($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->elements)) {

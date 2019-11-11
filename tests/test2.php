@@ -1,0 +1,52 @@
+<?php
+
+declare(strict_types=1);
+
+use Jeremeamia\Slack\BlockKit\Blocks\{Actions, Context, Image, Section};
+use Jeremeamia\Slack\BlockKit\Inputs\Button;
+use Jeremeamia\Slack\BlockKit\Inputs\DatePicker;
+use Jeremeamia\Slack\BlockKit\Renderers;
+use Jeremeamia\Slack\BlockKit\Surfaces\Message;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$msg = Message::new()
+    ->add(Section::new()
+        ->blockId('b1')
+        ->mrkdwnText('*foo* _bar_')
+        ->fieldMap(['foo' => 'bar', 'fizz' => 'buzz'])
+        ->setAccessory(Button::new()
+            ->actionId('a1')
+            ->text('Click me!')
+            ->value('two')
+        )
+    )
+    ->divider('b2')
+    ->add(Image::new()
+        ->blockId('b3')
+        ->title('This meeting has gone off the rails!')
+        ->url('https://i.imgflip.com/3dezi8.jpg')
+        ->altText('A train that has come of the railroad tracks')
+    )
+    ->add(Context::new()
+        ->blockId('b4')
+        ->image('https://i.imgflip.com/3dezi8.jpg', 'off the friggin rails again')
+        ->mrkdwnText('*foo* _bar_')
+    )
+    ->text('Hello!', 'b5')
+    ->add(Actions::new()
+        ->blockId('b6')
+        ->add(Button::new()
+            ->actionId('a2')
+            ->text('Submit')
+            ->value('Hi!')
+        )
+        ->add(DatePicker::new()
+            ->placeholder('Choose a date')
+            ->initialDate('2020-01-01')
+            ->confirm('Proceed?', 'If this is correct, click "OK".')
+        )
+    );
+
+echo (new Renderers\Json())->render($msg) . "\n";
+echo (new Renderers\KitBuilder())->render($msg) . "\n";

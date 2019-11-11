@@ -12,7 +12,7 @@ use Jeremeamia\Slack\BlockKit\{Exception, Element};
  *
  * There are currently three kinds of app surfaces: Message, Model, AppHome.
  */
-abstract class AppSurface extends Element
+abstract class Surface extends Element
 {
     private const MAX_BLOCKS = 50;
 
@@ -42,6 +42,10 @@ abstract class AppSurface extends Element
         return $this->blocks;
     }
 
+    /**
+     * @param string|null $blockId
+     * @return Actions
+     */
     public function newActions(?string $blockId = null): Actions
     {
         $block = new Actions($blockId);
@@ -50,6 +54,10 @@ abstract class AppSurface extends Element
         return $block;
     }
 
+    /**
+     * @param string|null $blockId
+     * @return Context
+     */
     public function newContext(?string $blockId = null): Context
     {
         $block = new Context($blockId);
@@ -58,6 +66,10 @@ abstract class AppSurface extends Element
         return $block;
     }
 
+    /**
+     * @param string|null $blockId
+     * @return Image
+     */
     public function newImage(?string $blockId = null): Image
     {
         $block = new Image($blockId);
@@ -66,6 +78,10 @@ abstract class AppSurface extends Element
         return $block;
     }
 
+    /**
+     * @param string|null $blockId
+     * @return Section
+     */
     public function newSection(?string $blockId = null): Section
     {
         $block = new Section($blockId);
@@ -74,11 +90,20 @@ abstract class AppSurface extends Element
         return $block;
     }
 
+    /**
+     * @param string|null $blockId
+     * @return static
+     */
     public function divider(?string $blockId = null): self
     {
         return $this->add(new Divider($blockId));
     }
 
+    /**
+     * @param string $text
+     * @param string|null $blockId
+     * @return static
+     */
     public function text(string $text, ?string $blockId = null): self
     {
         $block = new Section($blockId, $text);

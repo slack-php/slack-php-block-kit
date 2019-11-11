@@ -22,10 +22,14 @@ $msg->newContext('b4')
     ->image('https://i.imgflip.com/3dezi8.jpg', 'off the friggin rails again')
     ->mrkdwnText('*foo* _bar_');
 $msg->text('Hello!', 'b5');
-$msg->newActions('b6')
-    ->newButton('a2')
+$actions = $msg->newActions('b6');
+$actions->newButton('a2')
     ->text('Submit')
     ->value('Hi!');
+$actions->newDatePicker('a3')
+    ->placeholder('Choose a date')
+    ->initialDate('2020-01-01')
+    ->confirm('Proceed?', 'If this is correct, click "OK".');
 
 echo Slack::newRenderer()->forJson()->render($msg) . "\n";
 echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";

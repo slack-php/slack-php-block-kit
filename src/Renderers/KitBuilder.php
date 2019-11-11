@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Renderers;
 
-use Jeremeamia\Slack\BlockKit\Surfaces\AppSurface;
+use Jeremeamia\Slack\BlockKit\Surfaces\Surface;
 use Jeremeamia\Slack\BlockKit\Type;
 
 use function http_build_query, json_encode;
 
 class KitBuilder implements Renderer
 {
-    public function render(AppSurface $surface): string
+    public function render(Surface $surface): string
     {
         $type = $surface->getType();
 

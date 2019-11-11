@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\{Exception, Surfaces\AppSurface};
+use Jeremeamia\Slack\BlockKit\{Exception, Surfaces\Surface};
 use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
 class Image extends BlockElement
@@ -83,7 +83,7 @@ class Image extends BlockElement
     public function toArray(): array
     {
         $data = parent::toArray();
-        $isBlock = $this->getParent() === null || $this->getParent() instanceof AppSurface;
+        $isBlock = $this->getParent() === null || $this->getParent() instanceof Surface;
 
         if ($isBlock && !empty($this->title)) {
             $data['title'] = $this->title->toArray();

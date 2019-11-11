@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Renderers;
 
-use Jeremeamia\Slack\BlockKit\Surfaces\AppSurface;
+use Jeremeamia\Slack\BlockKit\Surfaces\Surface;
 
 interface Renderer
 {
-    public function render(AppSurface $surface): string;
+    public function render(Surface $surface): string;
 }

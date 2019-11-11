@@ -101,6 +101,14 @@ class Section extends BlockElement
         return $accessory;
     }
 
+    public function newDatePickerAccessory(?string $actionId = null): Inputs\DatePicker
+    {
+        $action = new Inputs\DatePicker($actionId);
+        $this->setAccessory($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->text) && empty($this->fields)) {

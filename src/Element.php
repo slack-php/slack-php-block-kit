@@ -58,7 +58,7 @@ abstract class Element implements JsonSerializable
     {
         $this->validate();
         $type = $this->getType();
-        $showType = !in_array($type, [Type::MESSAGE, Type::FIELDS], true);
+        $showType = !in_array($type, [Type::MESSAGE, Type::FIELDS, Type::CONFIRM], true);
 
         return $showType ? compact('type') : [];
     }
