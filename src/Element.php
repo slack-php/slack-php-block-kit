@@ -8,6 +8,8 @@ use JsonSerializable;
 
 abstract class Element implements JsonSerializable
 {
+    private const HIDE_TYPES = [Type::MESSAGE, Type::FIELDS, Type::CONFIRM];
+
     /** @var Element|null */
     protected $parent;
 
@@ -58,9 +60,8 @@ abstract class Element implements JsonSerializable
     {
         $this->validate();
         $type = $this->getType();
-        $showType = !in_array($type, [Type::MESSAGE, Type::FIELDS, Type::CONFIRM], true);
 
-        return $showType ? compact('type') : [];
+        return !in_array($type, self::HIDE_TYPES, true) ? compact('type') : [];
     }
 
     /**
