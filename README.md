@@ -52,27 +52,27 @@ $json = json_encode($msg);
 
 | **Type**    | **Element**       | **Supported?** |
 |-------------|-------------------|----------------|
-| Surface     | App Home          | Yes            |
-| Surface     | Message           | Yes            |
-| Surface     | Model             | Yes            |
-| Block       | Actions           | Yes            |
-| Block       | Context           | Yes            |
-| Block       | Divider           | Yes            |
-| Block       | File              | No             |
-| Block       | Image             | Yes            |
-| Block       | Input             | Yes            |
-| Block       | Section           | Yes            |
-| Interactive | Button            | Partial        |
-| Interactive | Date Picker       | Yes            |
-| Interactive | Multi-select Menu | No             |
-| Interactive | Overflow Menu     | No             |
-| Interactive | Radio Buttons     | No             |
-| Interactive | Select Menu       | No             |
-| Partial     | Confirm Dialog    | Yes            |
-| Partial     | Mrkdwn Text       | Yes            |
-| Partial     | Option            | No             |
-| Partial     | Option Group      | No             |
-| Partial     | Plain Text        | Yes            |
+| Surface     | App Home          | ✅             |
+| Surface     | Message           | ✅             |
+| Surface     | Model             | ✅             |
+| Block       | Actions           | ✅             |
+| Block       | Context           | ✅             |
+| Block       | Divider           | ✅             |
+| Block       | File              | ❌             |
+| Block       | Image             | ✅             |
+| Block       | Input             | ✅             |
+| Block       | Section           | ✅             |
+| Interactive | Button            | ⚠️              |
+| Interactive | Date Picker       | ✅             |
+| Interactive | Multi-select Menu | ❌             |
+| Interactive | Overflow Menu     | ❌             |
+| Interactive | Radio Buttons     | ❌             |
+| Interactive | Select Menu       | ❌             |
+| Partial     | Confirm Dialog    | ✅             |
+| Partial     | Mrkdwn Text       | ✅             |
+| Partial     | Option            | ❌             |
+| Partial     | Option Group      | ❌             |
+| Partial     | Plain Text        | ✅             |
 
 ## Class Structure
 
@@ -122,3 +122,25 @@ _Blocks_ are the primary element of the Block Kit. Blocks contain other elements
 [Block]-[note: examples:;Section;Actions{bg:cornsilk}]
 </pre>
 </details>
+
+### Contributions
+
+Contributions welcome to support new elements, write tests, setup github actions, etc. See the Project tab.
+
+When implementing elements, to fit within the existing DSL, consider these points:
+
+- To set sub-elements, provide a `set`-prefixed setter (e.g., `setText(Text $text): self`).
+    - Should return `self` to support chaining.
+    - Should set the parent (e.g., `setParent()`) of the element to `$this`.
+- To set simple sub-elements, provide a simple setter method (e.g., `title(string $title): self`).
+    - Should be in addition to the `set`-prefixed setter.
+    - Should be named after the property being set.
+    - Should return `self` to support chaining.
+    - Should call the regular setter (e.g., `return $this->setText(new PlainText($title));`).
+- To set other non-element properties, provide a simple setter method (e.g., `url(string $url): self`).
+    - Should be named after the property being set.
+    - Should return `self` to support chaining.
+- To create new sub-elements attached to the current one, provide a `new`-prefixed factory method (e.g., `newImage(): self`).
+    - Should return a new instance of an element.
+    - Should set the parent (e.g., `setParent()`) of the element to `$this` before returning.
+    - Should support a `$blockId` parameter if it's a Block or an `$actionId` parameter if it's an interactive element.
