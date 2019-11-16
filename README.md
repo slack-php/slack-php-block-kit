@@ -140,7 +140,7 @@ When implementing elements, to fit within the existing DSL, consider these point
 - To set other non-element properties, provide a simple setter method (e.g., `url(string $url): self`).
     - Should be named after the property being set.
     - Should return `self` to support chaining.
-- To create new sub-elements attached to the current one, provide a `new`-prefixed factory method (e.g., `newImage(): self`).
+- To create new sub-elements attached to the current one, provide a `new`-prefixed factory method (e.g., `newImage(): Image`).
     - Should return a new instance of an element.
     - Should set the parent (e.g., `setParent()`) of the element to `$this` before returning.
     - Should support a `$blockId` parameter if it's a Block or an `$actionId` parameter if it's an interactive element.
