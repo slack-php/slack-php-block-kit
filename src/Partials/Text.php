@@ -24,7 +24,7 @@ abstract class Text extends Element
 
     public function validate(): void
     {
-        if (empty($this->text)) {
+        if (empty($this->text) && $this->text !== '0') {
             throw new Exception('Text component must have a "text" value');
         }
     }

@@ -24,9 +24,18 @@ $msg->newContext('b4')
 $msg->text('Hello!', 'b5');
 $actions = $msg->newActions('b6');
 $actions->newButton('a2')
-    ->text('Submit')
-    ->value('Hi!');
-$actions->newDatePicker('a3')
+    ->text('Complete')
+    ->value('completed')
+    ->asPrimary();
+$actions->newButton('a3')
+    ->text('Next')
+    ->value('next');
+$actions->newButton('a4')
+    ->text('Remove')
+    ->value('remove')
+    ->asDangerous()
+    ->confirm('Are you sure?', 'If you want to remove it, click "OK".');
+$actions->newDatePicker('a5')
     ->placeholder('Choose a date')
     ->initialDate('2020-01-01')
     ->confirm('Proceed?', 'If this is correct, click "OK".');

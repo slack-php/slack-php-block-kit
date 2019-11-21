@@ -9,6 +9,8 @@ use Jeremeamia\Slack\BlockKit\Partials\{Confirm, PlainText};
 
 class DatePicker extends InputElement
 {
+    use HasConfirm;
+
     private const DATE_FORMAT = 'Y-m-d';
 
     /** @var PlainText */
@@ -17,19 +19,9 @@ class DatePicker extends InputElement
     /** @var string */
     private $initialDate;
 
-    /** @var Confirm */
-    private $confirm;
-
     public function setPlaceholder(PlainText $placeholder): self
     {
         $this->placeholder = $placeholder->setParent($this);
-
-        return $this;
-    }
-
-    public function setConfirm(Confirm $confirm): self
-    {
-        $this->confirm = $confirm->setParent($this);
 
         return $this;
     }
@@ -44,11 +36,6 @@ class DatePicker extends InputElement
         $this->initialDate = DateTime::createFromFormat(self::DATE_FORMAT, $date)->format(self::DATE_FORMAT);
 
         return $this;
-    }
-
-    public function confirm(string $title, string $text, string $confirm = 'OK', string $deny = 'Cancel'): self
-    {
-        return $this->setConfirm(new Confirm($title, $text, $confirm, $deny));
     }
 
     public function validate(): void

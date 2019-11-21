@@ -4,7 +4,16 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Blocks\{Actions, BlockElement, Context, Divider, Image, Section};
+use Jeremeamia\Slack\BlockKit\Blocks\{
+    Actions,
+    BlockElement,
+    Context,
+    Divider,
+    Image,
+    Virtual\VirtualBlock,
+    Virtual\TwoColumnTable,
+    Section,
+};
 use Jeremeamia\Slack\BlockKit\{Exception, Element};
 
 /**
@@ -39,7 +48,18 @@ abstract class Surface extends Element
      */
     public function getBlocks(): array
     {
-        return $this->blocks;
+        $blocks = [];
+        foreach ($this->blocks as $block) {
+            if ($block instanceof VirtualBlock) {
+                foreach ($block->getBlocks() as $subBlock) {
+                    $blocks[] = $subBlock;
+                }
+            } else {
+                $blocks[] = $block;
+            }
+        }
+
+        return $blocks;
     }
 
     /**
@@ -92,6 +112,18 @@ abstract class Surface extends Element
 
     /**
      * @param string|null $blockId
+     * @return TwoColumnTable
+     */
+    public function newTwoColumnTable(?string $blockId = null): TwoColumnTable
+    {
+        $block = new TwoColumnTable($blockId);
+        $this->add($block);
+
+        return $block;
+    }
+
+    /**
+     * @param string|null $blockId
      * @return static
      */
     public function divider(?string $blockId = null): self
@@ -127,8 +159,7 @@ abstract class Surface extends Element
         $data = parent::toArray();
 
         $data['blocks'] = [];
-        foreach ($this->blocks as $block) {
-            var_dump($block);
+        foreach ($this->getBlocks() as $block) {
             $data['blocks'][] = $block->toArray();
         }
 

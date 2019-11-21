@@ -50,29 +50,38 @@ $json = json_encode($msg);
 
 ## Supported Elements
 
-| **Type**    | **Element**       | **Supported?** |
-|-------------|-------------------|----------------|
-| Surface     | App Home          | ✅             |
-| Surface     | Message           | ✅             |
-| Surface     | Model             | ✅             |
-| Block       | Actions           | ✅             |
-| Block       | Context           | ✅             |
-| Block       | Divider           | ✅             |
-| Block       | File              | ❌             |
-| Block       | Image             | ✅             |
-| Block       | Input             | ✅             |
-| Block       | Section           | ✅             |
-| Interactive | Button            | ⚠️              |
-| Interactive | Date Picker       | ✅             |
-| Interactive | Multi-select Menu | ❌             |
-| Interactive | Overflow Menu     | ❌             |
-| Interactive | Radio Buttons     | ❌             |
-| Interactive | Select Menu       | ❌             |
-| Partial     | Confirm Dialog    | ✅             |
-| Partial     | Mrkdwn Text       | ✅             |
-| Partial     | Option            | ❌             |
-| Partial     | Option Group      | ❌             |
-| Partial     | Plain Text        | ✅             |
+The following are supported elements from the Block Kit documentation:
+
+| **Type** | **Element**       | **Supported?** |
+|----------|-------------------|----------------|
+| Surface  | App Home          | ✅             |
+| Surface  | Message           | ✅             |
+| Surface  | Model             | ✅             |
+| Block    | Actions           | ✅             |
+| Block    | Context           | ✅             |
+| Block    | Divider           | ✅             |
+| Block    | File              | ❌             |
+| Block    | Image             | ✅             |
+| Block    | Input             | ✅             |
+| Block    | Section           | ✅             |
+| Input    | Button            | ✅️             |
+| Input    | Date Picker       | ✅             |
+| Input    | Multi-select Menu | ❌             |
+| Input    | Overflow Menu     | ❌             |
+| Input    | Radio Buttons     | ❌             |
+| Input    | Select Menu       | ❌             |
+| Partial  | Confirm Dialog    | ✅             |
+| Partial  | Mrkdwn Text       | ✅             |
+| Partial  | Fields            | ✅             |
+| Partial  | Option            | ❌             |
+| Partial  | Option Group      | ❌             |
+| Partial  | Plain Text        | ✅             |
+
+### Virtual Elements
+
+The following are virtual/custom elements composed of one or more blocks:
+
+* `TwoColumnTable` - Uses Sections with Fields to create a two-column table with an optional header.
 
 ## Class Structure
 

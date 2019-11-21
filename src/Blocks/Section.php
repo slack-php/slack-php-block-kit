@@ -30,6 +30,10 @@ class Section extends BlockElement
         }
     }
 
+    /**
+     * @param Partials\Text $text
+     * @return self
+     */
     public function setText(Partials\Text $text): self
     {
         $this->text = $text->setParent($this);
@@ -37,6 +41,10 @@ class Section extends BlockElement
         return $this;
     }
 
+    /**
+     * @param Partials\Fields $fields
+     * @return self
+     */
     public function setFields(Partials\Fields $fields): self
     {
         $this->fields = $fields->setParent($this);
@@ -44,6 +52,10 @@ class Section extends BlockElement
         return $this;
     }
 
+    /**
+     * @param Element $accessory
+     * @return self
+     */
     public function setAccessory(Element $accessory): self
     {
         if (!in_array($accessory->getType(), Type::ACCESSORY_ELEMENTS)) {
@@ -55,25 +67,48 @@ class Section extends BlockElement
         return $this;
     }
 
+    /**
+     * @param string $text
+     * @param bool $emoji
+     * @return self
+     */
     public function plainText(string $text, bool $emoji = true): self
     {
         return $this->setText(new Partials\PlainText($text, $emoji));
     }
 
+    /**
+     * @param string $text
+     * @param bool $verbatim
+     * @return self
+     */
     public function mrkdwnText(string $text, bool $verbatim = false): self
     {
         return $this->setText(new Partials\MrkdwnText($text, $verbatim));
     }
 
     /**
+     * @param string $code
+     * @return self
+     */
+    public function code(string $code): self
+    {
+        return $this->setText(new Partials\MrkdwnText("```\n{$code}\n```"));
+    }
+
+    /**
      * @param string[] $values
-     * @return Section
+     * @return self
      */
     public function fieldList(array $values): self
     {
         return $this->setFields(new Partials\Fields($values));
     }
 
+    /**
+     * @param array $keyValuePairs
+     * @return self
+     */
     public function fieldMap(array $keyValuePairs): self
     {
         $fields = new Partials\Fields();

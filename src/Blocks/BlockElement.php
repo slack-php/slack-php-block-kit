@@ -8,7 +8,7 @@ use Jeremeamia\Slack\BlockKit\Element;
 
 abstract class BlockElement extends Element
 {
-    /** @var string */
+    /** @var string|null */
     private $blockId;
 
     /**
@@ -30,6 +30,14 @@ abstract class BlockElement extends Element
         $this->blockId = $blockId;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBlockId(): ?string
+    {
+        return $this->blockId;
     }
 
     /**
