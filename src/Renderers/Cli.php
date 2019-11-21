@@ -17,11 +17,20 @@ class Cli implements Renderer
 
     public function render(Surface $surface): string
     {
-        $data = $surface->toArray();
+        return $this->renderSurface($surface->toArray());
+    }
+
+    public function renderJson(string $json): string
+    {
+        return $this->renderSurface(json_decode($json, true));
+    }
+
+    private function renderSurface(array $data): string
+    {
         $buffer = '';
 
-        // Special handling to messages to add visibility information.
-        if ($surface instanceof Message) {
+        // Special handling to messages to add type and visibility information.
+        if (!isset($data['type'])) {
             $buffer .= '(•) ';
             $buffer .= $data['response_type'] === Message::EPHEMERAL
                 ? "Only visible to you\n"
@@ -30,7 +39,7 @@ class Cli implements Renderer
             $data['type'] = 'message';
         }
 
-        $buffer .= $this->renderArray($data);
+        $buffer .= $this->renderElements($data);
 
         return $buffer;
     }
@@ -42,7 +51,7 @@ class Cli implements Renderer
      * @param int $level Indentation level
      * @return string
      */
-    private function renderArray(array $array, int $level = 0): string
+    private function renderElements(array $array, int $level = 0): string
     {
         // Start with an empty buffer.
         $buffer = '';
@@ -54,7 +63,7 @@ class Cli implements Renderer
         // If the array is a list, render each element in the list.
         if (isset($array[0])) {
             foreach ($array as $subArray) {
-                $buffer .= $this->renderArray($subArray, $level);
+                $buffer .= $this->renderElements($subArray, $level);
             }
             return $buffer;
         }
@@ -97,7 +106,7 @@ class Cli implements Renderer
         // Render all properties of an element under it's title/type.
         foreach ($array as $property => $value) {
             $buffer .= "{$indent}{$tab}{$property}:";
-            $buffer .= is_array($value) ? "\n{$this->renderArray($value, $level + 2)}" : " {$value}\n";
+            $buffer .= is_array($value) ? "\n{$this->renderElements($value, $level + 2)}" : " {$value}\n";
         }
 
         return $buffer;
