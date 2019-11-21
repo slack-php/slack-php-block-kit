@@ -15,4 +15,9 @@ class RendererFactory
     {
         return new KitBuilder();
     }
+
+    public function forCli(): Cli
+    {
+        return new Cli();
+    }
 }

@@ -6,8 +6,8 @@ namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
 class Message extends Surface
 {
-    private const EPHEMERAL = 'ephemeral';
-    private const IN_CHANNEL = 'in_channel';
+    public const EPHEMERAL = 'ephemeral';
+    public const IN_CHANNEL = 'in_channel';
 
     /** @var string */
     private $responseType = self::EPHEMERAL;

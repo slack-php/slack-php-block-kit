@@ -40,5 +40,6 @@ $actions->newDatePicker('a5')
     ->initialDate('2020-01-01')
     ->confirm('Proceed?', 'If this is correct, click "OK".');
 
-echo Slack::newRenderer()->forJson()->render($msg) . "\n";
+// echo Slack::newRenderer()->forJson()->render($msg) . "\n";
 echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";
+// echo Slack::newRenderer()->forCli()->render($msg) . "\n";

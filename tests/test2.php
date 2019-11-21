@@ -48,5 +48,6 @@ $msg = Message::new()
         )
     );
 
-echo (new Renderers\Json())->render($msg) . "\n";
+// echo (new Renderers\Json())->render($msg) . "\n";
 echo (new Renderers\KitBuilder())->render($msg) . "\n";
+// echo (new Renderers\Cli())->render($msg) . "\n";

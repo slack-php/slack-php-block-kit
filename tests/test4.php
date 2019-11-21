@@ -35,5 +35,6 @@ $msg->newTwoColumnTable('table3')
         'Emmy' => '0',
     ]);
 
-echo Slack::newRenderer()->forJson()->render($msg) . "\n";
+// echo Slack::newRenderer()->forJson()->render($msg) . "\n";
 echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";
+// echo Slack::newRenderer()->forCli()->render($msg) . "\n";
