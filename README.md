@@ -128,7 +128,9 @@ echo Slack::newRenderer()->forKitBuilder()->render($msg);
 https://api.slack.com/tools/block-kit-builder?mode=message&blocks=%5B%7B%22type%22%3A%22section%22%2C%22text%22%3A%7B%22type%22%3A%22mrkdwn%22%2C%22text%22%3A%22Don%27t%20you%20just%20love%20XKCD%3F%22%7D%7D%2C%7B%22type%22%3A%22divider%22%7D%2C%7B%22type%22%3A%22image%22%2C%22title%22%3A%7B%22type%22%3A%22plain_text%22%2C%22text%22%3A%22Team%20Chat%22%2C%22emoji%22%3Atrue%7D%2C%22image_url%22%3A%22https%3A%2F%2Fimgs.xkcd.com%2Fcomics%2Fteam_chat.png%22%2C%22alt_text%22%3A%22Comic%20about%20the%20stubbornness%20of%20some%20people%20switching%20chat%20clients%22%7D%5D
 ```
 
-And it shows up in the Block Kit Builder looking something like this:
+And here's the [actual Block Kit Builder link](https://api.slack.com/tools/block-kit-builder?mode=message&blocks=%5B%7B%22type%22%3A%22section%22%2C%22text%22%3A%7B%22type%22%3A%22mrkdwn%22%2C%22text%22%3A%22Don%27t%20you%20just%20love%20XKCD%3F%22%7D%7D%2C%7B%22type%22%3A%22divider%22%7D%2C%7B%22type%22%3A%22image%22%2C%22title%22%3A%7B%22type%22%3A%22plain_text%22%2C%22text%22%3A%22Team%20Chat%22%2C%22emoji%22%3Atrue%7D%2C%22image_url%22%3A%22https%3A%2F%2Fimgs.xkcd.com%2Fcomics%2Fteam_chat.png%22%2C%22alt_text%22%3A%22Comic%20about%20the%20stubbornness%20of%20some%20people%20switching%20chat%20clients%22%7D%5D). 
+
+It will show up in the Block Kit Builder looking something like this:
 
 ![Screenshot of rendered message in Block Kit Builder](block-kit-screenshot.png)
 
