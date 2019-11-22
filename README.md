@@ -41,7 +41,7 @@ _Note: This library is built for PHP 7.2+._
 
 ## Basic Usage
 
-This library supports a fluid, chainable syntax for composing Slack messages. The `Slack` class acts as a façade to the
+This library supports an intuitive syntax for composing Slack messages. The `Slack` class acts as a façade to the
 entire library, and let's you start new messages.
 
 ```php
