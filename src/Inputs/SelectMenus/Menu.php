@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Inputs;
+namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
-use DateTime;
 use Jeremeamia\Slack\BlockKit\Partials\PlainText;
+use Jeremeamia\Slack\BlockKit\Inputs\HasConfirm;
+use Jeremeamia\Slack\BlockKit\Inputs\InputElement;
 
-class DatePicker extends InputElement
+abstract class Menu extends InputElement
 {
     use HasConfirm;
-
-    private const DATE_FORMAT = 'Y-m-d';
 
     /** @var PlainText */
     private $placeholder;
 
-    /** @var string */
-    private $initialDate;
-
+    /**
+     * @param PlainText $placeholder
+     * @return static
+     */
     public function setPlaceholder(PlainText $placeholder): self
     {
         $this->placeholder = $placeholder->setParent($this);
@@ -26,16 +26,13 @@ class DatePicker extends InputElement
         return $this;
     }
 
+    /**
+     * @param string $placeholder
+     * @return static
+     */
     public function placeholder(string $placeholder): self
     {
         return $this->setPlaceholder(new PlainText($placeholder));
-    }
-
-    public function initialDate(string $date): self
-    {
-        $this->initialDate = DateTime::createFromFormat(self::DATE_FORMAT, $date)->format(self::DATE_FORMAT);
-
-        return $this;
     }
 
     public function validate(): void
@@ -58,10 +55,6 @@ class DatePicker extends InputElement
 
         if (!empty($this->placeholder)) {
             $data['placeholder'] = $this->placeholder->toArray();
-        }
-
-        if (!empty($this->initialDate)) {
-            $data['initial_date'] = $this->initialDate;
         }
 
         if (!empty($this->confirm)) {

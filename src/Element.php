@@ -8,7 +8,7 @@ use JsonSerializable;
 
 abstract class Element implements JsonSerializable
 {
-    private const HIDE_TYPES = [Type::MESSAGE, Type::FIELDS, Type::CONFIRM];
+    private const HIDE_TYPES = [Type::MESSAGE, Type::FIELDS, Type::CONFIRM, Type::OPTION];
 
     /** @var Element|null */
     protected $parent;

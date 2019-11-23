@@ -56,6 +56,14 @@ class Actions extends BlockElement
         return $action;
     }
 
+    public function newSelectMenu(?string $actionId = null): Inputs\SelectMenus\SelectMenu
+    {
+        $action = new Inputs\SelectMenus\SelectMenu($actionId);
+        $this->add($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->elements)) {

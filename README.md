@@ -181,11 +181,11 @@ The following are supported elements from the Block Kit documentation:
 | Input    | Multi-select Menu | ❌             |
 | Input    | Overflow Menu     | ❌             |
 | Input    | Radio Buttons     | ❌             |
-| Input    | Select Menu       | ❌             |
+| Input    | Select Menu       | Partial        |
 | Partial  | Confirm Dialog    | ✅             |
 | Partial  | Mrkdwn Text       | ✅             |
 | Partial  | Fields            | ✅             |
-| Partial  | Option            | ❌             |
+| Partial  | Option            | ✅             |
 | Partial  | Option Group      | ❌             |
 | Partial  | Plain Text        | ✅             |
 
