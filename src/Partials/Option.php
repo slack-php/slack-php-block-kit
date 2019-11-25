@@ -37,7 +37,7 @@ class Option extends Element
      */
     public function text(string $text): self
     {
-        return $this->setText(new PlainText($text, false));
+        return $this->setText(new PlainText($text));
     }
 
     /**

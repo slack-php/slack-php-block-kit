@@ -164,30 +164,30 @@ message:
 
 The following are supported elements from the Block Kit documentation:
 
-| **Type** | **Element**       | **Supported?** |
-|----------|-------------------|----------------|
-| Surface  | App Home          | ✅             |
-| Surface  | Message           | ✅             |
-| Surface  | Model             | ✅             |
-| Block    | Actions           | ✅             |
-| Block    | Context           | ✅             |
-| Block    | Divider           | ✅             |
-| Block    | File              | ❌             |
-| Block    | Image             | ✅             |
-| Block    | Input             | ✅             |
-| Block    | Section           | ✅             |
-| Input    | Button            | ✅️             |
-| Input    | Date Picker       | ✅             |
-| Input    | Multi-select Menu | ❌             |
-| Input    | Overflow Menu     | ❌             |
-| Input    | Radio Buttons     | ❌             |
-| Input    | Select Menu       | Partial        |
-| Partial  | Confirm Dialog    | ✅             |
-| Partial  | Mrkdwn Text       | ✅             |
-| Partial  | Fields            | ✅             |
-| Partial  | Option            | ✅             |
-| Partial  | Option Group      | ❌             |
-| Partial  | Plain Text        | ✅             |
+| **Type** | **Element**        | **Supported?** |
+|----------|--------------------|----------------|
+| Surface  | App Home           | ✅             |
+| Surface  | Message            | ✅             |
+| Surface  | Model              | ✅             |
+| Block    | Actions            | ✅             |
+| Block    | Context            | ✅             |
+| Block    | Divider            | ✅             |
+| Block    | File               | ❌             |
+| Block    | Image              | ✅             |
+| Block    | Input              | ✅             |
+| Block    | Section            | ✅             |
+| Input    | Button             | ✅️             |
+| Input    | Date Picker        | ✅             |
+| Input    | Multi-select Menus | ✅✅✅✅✅    |
+| Input    | Overflow Menu      | ❌             |
+| Input    | Radio Buttons      | ❌             |
+| Input    | Select Menus       | ✅✅✅✅✅    |
+| Partial  | Confirm Dialog     | ✅             |
+| Partial  | Mrkdwn Text        | ✅             |
+| Partial  | Fields             | ✅             |
+| Partial  | Option             | ✅             |
+| Partial  | Option Group       | ✅             |
+| Partial  | Plain Text         | ✅             |
 
 ### Virtual Elements
 

@@ -35,6 +35,12 @@ class PlainText extends Text
      */
     public function toArray(): array
     {
-        return parent::toArray() + ['emoji' => $this->emoji];
+        $data = parent::toArray();
+
+        if ($this->emoji === false) {
+            $data['emoji'] = $this->emoji;
+        }
+
+        return $data;
     }
 }

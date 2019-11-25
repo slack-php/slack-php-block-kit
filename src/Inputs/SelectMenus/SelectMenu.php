@@ -5,35 +5,47 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
 use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Partials\Option;
+use Jeremeamia\Slack\BlockKit\Partials\PlainText;
+use Jeremeamia\Slack\BlockKit\Inputs\HasConfirm;
+use Jeremeamia\Slack\BlockKit\Inputs\InputElement;
 
-class SelectMenu extends Menu
+abstract class SelectMenu extends InputElement
 {
-    /** @var Option[]|array */
-    private $options;
+    use HasConfirm;
 
-    public function options(array $options): self
+    /** @var PlainText */
+    private $placeholder;
+
+    /**
+     * @param PlainText $placeholder
+     * @return static
+     */
+    public function setPlaceholder(PlainText $placeholder): self
     {
-        foreach ($options as $text => $value) {
-            $this->options[] = new Option($text, $value);
-        }
+        $this->placeholder = $placeholder->setParent($this);
 
         return $this;
     }
 
-    public function option(string $text, string $value): self
+    /**
+     * @param string $placeholder
+     * @return static
+     */
+    public function placeholder(string $placeholder): self
     {
-        $this->options[] = new Option($text, $value);
-
-        return $this;
+        return $this->setPlaceholder(new PlainText($placeholder));
     }
 
     public function validate(): void
     {
-        parent::validate();
+        if (empty($this->placeholder)) {
+            throw new Exception('Select menus must contain a "placeholder"');
+        }
 
-        if (empty($this->options)) {
-            throw new Exception("Select menu requires options to be provided");
+        $this->placeholder->validate();
+
+        if (!empty($this->confirm)) {
+            $this->confirm->validate();
         }
     }
 
@@ -44,9 +56,11 @@ class SelectMenu extends Menu
     {
         $data = parent::toArray();
 
-        $data['options'] = array_map(function (Option $option) {
-            return $option->toArray();
-        }, $this->options);
+        $data['placeholder'] = $this->placeholder->toArray();
+
+        if (!empty($this->confirm)) {
+            $data['confirm'] = $this->confirm->toArray();
+        }
 
         return $data;
     }

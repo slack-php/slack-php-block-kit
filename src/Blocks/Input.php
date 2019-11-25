@@ -90,6 +90,20 @@ class Input extends BlockElement
         return $action;
     }
 
+    public function newSelectMenu(?string $actionId = null): Inputs\SelectMenus\SelectMenuFactory
+    {
+        return new Inputs\SelectMenus\SelectMenuFactory($actionId, function (Inputs\SelectMenus\SelectMenu $menu) {
+            $this->setElement($menu);
+        });
+    }
+
+    public function newMultiSelectMenu(?string $actionId = null): Inputs\SelectMenus\MultiSelectMenuFactory
+    {
+        return new Inputs\SelectMenus\MultiSelectMenuFactory($actionId, function (Inputs\SelectMenus\SelectMenu $menu) {
+            $this->setElement($menu);
+        });
+    }
+
     public function validate(): void
     {
         if (empty($this->label)) {

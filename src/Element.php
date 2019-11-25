@@ -8,8 +8,6 @@ use JsonSerializable;
 
 abstract class Element implements JsonSerializable
 {
-    private const HIDE_TYPES = [Type::MESSAGE, Type::FIELDS, Type::CONFIRM, Type::OPTION];
-
     /** @var Element|null */
     protected $parent;
 
@@ -61,7 +59,7 @@ abstract class Element implements JsonSerializable
         $this->validate();
         $type = $this->getType();
 
-        return !in_array($type, self::HIDE_TYPES, true) ? compact('type') : [];
+        return !in_array($type, Type::HIDDEN_TYPES, true) ? compact('type') : [];
     }
 
     /**
@@ -70,5 +68,13 @@ abstract class Element implements JsonSerializable
     public function jsonSerialize()
     {
         return $this->toArray();
+    }
+
+    public function __debugInfo()
+    {
+        $data = get_object_vars($this);
+        unset($data['parent']);
+
+        return $data;
     }
 }

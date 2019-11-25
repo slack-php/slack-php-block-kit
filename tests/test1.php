@@ -39,14 +39,7 @@ $msg->newActions('b7')
     ->newDatePicker('a5')
         ->placeholder('Choose a date')
         ->initialDate('2020-01-01')
-->confirm('Proceed?', 'If this is correct, click "OK".');
-$msg->newActions('b8')
-    ->newSelectMenu('a6')
-        ->options([
-            'a' => 'x',
-            'b' => 'y',
-            'c' => 'z',
-        ]);
+        ->confirm('Proceed?', 'If this is correct, click "OK".');
 
 // echo Slack::newRenderer()->forJson()->render($msg) . "\n";
 echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";

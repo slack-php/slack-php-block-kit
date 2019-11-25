@@ -144,6 +144,20 @@ class Section extends BlockElement
         return $action;
     }
 
+    public function newSelectMenuAccessory(?string $actionId = null): Inputs\SelectMenus\SelectMenuFactory
+    {
+        return new Inputs\SelectMenus\SelectMenuFactory($actionId, function (Inputs\SelectMenus\SelectMenu $menu) {
+            $this->setAccessory($menu);
+        });
+    }
+
+    public function newMultiSelectMenuAccessory(?string $actionId = null): Inputs\SelectMenus\MultiSelectMenuFactory
+    {
+        return new Inputs\SelectMenus\MultiSelectMenuFactory($actionId, function (Inputs\SelectMenus\SelectMenu $menu) {
+            $this->setAccessory($menu);
+        });
+    }
+
     public function validate(): void
     {
         if (empty($this->text) && empty($this->fields)) {
