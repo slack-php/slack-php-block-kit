@@ -23,11 +23,9 @@ $msg->newActions('b2')
     ->newSelectMenu('m3')
         ->forStaticOptions()
         ->placeholder('Choose a letter?')
-        ->options([
-            'a' => 'x',
-            'b' => 'y',
-            'c' => 'z',
-        ])
+        ->option('a', 'x')
+        ->option('b', 'y')
+        ->option('c', 'z')
         ->initialOption('b', 'y');
 $msg->newActions('b3')
     ->newSelectMenu('m4')

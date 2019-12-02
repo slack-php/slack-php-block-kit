@@ -17,13 +17,17 @@ abstract class Type
     public const ACTIONS = 'actions';
     public const CONTEXT = 'context';
     public const DIVIDER = 'divider';
+    // public const FILE = 'file'; // Not yet supported.
     public const IMAGE   = 'image';
     public const INPUT   = 'input';
     public const SECTION = 'section';
 
     // Inputs
-    public const BUTTON      = 'button';
-    public const DATEPICKER  = 'datepicker';
+    public const BUTTON            = 'button';
+    public const DATEPICKER        = 'datepicker';
+    // public const TEXT_INPUT     = 'plain_text_input'; // Not yet supported.
+    // public const OVERFLOW_MENU  = 'overflow'; // Not yet supported.
+    // public const RADIO_BUTTONS  = 'radio_buttons'; // Not yet supported.
 
     // Select Menus
     public const MULTI_SELECT_MENU_CHANNELS      = 'multi_channels_select';
@@ -45,7 +49,32 @@ abstract class Type
     public const OPTION_GROUP = 'option_group';
     public const PLAINTEXT    = 'plain_text';
 
-    // Validation groups
+    public const SURFACE_BLOCKS = [
+        self::APPHOME => [
+            self::ACTIONS,
+            self::CONTEXT,
+            self::DIVIDER,
+            self::IMAGE,
+            self::SECTION,
+        ],
+        self::MESSAGE => [
+            self::ACTIONS,
+            self::CONTEXT,
+            self::DIVIDER,
+            // self::FILE, // Not yet supported.
+            self::IMAGE,
+            self::SECTION,
+        ],
+        self::MODAL => [
+            self::ACTIONS,
+            self::CONTEXT,
+            self::DIVIDER,
+            self::IMAGE,
+            self::INPUT,
+            self::SECTION,
+        ],
+    ];
+
     public const ACCESSORY_ELEMENTS = [
         self::BUTTON,
         self::DATEPICKER,
@@ -55,38 +84,45 @@ abstract class Type
         self::MULTI_SELECT_MENU_EXTERNAL,
         self::MULTI_SELECT_MENU_STATIC,
         self::MULTI_SELECT_MENU_USERS,
+        // self::OVERFLOW_MENU, // Not yet supported.
+        // self::RADIO_BUTTONS, // Not yet supported.
         self::SELECT_MENU_CHANNELS,
         self::SELECT_MENU_CONVERSATIONS,
         self::SELECT_MENU_EXTERNAL,
         self::SELECT_MENU_STATIC,
         self::SELECT_MENU_USERS,
+        // self::TEXT_INPUT, // Not yet supported.
     ];
 
     public const ACTION_ELEMENTS = [
         self::BUTTON,
         self::DATEPICKER,
+        // self::OVERFLOW_MENU, // Not yet supported.
+        // self::RADIO_BUTTONS, // Not yet supported.
         self::SELECT_MENU_CHANNELS,
         self::SELECT_MENU_CONVERSATIONS,
         self::SELECT_MENU_EXTERNAL,
         self::SELECT_MENU_STATIC,
         self::SELECT_MENU_USERS,
+        // self::TEXT_INPUT, // Not yet supported.
     ];
 
     public const CONTEXT_ELEMENTS = [self::IMAGE, self::MRKDWNTEXT, self::PLAINTEXT];
 
     public const INPUT_ELEMENTS = [
         self::DATEPICKER,
-        self::SELECT_MENU_STATIC,
         self::MULTI_SELECT_MENU_CHANNELS,
         self::MULTI_SELECT_MENU_CONVERSATIONS,
         self::MULTI_SELECT_MENU_EXTERNAL,
         self::MULTI_SELECT_MENU_STATIC,
         self::MULTI_SELECT_MENU_USERS,
+        // self::RADIO_BUTTONS, // Not yet supported.
         self::SELECT_MENU_CHANNELS,
         self::SELECT_MENU_CONVERSATIONS,
         self::SELECT_MENU_EXTERNAL,
         self::SELECT_MENU_STATIC,
         self::SELECT_MENU_USERS,
+        // self::TEXT_INPUT, // Not yet supported.
     ];
 
     public const HIDDEN_TYPES = [self::MESSAGE, self::FIELDS, self::CONFIRM, self::OPTION, self::OPTION_GROUP];
@@ -99,12 +135,16 @@ abstract class Type
         Blocks\Actions::class => self::ACTIONS,
         Blocks\Context::class => self::CONTEXT,
         Blocks\Divider::class => self::DIVIDER,
+        // Block\File::class  => self::FILE, // Not yet supported.
         Blocks\Image::class   => self::IMAGE,
         Blocks\Input::class   => self::INPUT,
         Blocks\Section::class => self::SECTION,
 
-        Inputs\Button::class     => self::BUTTON,
-        Inputs\DatePicker::class => self::DATEPICKER,
+        Inputs\Button::class          => self::BUTTON,
+        Inputs\DatePicker::class      => self::DATEPICKER,
+        // Inputs\OverflowMenu::class => self::OVERFLOW_MENU, // Not yet supported.
+        // Inputs\RadioButtons::class => self::RADIO_BUTTONS, // Not yet supported.
+        // Inputs\TextInput::class    => self::TEXT_INPUT, // Not yet supported.
 
         SelectMenus\MultiChannelSelectMenu::class       => self::MULTI_SELECT_MENU_CHANNELS,
         SelectMenus\MultiConversationSelectMenu::class  => self::MULTI_SELECT_MENU_CONVERSATIONS,
@@ -128,7 +168,7 @@ abstract class Type
     public static function mapClass(string $class): string
     {
         if (!isset(self::$typeMap[$class])) {
-            throw new Exception("No type for class: {$class}");
+            throw new Exception('No type for class: %s', [$class]);
         }
 
         return self::$typeMap[$class];

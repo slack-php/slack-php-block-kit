@@ -31,7 +31,7 @@ class Context extends BlockElement
     public function add(Element $element): self
     {
         if (!in_array($element->getType(), Type::CONTEXT_ELEMENTS)) {
-            throw new Exception("Invalid context element type: {$element->getType()}");
+            throw new Exception('Invalid context element type: %s', [$element->getType()]);
         }
 
         if (count($this->elements) >= self::MAX_ELEMENTS) {

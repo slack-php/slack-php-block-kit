@@ -58,8 +58,12 @@ class Section extends BlockElement
      */
     public function setAccessory(Element $accessory): self
     {
+        if (!empty($this->accessory)) {
+            throw new Exception('Section accessory already set as type %s', [$this->accessory->getType()]);
+        }
+
         if (!in_array($accessory->getType(), Type::ACCESSORY_ELEMENTS)) {
-            throw new Exception("Invalid section accessory type: {$accessory->getType()}");
+            throw new Exception('Invalid section accessory type: %s', [$accessory->getType()]);
         }
 
         $this->accessory = $accessory->setParent($this);

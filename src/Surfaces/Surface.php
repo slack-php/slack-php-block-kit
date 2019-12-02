@@ -10,11 +10,10 @@ use Jeremeamia\Slack\BlockKit\Blocks\{
     Context,
     Divider,
     Image,
-    Virtual\VirtualBlock,
-    Virtual\TwoColumnTable,
     Section,
 };
-use Jeremeamia\Slack\BlockKit\{Exception, Element};
+use Jeremeamia\Slack\BlockKit\Blocks\Virtual\{VirtualBlock, TwoColumnTable};
+use Jeremeamia\Slack\BlockKit\{Exception, Element, Type};
 
 /**
  * A Slack app surface is something within a Slack app that renders blocks from the block kit (e.g., a Message).
@@ -36,6 +35,13 @@ abstract class Surface extends Element
     {
         if (count($this->blocks) >= self::MAX_BLOCKS) {
             throw new Exception('An App Surface cannot have more than %d blocks', [self::MAX_BLOCKS]);
+        }
+
+        if (!in_array($block->getType(), Type::SURFACE_BLOCKS[$this->getType()], true)) {
+            throw new Exception(
+                'Block type %s is not supported for surface type %s',
+                [$block->getType(), $this->getType()]
+            );
         }
 
         $this->blocks[] = $block->setParent($this);
@@ -146,7 +152,7 @@ abstract class Surface extends Element
     public function validate(): void
     {
         if (empty($this->blocks)) {
-            throw new Exception("A {$this->getType()} surface must contain at least one block");
+            throw new Exception('A surface must contain at least one block');
         }
 
         foreach ($this->blocks as $block) {

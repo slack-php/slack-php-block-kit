@@ -28,7 +28,7 @@ class Actions extends BlockElement
     public function add(Element $element): self
     {
         if (!in_array($element->getType(), Type::ACTION_ELEMENTS)) {
-            throw new Exception("Invalid actions element type: {$element->getType()}");
+            throw new Exception('Invalid actions element type: %s', [$element->getType()]);
         }
 
         if (count($this->elements) >= self::MAX_ACTIONS) {

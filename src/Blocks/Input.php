@@ -49,8 +49,12 @@ class Input extends BlockElement
 
     public function setElement(Element $element): self
     {
+        if (!empty($this->element)) {
+            throw new Exception('Input element already set as type %s', [$this->element->getType()]);
+        }
+
         if (!in_array($element->getType(), Type::INPUT_ELEMENTS)) {
-            throw new Exception("Invalid section accessory type: {$element->getType()}");
+            throw new Exception('Invalid input element type: %s', [$element->getType()]);
         }
 
         $this->element = $element->setParent($this);
@@ -136,7 +140,7 @@ class Input extends BlockElement
             $data['hint'] = $this->hint->toArray();
         }
 
-        if (!empty($this->optional)) {
+        if ($this->optional) {
             $data['optional'] = $this->optional;
         }
 
