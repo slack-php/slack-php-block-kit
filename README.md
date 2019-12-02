@@ -251,18 +251,20 @@ Contributions welcome to support new elements, write tests, setup github actions
 
 When implementing elements, to fit within the existing DSL, consider these points:
 
-- To set sub-elements, provide a `set`-prefixed setter (e.g., `setText(Text $text): self`).
+- To set instantiated sub-element objects, provide a `set`-prefixed setter (e.g., `setText(Text $text): self`).
     - Should return `self` to support chaining.
-    - Should set the parent (e.g., `setParent()`) of the element to `$this`.
-- To set simple sub-elements, provide a simple setter method (e.g., `title(string $title): self`).
+    - Should set the parent (e.g., `setParent()`) of the sub-element to `$this`.
+- To set simple sub-element objects, provide a simple setter method (e.g., `title(string $title): self`).
     - Should be in addition to the `set`-prefixed setter.
     - Should be named after the property being set.
     - Should return `self` to support chaining.
+    - Should have a maximum of 2 parameters.
     - Should call the regular setter (e.g., `return $this->setText(new PlainText($title));`).
 - To set other non-element properties, provide a simple setter method (e.g., `url(string $url): self`).
     - Should be named after the property being set.
     - Should return `self` to support chaining.
 - To create new sub-elements attached to the current one, provide a `new`-prefixed factory method (e.g., `newImage(): Image`).
-    - Should return a new instance of an element.
-    - Should set the parent (e.g., `setParent()`) of the element to `$this` before returning.
-    - Should support a `$blockId` parameter if it's a Block or an `$actionId` parameter if it's an interactive element.
+    - Should return an instance of the sub-element.
+    - Should set the parent (e.g., `setParent()`) of the sub-element to `$this` before returning.
+    - Should support a `$blockId` parameter if it's a Block or an `$actionId` parameter if it's an Input element.
+- All element types should be definied in the `Type` class and registered in relevant constant lists to be appropriately validated.
