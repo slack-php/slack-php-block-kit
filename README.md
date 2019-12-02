@@ -180,6 +180,7 @@ The following are supported elements from the Block Kit documentation:
 | Input    | Date Picker        | ✅             |
 | Input    | Multi-select Menus | ✅✅✅✅✅    |
 | Input    | Overflow Menu      | ❌             |
+| Input    | Plain Text Input   | ❌             |
 | Input    | Radio Buttons      | ❌             |
 | Input    | Select Menus       | ✅✅✅✅✅    |
 | Partial  | Confirm Dialog     | ✅             |
