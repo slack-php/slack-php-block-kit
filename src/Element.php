@@ -28,7 +28,7 @@ abstract class Element implements JsonSerializable
     }
 
     /**
-     * @param Element
+     * @param Element $parent
      * @return static
      */
     public function setParent(Element $parent): Element

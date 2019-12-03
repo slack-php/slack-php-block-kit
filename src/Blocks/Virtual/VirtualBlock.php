@@ -23,7 +23,10 @@ abstract class VirtualBlock extends BlockElement
      */
     protected function appendBlock(BlockElement $block): self
     {
-        $block->setParent($this->getParent());
+        if ($this->getParent() !== null) {
+            $block->setParent($this->getParent());
+        }
+
         $this->blocks[] = $this->assignBlockId($block);
 
         return $this;
@@ -31,7 +34,9 @@ abstract class VirtualBlock extends BlockElement
 
     protected function prependBlock(BlockElement $block): self
     {
-        $block->setParent($this->getParent());
+        if ($this->getParent() !== null) {
+            $block->setParent($this->getParent());
+        }
 
         $this->blocks = array_merge(
             [$this->assignBlockId($block, 1)],

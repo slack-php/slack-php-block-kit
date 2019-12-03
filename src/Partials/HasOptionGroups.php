@@ -10,9 +10,13 @@ trait HasOptionGroups
 {
     use HasOptions;
 
-    /** @var Option[]|array */
+    /** @var OptionGroup[] */
     private $optionGroups;
 
+    /**
+     * @param array $optionGroups
+     * @return HasOptionGroups
+     */
     public function optionGroups(array $optionGroups): self
     {
         foreach ($optionGroups as $label => $options) {
@@ -22,6 +26,11 @@ trait HasOptionGroups
         return $this;
     }
 
+    /**
+     * @param string $label
+     * @param array $options
+     * @return HasOptionGroups
+     */
     public function optionGroup(string $label, array $options): self
     {
         $group = new OptionGroup($label, $options);

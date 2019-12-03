@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Inputs;
 
 use DateTime;
+use Jeremeamia\Slack\BlockKit\Exception;
 use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
 class DatePicker extends InputElement
@@ -33,7 +34,12 @@ class DatePicker extends InputElement
 
     public function initialDate(string $date): self
     {
-        $this->initialDate = DateTime::createFromFormat(self::DATE_FORMAT, $date)->format(self::DATE_FORMAT);
+        $dateTime = DateTime::createFromFormat(self::DATE_FORMAT, $date);
+        if (!$dateTime) {
+            throw new Exception('Date was formatted incorrectly (must be Y-m-d)');
+        }
+
+        $this->initialDate = $dateTime->format(self::DATE_FORMAT);
 
         return $this;
     }

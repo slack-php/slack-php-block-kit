@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Renderers;
 
+use Jeremeamia\Slack\BlockKit\Exception;
 use Jeremeamia\Slack\BlockKit\Surfaces\Surface;
 use Jeremeamia\Slack\BlockKit\Type;
 
-use function http_build_query, json_decode, json_encode;
+use function http_build_query;
+use function json_decode;
+use function json_encode;
 
 class KitBuilder implements Renderer
 {
     public function render(Surface $surface): string
     {
         $type = $surface->getType();
-        $content = json_encode($type === Type::MESSAGE ? $surface->getBlocks() : $surface);
+        $content = $this->encode($type === Type::MESSAGE ? $surface->getBlocks() : $surface);
 
         return $this->createLink($type, $content);
     }
@@ -23,7 +26,7 @@ class KitBuilder implements Renderer
     {
         $json = json_decode($json, true);
         $type = $json['type'] ?? Type::MESSAGE;
-        $content = json_encode($type === Type::MESSAGE ? $json['blocks'] : $json);
+        $content = $this->encode($type === Type::MESSAGE ? $json['blocks'] : $json);
 
         return $this->createLink($type, $content);
     }
@@ -35,5 +38,19 @@ class KitBuilder implements Renderer
         $query[$type === Type::MESSAGE ? 'blocks' : 'view'] = $content;
 
         return "https://api.slack.com/tools/block-kit-builder?" . http_build_query($query);
+    }
+
+    /**
+     * @param object|array $object
+     * @return string
+     */
+    private function encode($object): string
+    {
+        $json = json_encode($object);
+        if (!is_string($json)) {
+            throw new Exception('Could not encode blocks as JSON for Kit Builder link');
+        }
+
+        return $json;
     }
 }
