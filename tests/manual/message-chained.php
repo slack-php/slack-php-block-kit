@@ -8,7 +8,7 @@ use Jeremeamia\Slack\BlockKit\Inputs\DatePicker;
 use Jeremeamia\Slack\BlockKit\Renderers;
 use Jeremeamia\Slack\BlockKit\Surfaces\Message;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 $msg = Message::new()
     ->add(Section::new()
