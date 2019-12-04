@@ -16,5 +16,11 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
 
+    - name: Run style linter
+      run: composer run-script style-lint
+
+    - name: Run static analyzer
+      run: composer run-script stan
+
     - name: Run test suite
-      run: composer run-script ci
+      run: composer run-script test-ci
