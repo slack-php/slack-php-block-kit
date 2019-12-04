@@ -15,7 +15,7 @@ trait HasOptionGroups
 
     /**
      * @param array $optionGroups
-     * @return HasOptionGroups
+     * @return static
      */
     public function optionGroups(array $optionGroups): self
     {
@@ -29,7 +29,7 @@ trait HasOptionGroups
     /**
      * @param string $label
      * @param array $options
-     * @return HasOptionGroups
+     * @return static
      */
     public function optionGroup(string $label, array $options): self
     {
