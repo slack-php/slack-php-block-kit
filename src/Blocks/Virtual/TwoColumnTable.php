@@ -6,6 +6,7 @@ namespace Jeremeamia\Slack\BlockKit\Blocks\Virtual;
 
 use Jeremeamia\Slack\BlockKit\Blocks\Section;
 use Jeremeamia\Slack\BlockKit\Exception;
+use Jeremeamia\Slack\BlockKit\Type;
 
 /**
  * A virtual, multi-block element using sections to create a two-column table.
@@ -134,5 +135,10 @@ class TwoColumnTable extends VirtualBlock
         }
 
         parent::validate();
+    }
+
+    public function getType(): string
+    {
+        return Type::SECTION;
     }
 }
