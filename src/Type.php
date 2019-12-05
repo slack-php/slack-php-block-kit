@@ -128,10 +128,12 @@ abstract class Type
     public const HIDDEN_TYPES = [self::MESSAGE, self::FIELDS, self::CONFIRM, self::OPTION, self::OPTION_GROUP];
 
     private static $typeMap = [
+        // Surfaces
         Surfaces\AppHome::class => self::APPHOME,
         Surfaces\Message::class => self::MESSAGE,
         Surfaces\Modal::class   => self::MODAL,
 
+        // Blocks
         Blocks\Actions::class => self::ACTIONS,
         Blocks\Context::class => self::CONTEXT,
         Blocks\Divider::class => self::DIVIDER,
@@ -140,12 +142,17 @@ abstract class Type
         Blocks\Input::class   => self::INPUT,
         Blocks\Section::class => self::SECTION,
 
+        // Virtual Blocks
+        Blocks\Virtual\TwoColumnTable::class => self::SECTION, // Composed of Sections
+
+        // Inputs
         Inputs\Button::class          => self::BUTTON,
         Inputs\DatePicker::class      => self::DATEPICKER,
         // Inputs\OverflowMenu::class => self::OVERFLOW_MENU, // Not yet supported.
         // Inputs\RadioButtons::class => self::RADIO_BUTTONS, // Not yet supported.
         // Inputs\TextInput::class    => self::TEXT_INPUT, // Not yet supported.
 
+        // Select Menus
         SelectMenus\MultiChannelSelectMenu::class       => self::MULTI_SELECT_MENU_CHANNELS,
         SelectMenus\MultiConversationSelectMenu::class  => self::MULTI_SELECT_MENU_CONVERSATIONS,
         SelectMenus\MultiExternalSelectMenu::class      => self::MULTI_SELECT_MENU_EXTERNAL,
@@ -157,6 +164,7 @@ abstract class Type
         SelectMenus\StaticSelectMenu::class             => self::SELECT_MENU_STATIC,
         SelectMenus\UserSelectMenu::class               => self::SELECT_MENU_USERS,
 
+        // Partials
         Partials\Confirm::class     => self::CONFIRM,
         Partials\Fields::class      => self::FIELDS,
         Partials\MrkdwnText::class  => self::MRKDWNTEXT,
