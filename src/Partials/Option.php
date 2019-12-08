@@ -14,9 +14,12 @@ class Option extends Element
     /** @var string */
     private $value;
 
-    public function __construct(string $text, string $value)
+    public function __construct(?string $text = null, string $value)
     {
-        $this->text($text);
+        if ($text !== null) {
+            $this->text($text);
+        }
+
         $this->value($value);
     }
 

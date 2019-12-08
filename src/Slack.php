@@ -9,19 +9,19 @@ use Jeremeamia\Slack\BlockKit\Renderers\RendererFactory;
 
 abstract class Slack
 {
+    public static function newAppHome(): AppHome
+    {
+        return new AppHome();
+    }
+
     public static function newMessage(): Message
     {
-        return Message::new();
+        return new Message();
     }
 
     public static function newModal(): Modal
     {
-        return Modal::new();
-    }
-
-    public static function newAppHome(): AppHome
-    {
-        return AppHome::new();
+        return new Modal();
     }
 
     public static function newRenderer(): RendererFactory

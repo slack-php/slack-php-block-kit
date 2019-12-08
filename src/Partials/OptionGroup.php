@@ -13,10 +13,15 @@ class OptionGroup extends Element
     /** @var PlainText */
     private $label;
 
-    public function __construct(string $label, array $options)
+    public function __construct(?string $label = null, array $options = [])
     {
-        $this->label($label);
-        $this->options($options);
+        if ($label !== null) {
+            $this->label($label);
+        }
+
+        if (!empty($options)) {
+            $this->options($options);
+        }
     }
 
     /**

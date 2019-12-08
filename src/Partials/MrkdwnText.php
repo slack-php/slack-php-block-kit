@@ -10,12 +10,14 @@ class MrkdwnText extends Text
     private $verbatim;
 
     /**
-     * @param string $text
+     * @param string|null $text
      * @param bool $verbatim
      */
-    public function __construct(string $text, bool $verbatim = false)
+    public function __construct(?string $text = null, bool $verbatim = false)
     {
-        $this->text($text);
+        if ($text !== null) {
+            $this->text($text);
+        }
         $this->verbatim($verbatim);
     }
 

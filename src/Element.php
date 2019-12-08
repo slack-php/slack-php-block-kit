@@ -69,12 +69,4 @@ abstract class Element implements JsonSerializable
     {
         return $this->toArray();
     }
-
-    public function __debugInfo()
-    {
-        $data = get_object_vars($this);
-        unset($data['parent']);
-
-        return $data;
-    }
 }

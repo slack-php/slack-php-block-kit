@@ -16,12 +16,8 @@ class Fields extends Element
      */
     public function __construct(array $fields = [])
     {
-        foreach ($fields as $field) {
-            if (!$field instanceof Text) {
-                $field = new MrkdwnText($field);
-            }
-
-            $this->add($field);
+        if (!empty($fields)) {
+            $this->populate($fields);
         }
     }
 
@@ -36,6 +32,23 @@ class Fields extends Element
         }
 
         $this->fields[] = $field;
+
+        return $this;
+    }
+
+    /**
+     * @param Text[]|string[] $fields
+     * @return self
+     */
+    public function populate(array $fields = []): self
+    {
+        foreach ($fields as $field) {
+            if (!$field instanceof Text) {
+                $field = new MrkdwnText($field);
+            }
+
+            $this->add($field);
+        }
 
         return $this;
     }

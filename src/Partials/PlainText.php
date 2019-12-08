@@ -10,12 +10,15 @@ class PlainText extends Text
     private $emoji;
 
     /**
-     * @param string $text
+     * @param string|null $text
      * @param bool $emoji
      */
-    public function __construct(string $text, bool $emoji = true)
+    public function __construct(?string $text = null, bool $emoji = true)
     {
-        $this->text($text);
+        if ($text !== null) {
+            $this->text($text);
+        }
+
         $this->emoji($emoji);
     }
 

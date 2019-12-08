@@ -4,8 +4,10 @@ namespace Jeremeamia\Slack\BlockKit\Tests;
 
 use Jeremeamia\Slack\BlockKit\Blocks\Section;
 use Jeremeamia\Slack\BlockKit\{Exception, Slack, Type};
-use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Jeremeamia\Slack\BlockKit\Type
+ */
 class TypeTest extends TestCase
 {
     public function testCanMapDefinedElementClassToADefinedType()

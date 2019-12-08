@@ -287,4 +287,5 @@ When implementing elements, to fit within the existing DSL, consider these point
     - Should return an instance of the sub-element.
     - Should set the parent (e.g., `setParent()`) of the sub-element to `$this` before returning.
     - Should support a `$blockId` parameter if it's a Block or an `$actionId` parameter if it's an Input element.
-- All element types should be definied in the `Type` class and registered in relevant constant lists to be appropriately validated.
+- All element types should be defined in the `Type` class and registered in relevant constant lists to be appropriately validated.
+- If you implement a custom constructor for an element, make sure all the parameters are optional.
