@@ -24,7 +24,7 @@ class TestCase extends PhpUnitTestCase
     protected function jsonEncode($data): string
     {
         $json = json_encode($data);
-        if (!$json) {
+        if (!is_string($json)) {
             $this->fail('JSON encoding error in test.');
         }
 

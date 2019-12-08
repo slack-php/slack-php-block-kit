@@ -18,6 +18,10 @@ use Jeremeamia\Slack\BlockKit\<?= $classFullname ?>;
 use Jeremeamia\Slack\BlockKit\Tests\TestCase;
 <?php endif ?>
 
+/**
+ * @covers \Jeremeamia\Slack\BlockKit\<?= $classFullname ?>
+
+ */
 class <?= $className ?>Test extends TestCase
 {
     public function testThatSomethingDoesSomething()

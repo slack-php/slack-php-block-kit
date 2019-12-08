@@ -27,6 +27,6 @@ if (!is_dir($fileDir)) {
 }
 
 // Create the new test file.
-$filePath = "/{$className}.php";
+$filePath = "/{$className}Test.php";
 echo "Creating test file for {$classFullname}\n";
-file_put_contents("{$fileDir}/{$className}.php", $fileContent);
+file_put_contents("{$fileDir}{$filePath}", $fileContent);
