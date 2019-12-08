@@ -12,10 +12,11 @@
     <img src="https://img.shields.io/badge/code-php7-8892bf.svg" alt="Coded in PHP 7">
   </a>
   <a href="https://packagist.org/packages/jeremeamia/slack-block-kit">
-    <img src="https://img.shields.io/packagist/v/jeremeamia/slack-block-kit.svg" alt="Packagist Version>
+    <img src="https://img.shields.io/packagist/v/jeremeamia/slack-block-kit.svg" alt="Packagist Version">
   </a>
   <a href="https://github.com/jeremeamia/slack-block-kit/actions">
-    <img src="https://img.shields.io/github/workflow/status/jeremeamia/slack-block-kit/PHP%20Composer.svg" alt="Build Status">                                                                                                                       </a>
+    <img src="https://img.shields.io/github/workflow/status/jeremeamia/slack-block-kit/PHP%20Composer.svg" alt="Build Status">
+  </a>
 </p>
 
 ---
