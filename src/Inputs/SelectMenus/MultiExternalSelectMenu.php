@@ -6,7 +6,7 @@ namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
 use Jeremeamia\Slack\BlockKit\Partials\Option;
 
-class MultiExternalSelectMenu extends SelectMenu
+class MultiExternalSelectMenu extends MultiSelectMenu
 {
     /** @var Option[] */
     private $initialOptions;

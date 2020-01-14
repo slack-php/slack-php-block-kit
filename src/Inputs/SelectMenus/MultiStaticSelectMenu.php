@@ -7,7 +7,7 @@ namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 use Jeremeamia\Slack\BlockKit\Partials\HasOptionGroups;
 use Jeremeamia\Slack\BlockKit\Partials\Option;
 
-class MultiStaticSelectMenu extends SelectMenu
+class MultiStaticSelectMenu extends MultiSelectMenu
 {
     use HasOptionGroups;
 
