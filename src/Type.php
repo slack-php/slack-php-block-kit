@@ -25,7 +25,7 @@ abstract class Type
     // Inputs
     public const BUTTON            = 'button';
     public const DATEPICKER        = 'datepicker';
-    // public const TEXT_INPUT     = 'plain_text_input'; // Not yet supported.
+    public const TEXT_INPUT        = 'plain_text_input';
     // public const OVERFLOW_MENU  = 'overflow'; // Not yet supported.
     // public const RADIO_BUTTONS  = 'radio_buttons'; // Not yet supported.
 
@@ -91,7 +91,7 @@ abstract class Type
         self::SELECT_MENU_EXTERNAL,
         self::SELECT_MENU_STATIC,
         self::SELECT_MENU_USERS,
-        // self::TEXT_INPUT, // Not yet supported.
+        self::TEXT_INPUT,
     ];
 
     public const ACTION_ELEMENTS = [
@@ -104,7 +104,7 @@ abstract class Type
         self::SELECT_MENU_EXTERNAL,
         self::SELECT_MENU_STATIC,
         self::SELECT_MENU_USERS,
-        // self::TEXT_INPUT, // Not yet supported.
+        self::TEXT_INPUT,
     ];
 
     public const CONTEXT_ELEMENTS = [self::IMAGE, self::MRKDWNTEXT, self::PLAINTEXT];
@@ -122,7 +122,7 @@ abstract class Type
         self::SELECT_MENU_EXTERNAL,
         self::SELECT_MENU_STATIC,
         self::SELECT_MENU_USERS,
-        // self::TEXT_INPUT, // Not yet supported.
+        self::TEXT_INPUT,
     ];
 
     public const HIDDEN_TYPES = [self::MESSAGE, self::FIELDS, self::CONFIRM, self::OPTION, self::OPTION_GROUP];
@@ -150,7 +150,7 @@ abstract class Type
         Inputs\DatePicker::class      => self::DATEPICKER,
         // Inputs\OverflowMenu::class => self::OVERFLOW_MENU, // Not yet supported.
         // Inputs\RadioButtons::class => self::RADIO_BUTTONS, // Not yet supported.
-        // Inputs\TextInput::class    => self::TEXT_INPUT, // Not yet supported.
+        Inputs\TextInput::class    => self::TEXT_INPUT,
 
         // Select Menus
         SelectMenus\MultiChannelSelectMenu::class       => self::MULTI_SELECT_MENU_CHANNELS,

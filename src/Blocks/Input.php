@@ -108,6 +108,14 @@ class Input extends BlockElement
         });
     }
 
+    public function newTextInput(?string $actionId = null): Inputs\TextInput
+    {
+        $action = new Inputs\TextInput($actionId);
+        $this->setElement($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->label)) {
