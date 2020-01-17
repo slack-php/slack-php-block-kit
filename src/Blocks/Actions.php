@@ -70,6 +70,14 @@ class Actions extends BlockElement
         });
     }
 
+    public function newTextInput(?string $actionId = null): Inputs\TextInput
+    {
+        $action = new Inputs\TextInput($actionId);
+        $this->add($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->elements)) {

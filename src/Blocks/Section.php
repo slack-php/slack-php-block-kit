@@ -162,6 +162,14 @@ class Section extends BlockElement
         });
     }
 
+    public function newTextInputAccessory(?string $actionId = null): Inputs\TextInput
+    {
+        $action = new Inputs\TextInput($actionId);
+        $this->setAccessory($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->text) && empty($this->fields)) {

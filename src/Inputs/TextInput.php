@@ -9,23 +9,22 @@ use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
 class TextInput extends InputElement
 {
+    private const MAX_MIN_LENGTH = 3000;
 
     /** @var PlainText */
-    private $placeholder = '';
+    private $placeholder;
 
     /** @var string */
-    private $initialValue = '';
+    private $initialValue;
 
     /** @var bool */
-    private $multiline = false;
+    private $multiline;
 
     /** @var int */
     private $minLength;
 
     /** @var int */
     private $maxLength;
-
-
 
     public function setPlaceholder(PlainText $placeholder): self
     {
@@ -55,6 +54,10 @@ class TextInput extends InputElement
 
     public function minLength(int $length): self
     {
+        if ($length < 0) {
+            throw new Exception('Min length must be >= 0');
+        }
+
         $this->minLength = $length;
 
         return $this;
@@ -62,6 +65,10 @@ class TextInput extends InputElement
 
     public function maxLength(int $length): self
     {
+        if ($length < 1) {
+            throw new Exception('Max length must be >= 1');
+        }
+
         $this->maxLength = $length;
 
         return $this;
@@ -71,6 +78,16 @@ class TextInput extends InputElement
     {
         if (!empty($this->placeholder)) {
             $this->placeholder->validate();
+        }
+
+        if (isset($this->minLength)) {
+            if ($this->minLength > self::MAX_MIN_LENGTH) {
+                throw new Exception('Text input min length cannot exceed %d', [self::MAX_MIN_LENGTH]);
+            }
+
+            if (isset($this->maxLength) && $this->maxLength <= $this->minLength) {
+                throw new Exception('Text input max length must be greater than min length');
+            }
         }
     }
 
@@ -89,15 +106,15 @@ class TextInput extends InputElement
             $data['initial_value'] = $this->initialValue;
         }
 
-        if (!empty($this->multiline)) {
+        if (isset($this->multiline)) {
             $data['multiline'] = $this->multiline;
         }
 
-        if (!empty($this->minLength)) {
+        if (isset($this->minLength)) {
             $data['min_length'] = $this->minLength;
         }
 
-        if (!empty($this->maxLength)) {
+        if (isset($this->maxLength)) {
             $data['max_length'] = $this->maxLength;
         }
 

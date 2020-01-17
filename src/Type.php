@@ -150,7 +150,7 @@ abstract class Type
         Inputs\DatePicker::class      => self::DATEPICKER,
         // Inputs\OverflowMenu::class => self::OVERFLOW_MENU, // Not yet supported.
         // Inputs\RadioButtons::class => self::RADIO_BUTTONS, // Not yet supported.
-        Inputs\TextInput::class    => self::TEXT_INPUT,
+        Inputs\TextInput::class       => self::TEXT_INPUT,
 
         // Select Menus
         SelectMenus\MultiChannelSelectMenu::class       => self::MULTI_SELECT_MENU_CHANNELS,
