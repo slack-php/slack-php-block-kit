@@ -11,6 +11,10 @@ trait HasOptions
     /** @var Option[]|array */
     private $options;
 
+    /**
+     * @param array $options
+     * @return static
+     */
     public function options(array $options): self
     {
         foreach ($options as $text => $value) {
@@ -20,6 +24,11 @@ trait HasOptions
         return $this;
     }
 
+    /**
+     * @param string $text
+     * @param string $value
+     * @return static
+     */
     public function option(string $text, string $value): self
     {
         $option = new Option($text, $value);

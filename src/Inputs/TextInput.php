@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Inputs;
 
 use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
 class TextInput extends InputElement
 {
-    private const MAX_MIN_LENGTH = 3000;
+    use HasPlaceholder;
 
-    /** @var PlainText */
-    private $placeholder;
+    private const MAX_MIN_LENGTH = 3000;
 
     /** @var string */
     private $initialValue;
@@ -25,18 +23,6 @@ class TextInput extends InputElement
 
     /** @var int */
     private $maxLength;
-
-    public function setPlaceholder(PlainText $placeholder): self
-    {
-        $this->placeholder = $placeholder->setParent($this);
-
-        return $this;
-    }
-
-    public function placeholder(string $placeholder): self
-    {
-        return $this->setPlaceholder(new PlainText($placeholder));
-    }
 
     public function initialValue(string $text): self
     {

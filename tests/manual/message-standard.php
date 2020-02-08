@@ -33,8 +33,8 @@ $actions->newButton('a3')
 $actions->newButton('a4')
     ->text('Remove')
     ->value('remove')
-    ->asDangerous()
-    ->confirm('Are you sure?', 'If you want to remove it, click "OK".');
+    ->confirm('Are you sure?', 'If you want to remove it, click "OK".')
+    ->asDangerous();
 $msg->newActions('b7')
     ->newDatePicker('a5')
         ->placeholder('Choose a date')

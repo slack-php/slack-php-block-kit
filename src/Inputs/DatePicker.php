@@ -6,31 +6,16 @@ namespace Jeremeamia\Slack\BlockKit\Inputs;
 
 use DateTime;
 use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
 class DatePicker extends InputElement
 {
     use HasConfirm;
+    use HasPlaceholder;
 
     private const DATE_FORMAT = 'Y-m-d';
 
-    /** @var PlainText */
-    private $placeholder;
-
     /** @var string */
     private $initialDate;
-
-    public function setPlaceholder(PlainText $placeholder): self
-    {
-        $this->placeholder = $placeholder->setParent($this);
-
-        return $this;
-    }
-
-    public function placeholder(string $placeholder): self
-    {
-        return $this->setPlaceholder(new PlainText($placeholder));
-    }
 
     public function initialDate(string $date): self
     {

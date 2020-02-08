@@ -5,36 +5,14 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
 use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Partials\PlainText;
+use Jeremeamia\Slack\BlockKit\Inputs\HasPlaceholder;
 use Jeremeamia\Slack\BlockKit\Inputs\HasConfirm;
 use Jeremeamia\Slack\BlockKit\Inputs\InputElement;
 
 abstract class SelectMenu extends InputElement
 {
     use HasConfirm;
-
-    /** @var PlainText */
-    private $placeholder;
-
-    /**
-     * @param PlainText $placeholder
-     * @return static
-     */
-    public function setPlaceholder(PlainText $placeholder): self
-    {
-        $this->placeholder = $placeholder->setParent($this);
-
-        return $this;
-    }
-
-    /**
-     * @param string $placeholder
-     * @return static
-     */
-    public function placeholder(string $placeholder): self
-    {
-        return $this->setPlaceholder(new PlainText($placeholder));
-    }
+    use HasPlaceholder;
 
     public function validate(): void
     {

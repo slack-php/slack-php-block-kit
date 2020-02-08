@@ -8,6 +8,8 @@ use Jeremeamia\Slack\BlockKit\{Blocks\Input, Exception, Partials\PlainText, Type
 
 class Modal extends Surface
 {
+    private const MAX_LENGTH_TITLE = 24;
+
     /** @var PlainText */
     private $title;
 
@@ -118,6 +120,7 @@ class Modal extends Surface
         if (empty($this->title)) {
             throw new Exception('Modals must have a "title"');
         }
+        $this->title->validateWithLength(self::MAX_LENGTH_TITLE);
 
         $hasInputs = false;
         foreach ($this->getBlocks() as $block) {
