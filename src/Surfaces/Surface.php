@@ -33,18 +33,26 @@ abstract class Surface extends Element
      */
     public function add(BlockElement $block): self
     {
-        if (count($this->blocks) >= self::MAX_BLOCKS) {
-            throw new Exception('An App Surface cannot have more than %d blocks', [self::MAX_BLOCKS]);
+        if ($block instanceof VirtualBlock) {
+            $blocks = $block->getBlocks();
+        } else {
+            $blocks = [$block];
         }
 
-        if (!in_array($block->getType(), Type::SURFACE_BLOCKS[$this->getType()], true)) {
-            throw new Exception(
-                'Block type %s is not supported for surface type %s',
-                [$block->getType(), $this->getType()]
-            );
-        }
+        foreach ($blocks as $block) {
+            if (count($this->blocks) >= self::MAX_BLOCKS) {
+                throw new Exception('An App Surface cannot have more than %d blocks', [self::MAX_BLOCKS]);
+            }
 
-        $this->blocks[] = $block->setParent($this);
+            if (!in_array($block->getType(), Type::SURFACE_BLOCKS[$this->getType()], true)) {
+                throw new Exception(
+                    'Block type %s is not supported for surface type %s',
+                    [$block->getType(), $this->getType()]
+                );
+            }
+
+            $this->blocks[] = $block->setParent($this);
+        }
 
         return $this;
     }
@@ -54,18 +62,7 @@ abstract class Surface extends Element
      */
     public function getBlocks(): array
     {
-        $blocks = [];
-        foreach ($this->blocks as $block) {
-            if ($block instanceof VirtualBlock) {
-                foreach ($block->getBlocks() as $subBlock) {
-                    $blocks[] = $subBlock;
-                }
-            } else {
-                $blocks[] = $block;
-            }
-        }
-
-        return $blocks;
+        return $this->blocks;
     }
 
     /**
@@ -165,7 +162,7 @@ abstract class Surface extends Element
         $data = parent::toArray();
 
         $data['blocks'] = [];
-        foreach ($this->getBlocks() as $block) {
+        foreach ($this->blocks as $block) {
             $data['blocks'][] = $block->toArray();
         }
 

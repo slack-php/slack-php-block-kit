@@ -136,7 +136,7 @@ class Modal extends Surface
 
     public function toArray(): array
     {
-        $data = parent::toArray();
+        $data = [];
 
         $data['title'] = $this->title->toArray();
 
@@ -167,6 +167,8 @@ class Modal extends Surface
         if (!empty($this->notifyOnClose)) {
             $data['notify_on_close'] = $this->notifyOnClose;
         }
+
+        $data += parent::toArray();
 
         return $data;
     }

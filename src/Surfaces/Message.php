@@ -12,6 +12,12 @@ class Message extends Surface
     /** @var string */
     private $responseType = self::EPHEMERAL;
 
+    /**
+     * Configures whether the message is sent to the entire channel or not.
+     *
+     * @param bool $inChannel
+     * @return Message
+     */
     public function inChannel(bool $inChannel): self
     {
         $this->responseType = $inChannel ? self::IN_CHANNEL : self::EPHEMERAL;

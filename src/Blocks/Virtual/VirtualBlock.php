@@ -81,7 +81,7 @@ abstract class VirtualBlock extends BlockElement
     public function toArray(): array
     {
         $data = [];
-        foreach ($this->getBlocks() as $block) {
+        foreach ($this->blocks as $block) {
             $data[] = $block->toArray();
         }
 
