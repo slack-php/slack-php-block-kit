@@ -191,6 +191,7 @@ The following are supported elements from the Block Kit documentation:
 | Surface  | Message            | ✅             |
 | Surface  | Model              | ✅             |
 | Block    | Actions            | ✅             |
+| Block    | Checkboxes         | ❌             |
 | Block    | Context            | ✅             |
 | Block    | Divider            | ✅             |
 | Block    | File               | ❌             |
