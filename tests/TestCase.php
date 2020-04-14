@@ -50,9 +50,13 @@ class TestCase extends PhpUnitTestCase
         };
     }
 
-    protected function getMockVirtualBlock(): VirtualBlock
+    /**
+     * @param BlockElement[] $subBlocks
+     * @return VirtualBlock
+     */
+    protected function getMockVirtualBlock(array $subBlocks = []): VirtualBlock
     {
-        return new class () extends VirtualBlock {
+        $virtualBlock = new class () extends VirtualBlock {
             public function add(BlockElement $block): self
             {
                 return $this->appendBlock($block);
@@ -63,5 +67,11 @@ class TestCase extends PhpUnitTestCase
                 return Type::SECTION;
             }
         };
+
+        foreach ($subBlocks as $subBlock) {
+            $virtualBlock->add($subBlock);
+        }
+
+        return $virtualBlock;
     }
 }

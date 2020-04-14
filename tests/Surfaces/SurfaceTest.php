@@ -38,10 +38,7 @@ class SurfaceTest extends TestCase
 
         $dummyBlock = new Section();
         for ($i = 0; $i < 3; $i++) {
-            $virtualBlock = $this->getMockVirtualBlock();
-            for ($j = 0; $j < 3; $j++) {
-                $virtualBlock->add($dummyBlock);
-            }
+            $virtualBlock = $this->getMockVirtualBlock([$dummyBlock, $dummyBlock, $dummyBlock]);
             $surface->add($virtualBlock);
         }
 
