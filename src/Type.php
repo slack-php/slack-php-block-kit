@@ -24,6 +24,7 @@ abstract class Type
 
     // Inputs
     public const BUTTON            = 'button';
+    // public const CHECKBOXES     = 'checkboxes'; // Not yet supported.
     public const DATEPICKER        = 'datepicker';
     public const TEXT_INPUT        = 'plain_text_input';
     // public const OVERFLOW_MENU  = 'overflow'; // Not yet supported.
@@ -77,6 +78,7 @@ abstract class Type
 
     public const ACCESSORY_ELEMENTS = [
         self::BUTTON,
+        // self::CHECKBOXES, // Not yet supported.
         self::DATEPICKER,
         self::IMAGE,
         self::MULTI_SELECT_MENU_CHANNELS,
@@ -96,6 +98,7 @@ abstract class Type
 
     public const ACTION_ELEMENTS = [
         self::BUTTON,
+        // self::CHECKBOXES, // Not yet supported.
         self::DATEPICKER,
         // self::OVERFLOW_MENU, // Not yet supported.
         // self::RADIO_BUTTONS, // Not yet supported.
@@ -110,6 +113,7 @@ abstract class Type
     public const CONTEXT_ELEMENTS = [self::IMAGE, self::MRKDWNTEXT, self::PLAINTEXT];
 
     public const INPUT_ELEMENTS = [
+        // self::CHECKBOXES, // Not yet supported.
         self::DATEPICKER,
         self::MULTI_SELECT_MENU_CHANNELS,
         self::MULTI_SELECT_MENU_CONVERSATIONS,
@@ -147,6 +151,7 @@ abstract class Type
 
         // Inputs
         Inputs\Button::class          => self::BUTTON,
+        // Inputs\Checkboxes::class   => self::CHECKBOXES, // Not yet supported.
         Inputs\DatePicker::class      => self::DATEPICKER,
         // Inputs\OverflowMenu::class => self::OVERFLOW_MENU, // Not yet supported.
         // Inputs\RadioButtons::class => self::RADIO_BUTTONS, // Not yet supported.
