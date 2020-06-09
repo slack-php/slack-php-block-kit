@@ -73,7 +73,7 @@ class Button extends InputElement
         }
 
         if (empty($this->value)) {
-            throw new Exception('Image must contain "value"');
+            throw new Exception('Button must contain "value"');
         }
 
         $this->text->validate();
