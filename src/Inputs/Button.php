@@ -72,10 +72,6 @@ class Button extends InputElement
             throw new Exception('Button must contain "text"');
         }
 
-        if (empty($this->value)) {
-            throw new Exception('Button must contain "value"');
-        }
-
         $this->text->validate();
 
         if (!empty($this->confirm)) {
@@ -90,7 +86,10 @@ class Button extends InputElement
     {
         $data = parent::toArray();
         $data['text'] = $this->text->toArray();
-        $data['value'] = $this->value;
+
+        if (!empty($this->value)) {
+            $data['value'] = $this->value;
+        }
 
         if (!empty($this->url)) {
             $data['url'] = $this->url;
