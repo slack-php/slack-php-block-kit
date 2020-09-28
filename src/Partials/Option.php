@@ -14,13 +14,17 @@ class Option extends Element
     /** @var string */
     private $value;
 
-    public function __construct(?string $text = null, string $value)
+    /** @var bool */
+    private $isInitial = false;
+
+    public function __construct(?string $text = null, string $value, bool $isInitial = false)
     {
         if ($text !== null) {
             $this->text($text);
         }
 
         $this->value($value);
+        $this->isInitial = $isInitial;
     }
 
     /**
@@ -52,6 +56,14 @@ class Option extends Element
         $this->value = $value;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInitial(): bool
+    {
+        return $this->isInitial;
     }
 
     public function validate(): void

@@ -24,11 +24,11 @@ abstract class Type
 
     // Inputs
     public const BUTTON            = 'button';
-    // public const CHECKBOXES     = 'checkboxes'; // Not yet supported.
+    public const CHECKBOXES        = 'checkboxes';
     public const DATEPICKER        = 'datepicker';
     public const TEXT_INPUT        = 'plain_text_input';
     // public const OVERFLOW_MENU  = 'overflow'; // Not yet supported.
-    // public const RADIO_BUTTONS  = 'radio_buttons'; // Not yet supported.
+    public const RADIO_BUTTONS     = 'radio_buttons';
 
     // Select Menus
     public const MULTI_SELECT_MENU_CHANNELS      = 'multi_channels_select';
@@ -78,7 +78,7 @@ abstract class Type
 
     public const ACCESSORY_ELEMENTS = [
         self::BUTTON,
-        // self::CHECKBOXES, // Not yet supported.
+        self::CHECKBOXES,
         self::DATEPICKER,
         self::IMAGE,
         self::MULTI_SELECT_MENU_CHANNELS,
@@ -87,7 +87,7 @@ abstract class Type
         self::MULTI_SELECT_MENU_STATIC,
         self::MULTI_SELECT_MENU_USERS,
         // self::OVERFLOW_MENU, // Not yet supported.
-        // self::RADIO_BUTTONS, // Not yet supported.
+        self::RADIO_BUTTONS,
         self::SELECT_MENU_CHANNELS,
         self::SELECT_MENU_CONVERSATIONS,
         self::SELECT_MENU_EXTERNAL,
@@ -98,10 +98,10 @@ abstract class Type
 
     public const ACTION_ELEMENTS = [
         self::BUTTON,
-        // self::CHECKBOXES, // Not yet supported.
+        self::CHECKBOXES,
         self::DATEPICKER,
         // self::OVERFLOW_MENU, // Not yet supported.
-        // self::RADIO_BUTTONS, // Not yet supported.
+        self::RADIO_BUTTONS,
         self::SELECT_MENU_CHANNELS,
         self::SELECT_MENU_CONVERSATIONS,
         self::SELECT_MENU_EXTERNAL,
@@ -113,14 +113,14 @@ abstract class Type
     public const CONTEXT_ELEMENTS = [self::IMAGE, self::MRKDWNTEXT, self::PLAINTEXT];
 
     public const INPUT_ELEMENTS = [
-        // self::CHECKBOXES, // Not yet supported.
+        self::CHECKBOXES,
         self::DATEPICKER,
         self::MULTI_SELECT_MENU_CHANNELS,
         self::MULTI_SELECT_MENU_CONVERSATIONS,
         self::MULTI_SELECT_MENU_EXTERNAL,
         self::MULTI_SELECT_MENU_STATIC,
         self::MULTI_SELECT_MENU_USERS,
-        // self::RADIO_BUTTONS, // Not yet supported.
+        self::RADIO_BUTTONS,
         self::SELECT_MENU_CHANNELS,
         self::SELECT_MENU_CONVERSATIONS,
         self::SELECT_MENU_EXTERNAL,
@@ -151,10 +151,10 @@ abstract class Type
 
         // Inputs
         Inputs\Button::class          => self::BUTTON,
-        // Inputs\Checkboxes::class   => self::CHECKBOXES, // Not yet supported.
+        Inputs\Checkboxes::class      => self::CHECKBOXES, // Not yet supported.
         Inputs\DatePicker::class      => self::DATEPICKER,
         // Inputs\OverflowMenu::class => self::OVERFLOW_MENU, // Not yet supported.
-        // Inputs\RadioButtons::class => self::RADIO_BUTTONS, // Not yet supported.
+        Inputs\RadioButtons::class    => self::RADIO_BUTTONS,
         Inputs\TextInput::class       => self::TEXT_INPUT,
 
         // Select Menus

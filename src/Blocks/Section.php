@@ -170,6 +170,22 @@ class Section extends BlockElement
         return $action;
     }
 
+    public function newRadioButtonsAccessory(?string $actionId = null): Inputs\RadioButtons
+    {
+        $action = new Inputs\RadioButtons($actionId);
+        $this->setAccessory($action);
+
+        return $action;
+    }
+
+    public function newCheckboxesAccessory(?string $actionId = null): Inputs\Checkboxes
+    {
+        $action = new Inputs\Checkboxes($actionId);
+        $this->setAccessory($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->text) && empty($this->fields)) {

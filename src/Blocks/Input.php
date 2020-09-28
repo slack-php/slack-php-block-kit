@@ -116,6 +116,22 @@ class Input extends BlockElement
         return $action;
     }
 
+    public function newRadioButtons(?string $actionId = null): Inputs\RadioButtons
+    {
+        $action = new Inputs\RadioButtons($actionId);
+        $this->setElement($action);
+
+        return $action;
+    }
+
+    public function newCheckboxes(?string $actionId = null): Inputs\Checkboxes
+    {
+        $action = new Inputs\Checkboxes($actionId);
+        $this->setElement($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->label)) {

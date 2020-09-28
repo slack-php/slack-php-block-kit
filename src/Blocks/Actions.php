@@ -78,6 +78,22 @@ class Actions extends BlockElement
         return $action;
     }
 
+    public function newRadioButtons(?string $actionId = null): Inputs\RadioButtons
+    {
+        $action = new Inputs\RadioButtons($actionId);
+        $this->add($action);
+
+        return $action;
+    }
+
+    public function newCheckboxes(?string $actionId = null): Inputs\Checkboxes
+    {
+        $action = new Inputs\Checkboxes($actionId);
+        $this->add($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->elements)) {

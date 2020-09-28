@@ -27,11 +27,12 @@ trait HasOptions
     /**
      * @param string $text
      * @param string $value
+     * @param bool $isInitial
      * @return static
      */
-    public function option(string $text, string $value): self
+    public function option(string $text, string $value, bool $isInitial = false): self
     {
-        $option = new Option($text, $value);
+        $option = new Option($text, $value, $isInitial);
         $option->setParent($this);
         $this->options[] = $option;
 
