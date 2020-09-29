@@ -5,35 +5,27 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Tests\Inputs;
 
 use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Inputs\RadioButtons;
+use Jeremeamia\Slack\BlockKit\Inputs\OverflowMenu;
 use Jeremeamia\Slack\BlockKit\Partials\Confirm;
-use Jeremeamia\Slack\BlockKit\Partials\Option;
 use Jeremeamia\Slack\BlockKit\Tests\TestCase;
 use Jeremeamia\Slack\BlockKit\Type;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Inputs\RadioButtons
+ * @covers \Jeremeamia\Slack\BlockKit\Inputs\OverflowMenu
  */
-class RadioButtonsTest extends TestCase
+class OverflowMenuTest extends TestCase
 {
-    public function testRadioButtonsWithConfirm()
+    public function testOverflowMenuWithConfirm()
     {
-        $input = (new RadioButtons('radio-buttons-identifier'))
+        $input = (new OverflowMenu('overflow-identifier'))
             ->option('foo', 'foo')
-            ->option('bar', 'bar', true)
+            ->option('bar', 'bar')
             ->option('foobar', 'foobar')
-            ->setConfirm(new Confirm('Switch', 'Do you really want to switch?', 'Yes switch'));
+            ->setConfirm(new Confirm('Choose', 'Do you really want to choose this?', 'Yes choose'));
 
         $this->assertJsonData([
-            'type' => Type::RADIO_BUTTONS,
-            'action_id' => 'radio-buttons-identifier',
-            'initial_option' => [
-                'text' => [
-                    'type' => 'plain_text',
-                    'text' => 'bar',
-                ],
-                'value' => 'bar',
-            ],
+            'type' => Type::OVERFLOW_MENU,
+            'action_id' => 'overflow-identifier',
             'options' => [
                 [
                     'text' => [
@@ -60,15 +52,15 @@ class RadioButtonsTest extends TestCase
             'confirm' => [
                 'title' => [
                     'type' => 'plain_text',
-                    'text' => 'Switch',
+                    'text' => 'Choose',
                 ],
                 'text' => [
                     'type' => 'mrkdwn',
-                    'text' => 'Do you really want to switch?',
+                    'text' => 'Do you really want to choose this?',
                 ],
                 'confirm' => [
                     'type' => 'plain_text',
-                    'text' => 'Yes switch',
+                    'text' => 'Yes choose',
                 ],
                 'deny' => [
                     'type' => 'plain_text',
@@ -80,14 +72,8 @@ class RadioButtonsTest extends TestCase
 
     public function testTooManyOptions()
     {
-
         $this->expectException(Exception::class);
-        $input = (new RadioButtons())
-            ->option('foo', 'foo')
-            ->option('foo', 'foo')
-            ->option('foo', 'foo')
-            ->option('foo', 'foo')
-            ->option('foo', 'foo')
+        $input = (new OverflowMenu())
             ->option('foo', 'foo')
             ->option('foo', 'foo')
             ->option('foo', 'foo')
@@ -97,19 +83,11 @@ class RadioButtonsTest extends TestCase
         $input->validate();
     }
 
-    public function testNoOptions()
+    public function testTooFewOptions()
     {
         $this->expectException(Exception::class);
-        $input = new RadioButtons();
-        $input->validate();
-    }
-
-    public function testTooManyInitialOptions()
-    {
-        $this->expectException(Exception::class);
-        $input = (new RadioButtons())
-            ->option('foo', 'foo', true)
-            ->option('foo', 'foo', true);
+        $input = (new OverflowMenu())
+            ->option('foo', 'foo');
         $input->validate();
     }
 }

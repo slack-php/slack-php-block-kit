@@ -27,7 +27,7 @@ abstract class Type
     public const CHECKBOXES        = 'checkboxes';
     public const DATEPICKER        = 'datepicker';
     public const TEXT_INPUT        = 'plain_text_input';
-    // public const OVERFLOW_MENU  = 'overflow'; // Not yet supported.
+    public const OVERFLOW_MENU     = 'overflow';
     public const RADIO_BUTTONS     = 'radio_buttons';
 
     // Select Menus
@@ -86,7 +86,7 @@ abstract class Type
         self::MULTI_SELECT_MENU_EXTERNAL,
         self::MULTI_SELECT_MENU_STATIC,
         self::MULTI_SELECT_MENU_USERS,
-        // self::OVERFLOW_MENU, // Not yet supported.
+        self::OVERFLOW_MENU,
         self::RADIO_BUTTONS,
         self::SELECT_MENU_CHANNELS,
         self::SELECT_MENU_CONVERSATIONS,
@@ -100,7 +100,7 @@ abstract class Type
         self::BUTTON,
         self::CHECKBOXES,
         self::DATEPICKER,
-        // self::OVERFLOW_MENU, // Not yet supported.
+        self::OVERFLOW_MENU,
         self::RADIO_BUTTONS,
         self::SELECT_MENU_CHANNELS,
         self::SELECT_MENU_CONVERSATIONS,
@@ -151,9 +151,9 @@ abstract class Type
 
         // Inputs
         Inputs\Button::class          => self::BUTTON,
-        Inputs\Checkboxes::class      => self::CHECKBOXES, // Not yet supported.
+        Inputs\Checkboxes::class      => self::CHECKBOXES,
         Inputs\DatePicker::class      => self::DATEPICKER,
-        // Inputs\OverflowMenu::class => self::OVERFLOW_MENU, // Not yet supported.
+        Inputs\OverflowMenu::class    => self::OVERFLOW_MENU,
         Inputs\RadioButtons::class    => self::RADIO_BUTTONS,
         Inputs\TextInput::class       => self::TEXT_INPUT,
 

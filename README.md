@@ -191,7 +191,7 @@ The following are supported elements from the Block Kit documentation:
 | Surface  | Message            | ✅             |
 | Surface  | Model              | ✅             |
 | Block    | Actions            | ✅             |
-| Block    | Checkboxes         | ❌             |
+| Block    | Checkboxes         | ✅             |
 | Block    | Context            | ✅             |
 | Block    | Divider            | ✅             |
 | Block    | File               | ❌             |
@@ -201,9 +201,9 @@ The following are supported elements from the Block Kit documentation:
 | Input    | Button             | ✅️             |
 | Input    | Date Picker        | ✅             |
 | Input    | Multi-select Menus | ✅✅✅✅✅    |
-| Input    | Overflow Menu      | ❌             |
+| Input    | Overflow Menu      | ✅             |
 | Input    | Plain Text Input   | ✅             |
-| Input    | Radio Buttons      | ❌             |
+| Input    | Radio Buttons      | ✅             |
 | Input    | Select Menus       | ✅✅✅✅✅    |
 | Partial  | Confirm Dialog     | ✅             |
 | Partial  | Mrkdwn Text        | ✅             |

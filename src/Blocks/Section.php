@@ -186,6 +186,14 @@ class Section extends BlockElement
         return $action;
     }
 
+    public function newOverflowMenuAccessory(?string $actionId = null): Inputs\OverflowMenu
+    {
+        $action = new Inputs\OverflowMenu($actionId);
+        $this->setAccessory($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->text) && empty($this->fields)) {

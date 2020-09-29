@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Jeremeamia\Slack\BlockKit\Partials\Confirm;
 use Jeremeamia\Slack\BlockKit\Slack;
 
 require __DIR__ . '/../../vendor/autoload.php';
@@ -63,7 +64,13 @@ $msg->newSection('b4')
             ]
         ])
         ->initialOptions(['b' => 'l2', 'c' => 'l3']);
-
+$msg->newSection('b5')
+    ->mrkdwnText('Select from Overflow Menu')
+    ->newOverflowMenuAccessory('m6')
+    ->option('foo', 'foo')
+    ->option('bar', 'bar')
+    ->option('foobar', 'foobar')
+    ->setConfirm(new Confirm('Choose', 'Do you really want to choose this?', 'Yes choose'));
 //echo Slack::newRenderer()->forJson()->render($msg) . "\n";
 echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";
 // echo Slack::newRenderer()->forCli()->render($msg) . "\n";

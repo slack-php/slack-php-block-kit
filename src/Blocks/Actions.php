@@ -94,6 +94,14 @@ class Actions extends BlockElement
         return $action;
     }
 
+    public function newOverflowMenu(?string $actionId = null): Inputs\OverflowMenu
+    {
+        $action = new Inputs\OverflowMenu($actionId);
+        $this->add($action);
+
+        return $action;
+    }
+
     public function validate(): void
     {
         if (empty($this->elements)) {
