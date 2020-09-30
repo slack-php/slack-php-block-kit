@@ -11,6 +11,9 @@ abstract class Element implements JsonSerializable
     /** @var Element|null */
     protected $parent;
 
+    /** @var array */
+    protected $extra;
+
     /**
      * @return static
      */
@@ -47,6 +50,26 @@ abstract class Element implements JsonSerializable
     }
 
     /**
+     * Allows setting arbitrary extra fields on an element.
+     *
+     * Ideally, this is only used to allow setting new Slack features that are not yet implemented in this library.
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return static
+     */
+    public function setExtra(string $key, $value): Element
+    {
+        if (!is_scalar($value) && !($value instanceof Element)) {
+            throw new Exception('Invalid extra field set in %d.', [static::class]);
+        }
+
+        $this->extra[$key] = $value;
+
+        return $this;
+    }
+
+    /**
      * @throws Exception if the block kit item is invalid (e.g., missing data).
      */
     abstract public function validate(): void;
@@ -59,7 +82,13 @@ abstract class Element implements JsonSerializable
         $this->validate();
         $type = $this->getType();
 
-        return !in_array($type, Type::HIDDEN_TYPES, true) ? compact('type') : [];
+        $data = !in_array($type, Type::HIDDEN_TYPES, true) ? compact('type') : [];
+
+        foreach ($this->extra ?? [] as $key => $value) {
+            $data[$key] = $value instanceof Element ? $value->toArray() : $value;
+        }
+
+        return $data;
     }
 
     /**

@@ -42,6 +42,27 @@ class ElementTest extends TestCase
         $this->assertInstanceOf(Section::class, $element);
     }
 
+    public function testCanSetExtraFieldsForArbitraryData()
+    {
+        $element = $this->getMockElement();
+
+        $element->setExtra('fizz', 'buzz');
+
+        $this->assertJsonData($element, [
+            'type' => 'mock',
+            'text' => 'foo',
+            'fizz' => 'buzz',
+        ]);
+    }
+
+    public function testErrorIfExtraFieldIsInvalid()
+    {
+        $element = $this->getMockElement();
+
+        $this->expectException(Exception::class);
+        $element->setExtra('fizz', new \SplQueue());
+    }
+
     private function getMockElement(bool $valid = true): Element
     {
         return new class ($valid) extends Element {

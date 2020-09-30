@@ -6,8 +6,8 @@ namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
 abstract class MultiSelectMenu extends SelectMenu
 {
-    /** @var int */
-    private $maxSelectedItems;
+    /** @var int|null */
+    protected $maxSelectedItems;
 
     /**
      * @param int $maxSelectedItems

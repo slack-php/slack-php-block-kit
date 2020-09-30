@@ -21,7 +21,7 @@ class MultiExternalSelectMenu extends MultiSelectMenu
     public function initialOptions(array $options): self
     {
         foreach ($options as $name => $value) {
-            $option = new Option((string) $name, (string) $value);
+            $option = Option::new((string) $name, (string) $value);
             $option->setParent($this);
             $this->initialOptions[] = $option;
         }

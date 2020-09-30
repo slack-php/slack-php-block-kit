@@ -9,6 +9,9 @@ class MultiConversationSelectMenu extends MultiSelectMenu
     /** @var string[] */
     private $initialConversations;
 
+    /** @var bool */
+    private $defaultToCurrentConversation;
+
     /**
      * @param string[] $initialConversations
      * @return static
@@ -21,6 +24,19 @@ class MultiConversationSelectMenu extends MultiSelectMenu
     }
 
     /**
+     * @param bool $enabled
+     * @return static
+     */
+    public function defaultToCurrentConversation(bool $enabled): self
+    {
+        $this->defaultToCurrentConversation = $enabled;
+
+        return $this;
+    }
+
+    // @TODO: filter - https://api.slack.com/reference/block-kit/block-elements#conversation_select
+
+    /**
      * @return array
      */
     public function toArray(): array
@@ -29,6 +45,10 @@ class MultiConversationSelectMenu extends MultiSelectMenu
 
         if (!empty($this->initialConversations)) {
             $data['initial_conversations'] = $this->initialConversations;
+        }
+
+        if (!empty($this->defaultToCurrentConversation)) {
+            $data['default_to_current_conversation'] = $this->defaultToCurrentConversation;
         }
 
         return $data;

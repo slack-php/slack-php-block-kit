@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
+/**
+ * App-published messages are dynamic yet transient spaces. They allow users to complete workflows among their
+ * Slack conversations.
+ *
+ * @see https://api.slack.com/surfaces
+ */
 class Message extends Surface
 {
     public const EPHEMERAL = 'ephemeral';

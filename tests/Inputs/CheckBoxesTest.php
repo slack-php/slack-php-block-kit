@@ -7,7 +7,6 @@ namespace Jeremeamia\Slack\BlockKit\Tests\Inputs;
 use Jeremeamia\Slack\BlockKit\Exception;
 use Jeremeamia\Slack\BlockKit\Inputs\Checkboxes;
 use Jeremeamia\Slack\BlockKit\Partials\Confirm;
-use Jeremeamia\Slack\BlockKit\Partials\Option;
 use Jeremeamia\Slack\BlockKit\Tests\TestCase;
 use Jeremeamia\Slack\BlockKit\Type;
 

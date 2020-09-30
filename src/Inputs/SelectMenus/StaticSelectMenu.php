@@ -4,27 +4,18 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
-use Jeremeamia\Slack\BlockKit\Partials\HasOptionGroups;
-use Jeremeamia\Slack\BlockKit\Partials\Option;
+use Jeremeamia\Slack\BlockKit\Partials\{HasOptionGroups, OptionsConfig};
 
 class StaticSelectMenu extends SelectMenu
 {
     use HasOptionGroups;
 
-    /** @var Option */
-    private $initialOption;
-
-    /**
-     * @param string $name
-     * @param string $value
-     * @return self
-     */
-    public function initialOption(string $name, string $value): self
+    protected function getOptionsConfig(): OptionsConfig
     {
-        $this->initialOption = new Option($name, $value);
-        $this->initialOption->setParent($this);
-
-        return $this;
+        return OptionsConfig::new()
+            ->setMinOptions(1)
+            ->setMaxOptions(100)
+            ->setMaxInitialOptions(1);
     }
 
     public function validate(): void
@@ -32,21 +23,13 @@ class StaticSelectMenu extends SelectMenu
         parent::validate();
 
         $this->validateOptionGroups();
-
-        if (!empty($this->initialOption)) {
-            $this->initialOption->validate();
-        }
+        $this->validateInitialOptions();
     }
 
     public function toArray(): array
     {
-        $data = parent::toArray();
-        $data += $this->getOptionGroupsAsArray();
-
-        if (!empty($this->initialOption)) {
-            $data['initial_option'] = $this->initialOption->toArray();
-        }
-
-        return $data;
+        return parent::toArray()
+            + $this->getOptionGroupsAsArray()
+            + $this->getInitialOptionsAsArray();
     }
 }

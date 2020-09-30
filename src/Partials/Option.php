@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception};
+use Jeremeamia\Slack\BlockKit\{Element, Exception, Type};
 
+/**
+ * @see https://api.slack.com/reference/block-kit/composition-objects#option
+ */
 class Option extends Element
 {
     /** @var PlainText */
@@ -14,17 +17,30 @@ class Option extends Element
     /** @var string */
     private $value;
 
-    /** @var bool */
-    private $isInitial = false;
+    /** @var PlainText Description text for option. NOTE: Radio Button and Checkbox groups only. */
+    private $description;
 
-    public function __construct(?string $text = null, string $value, bool $isInitial = false)
+    /** @var string URL to load in browser when option is clicked. NOTE: Overflow Menu only. */
+    private $url;
+
+    /**
+     * @param string|null $text
+     * @param string|null $value
+     * @return Option
+     */
+    public static function new(?string $text = null, ?string $value = null): self
     {
+        $option = new self();
+
         if ($text !== null) {
-            $this->text($text);
+            $option->text($text);
         }
 
-        $this->value($value);
-        $this->isInitial = $isInitial;
+        if ($value !== null) {
+            $option->value($value);
+        }
+
+        return $option;
     }
 
     /**
@@ -59,11 +75,34 @@ class Option extends Element
     }
 
     /**
-     * @return bool
+     * @param PlainText $description
+     * @return self
      */
-    public function isInitial(): bool
+    public function setDescription(PlainText $description): self
     {
-        return $this->isInitial;
+        $this->description = $description->setParent($this);
+
+        return $this;
+    }
+
+    /**
+     * @param string $description
+     * @return static
+     */
+    public function description(string $description): self
+    {
+        return $this->setDescription(new PlainText($description));
+    }
+
+    /**
+     * @param string $url
+     * @return static
+     */
+    public function url(string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
     }
 
     public function validate(): void
@@ -72,10 +111,28 @@ class Option extends Element
             throw new Exception('Option element must contain a "text" element');
         }
 
-        $this->text->validate();
+        $this->text->validateWithLength(75, 1);
 
-        if (!is_string($this->value) || strlen($this->value) === 0) {
+        if (!is_string($this->value)) {
             throw new Exception('Option element must have a "value" value');
+        }
+
+        Text::validateString($this->value, 75, 1);
+
+        $parent = $this->getParent();
+
+        if (!empty($this->description)) {
+            $this->description->validateWithLength(75, 1);
+            if ($parent && !in_array($parent->getType(), [Type::CHECKBOXES, Type::RADIO_BUTTONS], true)) {
+                throw new Exception('Option "description" can only be applied to checkbox and radio button groups.');
+            }
+        }
+
+        if (!empty($this->url)) {
+            Text::validateString($this->url, 3000);
+            if ($parent && $parent->getType() !== Type::OVERFLOW_MENU) {
+                throw new Exception('Option "url" can only be applied to overflow menus.');
+            }
         }
     }
 
@@ -84,9 +141,19 @@ class Option extends Element
      */
     public function toArray(): array
     {
-        return parent::toArray() + [
+        $data = [
             'text' => $this->text->toArray(),
             'value' => $this->value,
         ];
+
+        if (!empty($this->description)) {
+            $data['description'] = $this->description->toArray();
+        }
+
+        if (!empty($this->url)) {
+            $data['url'] = $this->url;
+        }
+
+        return parent::toArray() + $data;
     }
 }

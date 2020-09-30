@@ -13,15 +13,29 @@ class OptionGroup extends Element
     /** @var PlainText */
     private $label;
 
-    public function __construct(?string $label = null, array $options = [])
+    /**
+     * @param string|null $label
+     * @param array|null $options
+     * @return OptionGroup
+     */
+    public static function new(?string $label = null, ?array $options = null): self
     {
+        $optionGroup = new self();
+
         if ($label !== null) {
-            $this->label($label);
+            $optionGroup->label($label);
         }
 
-        if (!empty($options)) {
-            $this->options($options);
+        if ($options !== null) {
+            $optionGroup->options($options);
         }
+
+        return $optionGroup;
+    }
+
+    protected function getOptionsConfig(): OptionsConfig
+    {
+        return OptionsConfig::new()->setMinOptions(1)->setMaxOptions(100);
     }
 
     /**

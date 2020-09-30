@@ -33,7 +33,7 @@ trait HasOptionGroups
      */
     public function optionGroup(string $label, array $options): self
     {
-        $group = new OptionGroup($label, $options);
+        $group = OptionGroup::new($label, $options);
         $group->setParent($this);
         $this->optionGroups[] = $group;
 

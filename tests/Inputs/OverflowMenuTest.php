@@ -19,7 +19,7 @@ class OverflowMenuTest extends TestCase
     {
         $input = (new OverflowMenu('overflow-identifier'))
             ->option('foo', 'foo')
-            ->option('bar', 'bar')
+            ->urlOption('bar', 'bar', 'https://example.org')
             ->option('foobar', 'foobar')
             ->setConfirm(new Confirm('Choose', 'Do you really want to choose this?', 'Yes choose'));
 
@@ -40,6 +40,7 @@ class OverflowMenuTest extends TestCase
                         'text' => 'bar',
                     ],
                     'value' => 'bar',
+                    'url' => 'https://example.org'
                 ],
                 [
                     'text' => [

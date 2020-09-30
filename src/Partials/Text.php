@@ -24,7 +24,7 @@ abstract class Text extends Element
 
     public function validate(): void
     {
-        $this->validateWithLength();
+        self::validateString($this->text);
     }
 
     /**
@@ -35,15 +35,27 @@ abstract class Text extends Element
      */
     public function validateWithLength(?int $max = null, int $min = 0): void
     {
-        if (!is_string($this->text)) {
+        self::validateString($this->text, $max, $min);
+    }
+
+    /**
+     * Validate string length for textual element properties.
+     *
+     * @param string $text String to validate.
+     * @param int|null $max Max length, or null if it doesn't have a max.
+     * @param int $min Min length, defaults to 0.
+     */
+    public static function validateString(string $text, ?int $max = null, int $min = 0): void
+    {
+        if (!is_string($text)) {
             throw new Exception('Text element must have a "text" value');
         }
 
-        if (strlen($this->text) < $min) {
+        if (strlen($text) < $min) {
             throw new Exception('Text element must have a "text" value with a length of at least %d', [$min]);
         }
 
-        if (is_int($max) && strlen($this->text) > $max) {
+        if (is_int($max) && strlen($text) > $max) {
             throw new Exception('Text element must have a "text" value with a length of at most %d', [$max]);
         }
     }

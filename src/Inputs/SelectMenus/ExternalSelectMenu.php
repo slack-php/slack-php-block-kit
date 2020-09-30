@@ -21,7 +21,7 @@ class ExternalSelectMenu extends SelectMenu
      */
     public function initialOption(string $name, string $value): self
     {
-        $this->initialOption = new Option($name, $value);
+        $this->initialOption = Option::new($name, $value);
         $this->initialOption->setParent($this);
 
         return $this;

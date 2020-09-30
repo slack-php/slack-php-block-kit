@@ -6,6 +6,12 @@ namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
 use Jeremeamia\Slack\BlockKit\{Blocks\Input, Exception, Partials\PlainText, Type};
 
+/**
+ * Modals provide focused spaces ideal for requesting and collecting data from users, or temporarily displaying dynamic
+ * and interactive information.
+ *
+ * @see https://api.slack.com/surfaces
+ */
 class Modal extends Surface
 {
     private const MAX_LENGTH_TITLE = 24;

@@ -25,9 +25,8 @@ $msg->newActions('b2')
         ->forStaticOptions()
         ->placeholder('Choose a letter?')
         ->option('a', 'x')
-        ->option('b', 'y')
-        ->option('c', 'z')
-        ->initialOption('b', 'y');
+        ->option('b', 'y', true)
+        ->option('c', 'z');
 $msg->newActions('b3')
     ->newSelectMenu('m4')
         ->forStaticOptions()
@@ -68,7 +67,7 @@ $msg->newSection('b5')
     ->mrkdwnText('Select from Overflow Menu')
     ->newOverflowMenuAccessory('m6')
     ->option('foo', 'foo')
-    ->option('bar', 'bar')
+    ->urlOption('bar', 'bar', 'https://example.org')
     ->option('foobar', 'foobar')
     ->setConfirm(new Confirm('Choose', 'Do you really want to choose this?', 'Yes choose'));
 //echo Slack::newRenderer()->forJson()->render($msg) . "\n";
