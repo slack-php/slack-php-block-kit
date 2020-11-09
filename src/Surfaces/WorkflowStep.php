@@ -1,0 +1,61 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Jeremeamia\Slack\BlockKit\Surfaces;
+
+use Jeremeamia\Slack\BlockKit\Blocks\Input;
+
+/**
+ * A Workflow Step surface are a special case of a Modal, with limited properties, and are used to configure an app's
+ * custom workflow step.
+ *
+ * @see https://api.slack.com/workflows/steps#handle_config_view
+ */
+class WorkflowStep extends Surface
+{
+    /** @var string */
+    private $privateMetadata;
+
+    /** @var string */
+    private $callbackId;
+
+    public function callbackId(string $callbackId): self
+    {
+        $this->callbackId = $callbackId;
+
+        return $this;
+    }
+
+    public function privateMetadata(string $privateMetadata): self
+    {
+        $this->privateMetadata = $privateMetadata;
+
+        return $this;
+    }
+
+    public function newInput(?string $blockId = null): Input
+    {
+        $block = new Input($blockId);
+        $this->add($block);
+
+        return $block;
+    }
+
+    public function toArray(): array
+    {
+        $data = [];
+
+        if (!empty($this->callbackId)) {
+            $data['callback_id'] = $this->callbackId;
+        }
+
+        if (!empty($this->privateMetadata)) {
+            $data['private_metadata'] = $this->privateMetadata;
+        }
+
+        $data += parent::toArray();
+
+        return $data;
+    }
+}

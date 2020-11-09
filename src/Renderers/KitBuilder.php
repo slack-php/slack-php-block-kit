@@ -17,6 +17,10 @@ class KitBuilder implements Renderer
     public function render(Surface $surface): string
     {
         $type = $surface->getType();
+        if ($type === Type::WORKFLOW_STEP) {
+            throw new Exception('The "workflow_step" surface is not yet compatible with Block Kit Builder');
+        }
+
         $content = $this->encode($type === Type::MESSAGE ? $surface->getBlocks() : $surface);
 
         return $this->createLink($type, $content);

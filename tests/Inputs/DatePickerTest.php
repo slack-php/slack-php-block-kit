@@ -13,7 +13,7 @@ use Jeremeamia\Slack\BlockKit\Tests\TestCase;
  */
 class DatePickerTest extends TestCase
 {
-    public function testCanConfigureTextInput()
+    public function testCanConfigureDatePicker()
     {
         $input = (new DatePicker())
             ->actionId('my_id')

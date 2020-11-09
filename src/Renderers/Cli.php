@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Renderers;
 
-use Jeremeamia\Slack\BlockKit\Surfaces\Message;
 use Jeremeamia\Slack\BlockKit\Surfaces\Surface;
 use Jeremeamia\Slack\BlockKit\Type;
 
@@ -31,8 +30,9 @@ class Cli implements Renderer
 
         // Special handling to messages to add type and visibility information.
         if (!isset($data['type'])) {
+            $responseType = $data['response_type'] ?? 'ephemeral';
             $buffer .= '(•) ';
-            $buffer .= $data['response_type'] === Message::EPHEMERAL
+            $buffer .= $responseType === 'ephemeral'
                 ? "Only visible to you\n"
                 : "Visible to channel\n";
             unset($data['response_type']);

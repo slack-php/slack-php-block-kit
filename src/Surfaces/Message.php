@@ -12,27 +12,66 @@ namespace Jeremeamia\Slack\BlockKit\Surfaces;
  */
 class Message extends Surface
 {
-    public const EPHEMERAL = 'ephemeral';
-    public const IN_CHANNEL = 'in_channel';
+    private const EPHEMERAL = ['response_type' => 'ephemeral'];
+    private const IN_CHANNEL = ['response_type' => 'in_channel'];
+    private const REPLACE_ORIGINAL = ['replace_original' => 'true'];
+    private const DELETE_ORIGINAL = ['delete_original' => 'true'];
 
-    /** @var string */
-    private $responseType = self::EPHEMERAL;
+    /** @var array|string[] A message can have a directive (e.g., response_type) included along with its blocks. */
+    private $directives;
 
     /**
-     * Configures whether the message is sent to the entire channel or not.
+     * Configures message to send to the entire channel.
      *
-     * @param bool $inChannel
      * @return Message
      */
-    public function inChannel(bool $inChannel): self
+    public function inChannel(): self
     {
-        $this->responseType = $inChannel ? self::IN_CHANNEL : self::EPHEMERAL;
+        $this->directives = self::IN_CHANNEL;
+
+        return $this;
+    }
+
+    /**
+     * Configures message to send privately to the user.
+     *
+     * This is default behavior for most interactions, and doesn't necessarily need to be explicitly configured.
+     *
+     * @return Message
+     */
+    public function ephemeral(): self
+    {
+        $this->directives = self::EPHEMERAL;
+
+        return $this;
+    }
+
+    /**
+     * Configures message to "replace_original" mode.
+     *
+     * @return Message
+     */
+    public function replaceOriginal(): self
+    {
+        $this->directives = self::REPLACE_ORIGINAL;
+
+        return $this;
+    }
+
+    /**
+     * Configures message to "delete_original" mode.
+     *
+     * @return Message
+     */
+    public function deleteOriginal(): self
+    {
+        $this->directives = self::DELETE_ORIGINAL;
 
         return $this;
     }
 
     public function toArray(): array
     {
-        return ['response_type' => $this->responseType] + parent::toArray();
+        return $this->directives + parent::toArray();
     }
 }

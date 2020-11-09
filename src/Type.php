@@ -9,9 +9,10 @@ use Jeremeamia\Slack\BlockKit\{Blocks, Inputs, Inputs\SelectMenus, Partials, Sur
 abstract class Type
 {
     // Surfaces
-    public const APPHOME = 'home';
-    public const MESSAGE = 'message';
-    public const MODAL   = 'modal';
+    public const APPHOME       = 'home';
+    public const MESSAGE       = 'message';
+    public const MODAL         = 'modal';
+    public const WORKFLOW_STEP = 'workflow_step';
 
     // Blocks
     public const ACTIONS = 'actions';
@@ -68,6 +69,14 @@ abstract class Type
             self::SECTION,
         ],
         self::MODAL => [
+            self::ACTIONS,
+            self::CONTEXT,
+            self::DIVIDER,
+            self::IMAGE,
+            self::INPUT,
+            self::SECTION,
+        ],
+        self::WORKFLOW_STEP => [
             self::ACTIONS,
             self::CONTEXT,
             self::DIVIDER,
@@ -137,9 +146,10 @@ abstract class Type
 
     private static $typeMap = [
         // Surfaces
-        Surfaces\AppHome::class => self::APPHOME,
-        Surfaces\Message::class => self::MESSAGE,
-        Surfaces\Modal::class   => self::MODAL,
+        Surfaces\AppHome::class      => self::APPHOME,
+        Surfaces\Message::class      => self::MESSAGE,
+        Surfaces\Modal::class        => self::MODAL,
+        Surfaces\WorkflowStep::class => self::WORKFLOW_STEP,
 
         // Blocks
         Blocks\Actions::class => self::ACTIONS,

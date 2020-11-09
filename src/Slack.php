@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit;
 
-use Jeremeamia\Slack\BlockKit\Surfaces\{AppHome, Message, Modal};
+use Jeremeamia\Slack\BlockKit\Surfaces\{
+    AppHome,
+    Message,
+    Modal,
+    WorkflowStep,
+};
 use Jeremeamia\Slack\BlockKit\Renderers\RendererFactory;
 
 abstract class Slack
@@ -22,6 +27,11 @@ abstract class Slack
     public static function newModal(): Modal
     {
         return new Modal();
+    }
+
+    public static function newWorkflowStep(): WorkflowStep
+    {
+        return new WorkflowStep();
     }
 
     public static function newRenderer(): RendererFactory

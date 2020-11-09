@@ -13,7 +13,7 @@ use Jeremeamia\Slack\BlockKit\Tests\TestCase;
  */
 class TimePickerTest extends TestCase
 {
-    public function testCanConfigureTextInput()
+    public function testCanConfigureTimePicker()
     {
         $input = (new TimePicker())
             ->actionId('my_id')
