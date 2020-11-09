@@ -13,11 +13,6 @@ jobs:
     - name: Display PHP version
       run: php -v
 
-    - name: Validate dependencies
-      uses: php-actions/composer@v2
-      with:
-        command: validate
-
     - name: Install dependencies
       uses: php-actions/composer@v2
 
