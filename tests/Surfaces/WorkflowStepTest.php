@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Inputs;
+namespace Jeremeamia\Slack\BlockKit\Tests\Surfaces;
 
 use Jeremeamia\Slack\BlockKit\Slack;
 use Jeremeamia\Slack\BlockKit\Tests\TestCase;

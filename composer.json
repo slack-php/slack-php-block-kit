@@ -26,11 +26,6 @@
         }
     },
     "scripts": {
-        "ci": [
-            "@style-lint",
-            "@stan",
-            "@test-ci"
-        ],
         "docs-codesniffer": "open https://github.com/squizlabs/PHP_CodeSniffer/wiki",
         "docs-composer": "open https://getcomposer.org/doc/",
         "docs-phpunit": "open https://phpunit.readthedocs.io/en/latest/",

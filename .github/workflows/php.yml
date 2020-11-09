@@ -8,16 +8,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
     - name: Display PHP version
       run: php -v
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
+    - name: Validate dependencies
+      uses: php-actions/composer@v2
+      with:
+        command: validate
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      uses: php-actions/composer@v2
 
     - name: Run style linter
       run: composer run-script style-lint
