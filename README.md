@@ -205,6 +205,7 @@ The following are supported elements from the Block Kit documentation:
 | Input    | Plain Text Input   | ✅             |
 | Input    | Radio Buttons      | ✅             |
 | Input    | Select Menus       | ✅✅✅✅✅    |
+| Input    | Time Picker        | ✅             |
 | Partial  | Confirm Dialog     | ✅             |
 | Partial  | Mrkdwn Text        | ✅             |
 | Partial  | Fields             | ✅             |
