@@ -27,6 +27,7 @@ abstract class Type
     public const CHECKBOXES        = 'checkboxes';
     public const DATEPICKER        = 'datepicker';
     public const TEXT_INPUT        = 'plain_text_input';
+    public const TIMEPICKER        = 'timepicker';
     public const OVERFLOW_MENU     = 'overflow';
     public const RADIO_BUTTONS     = 'radio_buttons';
 
@@ -94,6 +95,7 @@ abstract class Type
         self::SELECT_MENU_STATIC,
         self::SELECT_MENU_USERS,
         self::TEXT_INPUT,
+        self::TIMEPICKER,
     ];
 
     public const ACTION_ELEMENTS = [
@@ -108,6 +110,7 @@ abstract class Type
         self::SELECT_MENU_STATIC,
         self::SELECT_MENU_USERS,
         self::TEXT_INPUT,
+        self::TIMEPICKER,
     ];
 
     public const CONTEXT_ELEMENTS = [self::IMAGE, self::MRKDWNTEXT, self::PLAINTEXT];
@@ -127,6 +130,7 @@ abstract class Type
         self::SELECT_MENU_STATIC,
         self::SELECT_MENU_USERS,
         self::TEXT_INPUT,
+        self::TIMEPICKER,
     ];
 
     public const HIDDEN_TYPES = [self::MESSAGE, self::FIELDS, self::CONFIRM, self::OPTION, self::OPTION_GROUP];
@@ -156,6 +160,7 @@ abstract class Type
         Inputs\OverflowMenu::class    => self::OVERFLOW_MENU,
         Inputs\RadioButtons::class    => self::RADIO_BUTTONS,
         Inputs\TextInput::class       => self::TEXT_INPUT,
+        Inputs\TimePicker::class      => self::TIMEPICKER,
 
         // Select Menus
         SelectMenus\MultiChannelSelectMenu::class       => self::MULTI_SELECT_MENU_CHANNELS,
