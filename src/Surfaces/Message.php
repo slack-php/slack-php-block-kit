@@ -18,7 +18,7 @@ class Message extends Surface
     private const DELETE_ORIGINAL = ['delete_original' => 'true'];
 
     /** @var array|string[] A message can have a directive (e.g., response_type) included along with its blocks. */
-    private $directives;
+    private $directives = [];
 
     /**
      * Configures message to send to the entire channel.
