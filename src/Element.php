@@ -34,7 +34,7 @@ abstract class Element implements JsonSerializable
      * @param Element $parent
      * @return static
      */
-    public function setParent(Element $parent): Element
+    public function setParent(Element $parent): self
     {
         $this->parent = $parent;
 
@@ -58,13 +58,24 @@ abstract class Element implements JsonSerializable
      * @param mixed $value
      * @return static
      */
-    public function setExtra(string $key, $value): Element
+    public function setExtra(string $key, $value): self
     {
         if (!is_scalar($value) && !($value instanceof Element)) {
             throw new Exception('Invalid extra field set in %d.', [static::class]);
         }
 
         $this->extra[$key] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param callable $tap
+     * @return static
+     */
+    public function tap(callable $tap): self
+    {
+        $tap($this);
 
         return $this;
     }

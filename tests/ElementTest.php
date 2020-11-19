@@ -63,6 +63,20 @@ class ElementTest extends TestCase
         $element->setExtra('fizz', new \SplQueue());
     }
 
+    public function testCanTapIntoElementForChaining()
+    {
+        $element = $this->getMockElement()->tap(function (Element $e) {
+            $e->setExtra('fizz', 'buzz');
+        });
+
+        $this->assertInstanceOf(Element::class, $element);
+        $this->assertJsonData($element, [
+            'type' => 'mock',
+            'text' => 'foo',
+            'fizz' => 'buzz',
+        ]);
+    }
+
     private function getMockElement(bool $valid = true): Element
     {
         return new class ($valid) extends Element {
