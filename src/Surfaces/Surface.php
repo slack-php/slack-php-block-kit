@@ -17,8 +17,6 @@ use Jeremeamia\Slack\BlockKit\{Exception, Element, Type};
 
 /**
  * A Slack app surface is something within a Slack app that renders blocks from the block kit (e.g., a Message).
- *
- * There are currently three kinds of app surfaces: Message, Model, AppHome.
  */
 abstract class Surface extends Element
 {

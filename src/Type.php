@@ -10,6 +10,7 @@ abstract class Type
 {
     // Surfaces
     public const APPHOME       = 'home';
+    public const ATTACHMENT    = 'attachment';
     public const MESSAGE       = 'message';
     public const MODAL         = 'modal';
     public const WORKFLOW_STEP = 'workflow_step';
@@ -57,6 +58,14 @@ abstract class Type
             self::ACTIONS,
             self::CONTEXT,
             self::DIVIDER,
+            self::IMAGE,
+            self::SECTION,
+        ],
+        self::ATTACHMENT => [
+            self::ACTIONS,
+            self::CONTEXT,
+            self::DIVIDER,
+            // self::FILE, // Not yet supported.
             self::IMAGE,
             self::SECTION,
         ],
@@ -142,11 +151,19 @@ abstract class Type
         self::TIMEPICKER,
     ];
 
-    public const HIDDEN_TYPES = [self::MESSAGE, self::FIELDS, self::CONFIRM, self::OPTION, self::OPTION_GROUP];
+    public const HIDDEN_TYPES = [
+        self::ATTACHMENT,
+        self::CONFIRM,
+        self::FIELDS,
+        self::MESSAGE,
+        self::OPTION,
+        self::OPTION_GROUP,
+    ];
 
     private static $typeMap = [
         // Surfaces
         Surfaces\AppHome::class      => self::APPHOME,
+        Surfaces\Attachment::class   => self::ATTACHMENT,
         Surfaces\Message::class      => self::MESSAGE,
         Surfaces\Modal::class        => self::MODAL,
         Surfaces\WorkflowStep::class => self::WORKFLOW_STEP,
