@@ -195,6 +195,7 @@ The following are supported elements from the Block Kit documentation:
 | Block    | Context            | ✅             |
 | Block    | Divider            | ✅             |
 | Block    | File               | ❌             |
+| Block    | Header             | ✅             |
 | Block    | Image              | ✅             |
 | Block    | Input              | ✅             |
 | Block    | Section            | ✅             |

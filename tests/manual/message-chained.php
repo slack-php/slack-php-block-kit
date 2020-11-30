@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Blocks\{Actions, Context, Image, Section};
+use Jeremeamia\Slack\BlockKit\Blocks\{Actions, Context, Header, Image, Section};
 use Jeremeamia\Slack\BlockKit\Inputs\Button;
 use Jeremeamia\Slack\BlockKit\Inputs\DatePicker;
 use Jeremeamia\Slack\BlockKit\Renderers;
@@ -11,6 +11,7 @@ use Jeremeamia\Slack\BlockKit\Surfaces\Message;
 require __DIR__ . '/../../vendor/autoload.php';
 
 $msg = Message::new()
+    ->add(Header::new()->text('Header'))
     ->add(Section::new()
         ->blockId('b1')
         ->mrkdwnText('*foo* _bar_')

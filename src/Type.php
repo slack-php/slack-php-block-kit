@@ -20,6 +20,7 @@ abstract class Type
     public const CONTEXT = 'context';
     public const DIVIDER = 'divider';
     // public const FILE = 'file'; // Not yet supported.
+    public const HEADER  = 'header';
     public const IMAGE   = 'image';
     public const INPUT   = 'input';
     public const SECTION = 'section';
@@ -58,6 +59,7 @@ abstract class Type
             self::ACTIONS,
             self::CONTEXT,
             self::DIVIDER,
+            self::HEADER,
             self::IMAGE,
             self::SECTION,
         ],
@@ -66,6 +68,7 @@ abstract class Type
             self::CONTEXT,
             self::DIVIDER,
             // self::FILE, // Not yet supported.
+            self::HEADER,
             self::IMAGE,
             self::SECTION,
         ],
@@ -74,6 +77,7 @@ abstract class Type
             self::CONTEXT,
             self::DIVIDER,
             // self::FILE, // Not yet supported.
+            self::HEADER,
             self::IMAGE,
             self::SECTION,
         ],
@@ -81,6 +85,7 @@ abstract class Type
             self::ACTIONS,
             self::CONTEXT,
             self::DIVIDER,
+            self::HEADER,
             self::IMAGE,
             self::INPUT,
             self::SECTION,
@@ -89,6 +94,7 @@ abstract class Type
             self::ACTIONS,
             self::CONTEXT,
             self::DIVIDER,
+            self::HEADER,
             self::IMAGE,
             self::INPUT,
             self::SECTION,
@@ -173,6 +179,7 @@ abstract class Type
         Blocks\Context::class => self::CONTEXT,
         Blocks\Divider::class => self::DIVIDER,
         // Block\File::class  => self::FILE, // Not yet supported.
+        Blocks\Header::class  => self::HEADER,
         Blocks\Image::class   => self::IMAGE,
         Blocks\Input::class   => self::INPUT,
         Blocks\Section::class => self::SECTION,

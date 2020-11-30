@@ -9,6 +9,7 @@ use Jeremeamia\Slack\BlockKit\Blocks\{
     BlockElement,
     Context,
     Divider,
+    Header,
     Image,
     Section,
 };
@@ -81,6 +82,18 @@ abstract class Surface extends Element
     public function newContext(?string $blockId = null): Context
     {
         $block = new Context($blockId);
+        $this->add($block);
+
+        return $block;
+    }
+
+    /**
+     * @param string|null $blockId
+     * @return Header
+     */
+    public function newHeader(?string $blockId = null): Header
+    {
+        $block = new Header($blockId);
         $this->add($block);
 
         return $block;
