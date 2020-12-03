@@ -6,6 +6,9 @@ namespace Jeremeamia\Slack\BlockKit\Inputs;
 
 use DateTime;
 use Jeremeamia\Slack\BlockKit\Exception;
+use Jeremeamia\Slack\BlockKit\HydrationData;
+use Jeremeamia\Slack\BlockKit\Partials\Confirm;
+use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
 class DatePicker extends InputElement
 {
@@ -47,12 +50,12 @@ class DatePicker extends InputElement
     {
         $data = parent::toArray();
 
-        if (!empty($this->placeholder)) {
-            $data['placeholder'] = $this->placeholder->toArray();
-        }
-
         if (!empty($this->initialDate)) {
             $data['initial_date'] = $this->initialDate;
+        }
+
+        if (!empty($this->placeholder)) {
+            $data['placeholder'] = $this->placeholder->toArray();
         }
 
         if (!empty($this->confirm)) {
@@ -60,5 +63,22 @@ class DatePicker extends InputElement
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('initial_date')) {
+            $this->initialDate($data->useValue('initial_date'));
+        }
+
+        if ($data->has('placeholder')) {
+            $this->setPlaceholder(PlainText::fromArray($data->useElement('placeholder')));
+        }
+
+        if ($data->has('confirm')) {
+            $this->setConfirm(Confirm::fromArray($data->useElement('confirm')));
+        }
+
+        parent::hydrate($data);
     }
 }

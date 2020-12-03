@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
 use Jeremeamia\Slack\BlockKit\Exception;
+use Jeremeamia\Slack\BlockKit\HydrationData;
 
 trait HasOptions
 {
@@ -185,5 +186,24 @@ trait HasOptions
         return ['initial_options' => array_map(function (Option $initialOption) {
             return $initialOption->toArray();
         }, $this->initialOptions)];
+    }
+
+    protected function hydrateOptions(HydrationData $data): void
+    {
+        if ($data->has('options')) {
+            foreach ($data->useElements('options') as $option) {
+                $this->addOption(Option::fromArray($option));
+            }
+        }
+
+        if ($data->has('initial_option')) {
+            $this->initialOptions[] = Option::fromArray($data->useElement('initial_option'));
+        }
+
+        if ($data->has('initial_options')) {
+            foreach ($data->useElement('initial_options') as $option) {
+                $this->initialOptions[] = Option::fromArray($option);
+            }
+        }
     }
 }

@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\{Blocks\Input, Exception, Partials\PlainText, Type};
+use Jeremeamia\Slack\BlockKit\{
+    Blocks\Input,
+    Exception,
+    HydrationData,
+    Partials\PlainText,
+    Type,
+};
 
 /**
  * Modals provide focused spaces ideal for requesting and collecting data from users, or temporarily displaying dynamic
@@ -177,5 +183,42 @@ class Modal extends Surface
         $data += parent::toArray();
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('title')) {
+            $this->setTitle(PlainText::fromArray($data->useElement('title')));
+        }
+
+        if ($data->has('submit')) {
+            $this->setSubmit(PlainText::fromArray($data->useElement('submit')));
+        }
+
+        if ($data->has('close')) {
+            $this->setClose(PlainText::fromArray($data->useElement('close')));
+        }
+
+        if ($data->has('external_id')) {
+            $this->externalId($data->useValue('external_id'));
+        }
+
+        if ($data->has('callback_id')) {
+            $this->callbackId($data->useValue('callback_id'));
+        }
+
+        if ($data->has('private_metadata')) {
+            $this->privateMetadata($data->useValue('private_metadata'));
+        }
+
+        if ($data->has('clear_on_close')) {
+            $this->clearOnClose($data->useValue('clear_on_close'));
+        }
+
+        if ($data->has('notify_on_close')) {
+            $this->notifyOnClose($data->useValue('notify_on_close'));
+        }
+
+        parent::hydrate($data);
     }
 }

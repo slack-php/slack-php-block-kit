@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
+use Jeremeamia\Slack\BlockKit\HydrationData;
+
 class MrkdwnText extends Text
 {
     /** @var bool */
@@ -18,6 +20,7 @@ class MrkdwnText extends Text
         if ($text !== null) {
             $this->text($text);
         }
+
         $this->verbatim($verbatim);
     }
 
@@ -44,5 +47,12 @@ class MrkdwnText extends Text
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        $this->verbatim($data->useValue('verbatim', false));
+
+        parent::hydrate($data);
     }
 }

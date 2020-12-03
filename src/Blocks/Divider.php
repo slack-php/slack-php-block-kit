@@ -8,6 +8,6 @@ class Divider extends BlockElement
 {
     public function validate(): void
     {
-        return; // Everything is awesome!
+        // No validation needed.
     }
 }

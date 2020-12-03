@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Inputs;
 
 use Jeremeamia\Slack\BlockKit\Exception;
+use Jeremeamia\Slack\BlockKit\HydrationData;
+use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
 class TextInput extends InputElement
 {
@@ -105,5 +107,30 @@ class TextInput extends InputElement
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('initial_value')) {
+            $this->initialValue($data->useValue('initial_value'));
+        }
+
+        if ($data->has('multiline')) {
+            $this->initialValue($data->useValue('multiline'));
+        }
+
+        if ($data->has('min_length')) {
+            $this->minLength($data->useValue('min_length'));
+        }
+
+        if ($data->has('max_length')) {
+            $this->maxLength($data->useValue('max_length'));
+        }
+
+        if ($data->has('placeholder')) {
+            $this->setPlaceholder(PlainText::fromArray($data->useElement('placeholder')));
+        }
+
+        parent::hydrate($data);
     }
 }

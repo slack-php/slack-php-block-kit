@@ -166,6 +166,7 @@ abstract class Type
         self::OPTION_GROUP,
     ];
 
+    /** @var array<string, string> */
     private static $typeMap = [
         // Surfaces
         Surfaces\AppHome::class      => self::APPHOME,
@@ -224,5 +225,15 @@ abstract class Type
         }
 
         return self::$typeMap[$class];
+    }
+
+    public static function mapType(string $type): string
+    {
+        $class = array_search($type, self::$typeMap);
+        if (!$class) {
+            throw new Exception('No class for type: %s', [$type]);
+        }
+
+        return $class;
     }
 }

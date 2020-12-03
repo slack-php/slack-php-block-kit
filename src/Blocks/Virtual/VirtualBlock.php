@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Blocks\Virtual;
 
 use Jeremeamia\Slack\BlockKit\Blocks\BlockElement;
+use Jeremeamia\Slack\BlockKit\HydrationData;
+use Jeremeamia\Slack\BlockKit\HydrationException;
 
 /**
  * An encapsulation of multiple blocks acting as one virtual element.
@@ -86,5 +88,18 @@ abstract class VirtualBlock extends BlockElement
         }
 
         return $data;
+    }
+
+    /**
+     * Hydrating virtual blocks cannot be done.
+     *
+     * Virtual Blocks are a write-only construct. They won't come up during a regular surface hydration. This exception
+     * will only occur if someone calls `fromArray` manually on a virtual block class.
+     *
+     * @param HydrationData $data
+     */
+    protected function hydrate(HydrationData $data): void
+    {
+        throw new HydrationException('Cannot hydrate virtual blocks; they have no distinguishable representation');
     }
 }

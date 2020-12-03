@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
+use Jeremeamia\Slack\BlockKit\HydrationData;
+
 class ChannelSelectMenu extends SelectMenu
 {
     /** @var string */
@@ -50,5 +52,18 @@ class ChannelSelectMenu extends SelectMenu
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('initial_channel')) {
+            $this->initialChannel($data->useValue('initial_channel'));
+        }
+
+        if ($data->has('response_url_enabled')) {
+            $this->responseUrlEnabled($data->useValue('response_url_enabled'));
+        }
+
+        parent::hydrate($data);
     }
 }

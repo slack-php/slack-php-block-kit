@@ -25,7 +25,7 @@ abstract class Element implements JsonSerializable
     /**
      * @return Element|null
      */
-    public function getParent(): ?Element
+    final public function getParent(): ?Element
     {
         return $this->parent;
     }
@@ -34,7 +34,7 @@ abstract class Element implements JsonSerializable
      * @param Element $parent
      * @return static
      */
-    public function setParent(Element $parent): self
+    final public function setParent(Element $parent): self
     {
         $this->parent = $parent;
 
@@ -52,18 +52,12 @@ abstract class Element implements JsonSerializable
     /**
      * Allows setting arbitrary extra fields on an element.
      *
-     * Ideally, this is only used to allow setting new Slack features that are not yet implemented in this library.
-     *
      * @param string $key
      * @param mixed $value
      * @return static
      */
-    public function setExtra(string $key, $value): self
+    final public function setExtra(string $key, $value): self
     {
-        if (!is_scalar($value) && !($value instanceof Element)) {
-            throw new Exception('Invalid extra field set in %d.', [static::class]);
-        }
-
         $this->extra[$key] = $value;
 
         return $this;
@@ -73,7 +67,7 @@ abstract class Element implements JsonSerializable
      * @param callable $tap
      * @return static
      */
-    public function tap(callable $tap): self
+    final public function tap(callable $tap): self
     {
         $tap($this);
 
@@ -105,8 +99,66 @@ abstract class Element implements JsonSerializable
     /**
      * @return array
      */
-    public function jsonSerialize()
+    final public function jsonSerialize()
     {
         return $this->toArray();
+    }
+
+    /**
+     * @param string $json
+     * @return static
+     */
+    final public static function fromJson(string $json)
+    {
+        return static::fromArray(json_decode($json, true));
+    }
+
+    /**
+     * @param array $data
+     * @return static
+     */
+    final public static function fromArray(array $data)
+    {
+        $data = new HydrationData($data);
+
+        // Determine element class to hydrate.
+        // - If a type is present, map the type to the class.
+        // - Type-mapped class must be the same as or a subclass of the late-static-bound class.
+        // - If no type present, use the late-static-bound class.
+        $class = static::class;
+        if ($data->has('type')) {
+            $typeClass = Type::mapType((string) $data->get('type'));
+            if (is_a($typeClass, $class, true)) {
+                $class = $typeClass;
+            } else {
+                throw new Exception('Element class mismatch in fromArray: %s is not a %s', [$typeClass, $class]);
+            }
+        }
+
+        /** @var static $element */
+        $element = new $class();
+        $element->hydrate($data);
+
+        return $element;
+    }
+
+    /**
+     * @param HydrationData $data
+     * @internal Used by fromArray implementations.
+     */
+    protected function hydrate(HydrationData $data): void
+    {
+        $type = $data->useValue('type');
+
+        $class = get_class($this);
+        if (is_string($type) && Type::mapType($type) !== $class) {
+            throw new Exception('[Hydration] Type %s does not map to class %s.', [$type, $class]);
+        }
+
+        foreach ($data->getExtra() as $key => $value) {
+            $this->setExtra($key, $value);
+        }
+
+        $this->validate();
     }
 }

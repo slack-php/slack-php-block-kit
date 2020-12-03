@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception, Inputs, Partials, Type};
+use Jeremeamia\Slack\BlockKit\{
+    Element,
+    Exception,
+    HydrationData,
+    Inputs,
+    Partials,
+    Type,
+};
 
 class Input extends BlockElement
 {
@@ -69,12 +76,12 @@ class Input extends BlockElement
         return $this;
     }
 
-    public function label(string $text, bool $emoji = true): self
+    public function label(string $text, ?bool $emoji = null): self
     {
         return $this->setLabel(new Partials\PlainText($text, $emoji));
     }
 
-    public function hint(string $text, bool $emoji = true): self
+    public function hint(string $text, ?bool $emoji = null): self
     {
         return $this->setHint(new Partials\PlainText($text, $emoji));
     }
@@ -169,5 +176,26 @@ class Input extends BlockElement
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('label')) {
+            $this->setLabel(Partials\PlainText::fromArray($data->useElement('label')));
+        }
+
+        if ($data->has('element')) {
+            $this->setElement(Inputs\InputElement::fromArray($data->useElement('element')));
+        }
+
+        if ($data->has('hint')) {
+            $this->setHint(Partials\PlainText::fromArray($data->useElement('hint')));
+        }
+
+        if ($data->has('optional')) {
+            $this->optional($data->useValue('optional'));
+        }
+
+        parent::hydrate($data);
     }
 }

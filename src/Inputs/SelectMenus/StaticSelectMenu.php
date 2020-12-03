@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
 use Jeremeamia\Slack\BlockKit\Partials\{HasOptionGroups, OptionsConfig};
+use Jeremeamia\Slack\BlockKit\HydrationData;
 
 class StaticSelectMenu extends SelectMenu
 {
@@ -31,5 +32,11 @@ class StaticSelectMenu extends SelectMenu
         return parent::toArray()
             + $this->getOptionGroupsAsArray()
             + $this->getInitialOptionsAsArray();
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        $this->hydrateOptionGroups($data);
+        parent::hydrate($data);
     }
 }

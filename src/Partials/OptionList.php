@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
 use Jeremeamia\Slack\BlockKit\Element;
+use Jeremeamia\Slack\BlockKit\HydrationData;
 
 /**
  * A standalone element to use for building a list of options or options group.
@@ -26,5 +27,11 @@ class OptionList extends Element
     public function toArray(): array
     {
         return $this->getOptionGroupsAsArray();
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        $this->hydrateOptionGroups($data);
+        parent::hydrate($data);
     }
 }

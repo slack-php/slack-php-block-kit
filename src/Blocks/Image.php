@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\{Exception, Surfaces\Surface};
+use Jeremeamia\Slack\BlockKit\{Exception, HydrationData, Surfaces\Surface};
 use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
 class Image extends BlockElement
@@ -97,5 +97,22 @@ class Image extends BlockElement
         $data['alt_text'] = $this->altText;
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('title')) {
+            $this->setTitle(PlainText::fromArray($data->useElement('title')));
+        }
+
+        if ($data->has('image_url')) {
+            $this->url($data->useValue('image_url'));
+        }
+
+        if ($data->has('alt_text')) {
+            $this->altText($data->useValue('alt_text'));
+        }
+
+        parent::hydrate($data);
     }
 }

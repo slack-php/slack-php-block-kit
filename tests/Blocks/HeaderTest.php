@@ -13,7 +13,7 @@ use Jeremeamia\Slack\BlockKit\Type;
  */
 class HeaderTest extends TestCase
 {
-    public function testThatDividerRendersToJsonCorrectly()
+    public function testThatHeaderRendersToJsonCorrectly()
     {
         $header = new Header('id1');
         $header->text('foo');

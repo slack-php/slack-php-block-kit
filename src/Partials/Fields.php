@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception};
+use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData};
 
 class Fields extends Element
 {
@@ -58,6 +58,10 @@ class Fields extends Element
         if (empty($this->fields)) {
             throw new Exception('Fields component must have at least one field.');
         }
+
+        foreach ($this->fields as $field) {
+            $field->validate();
+        }
     }
 
     /**
@@ -71,5 +75,14 @@ class Fields extends Element
         }
 
         return parent::toArray() + $fields;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        foreach ($data->useElements(null) as $field) {
+            $this->add(Text::fromArray($field));
+        }
+
+        parent::hydrate($data);
     }
 }

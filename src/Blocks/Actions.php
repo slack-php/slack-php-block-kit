@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception, Inputs, Type};
+use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData, Inputs, Type};
 
 class Actions extends BlockElement
 {
@@ -113,9 +113,6 @@ class Actions extends BlockElement
         }
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
         $data = parent::toArray();
@@ -126,5 +123,14 @@ class Actions extends BlockElement
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        foreach ($data->useElements('elements') as $element) {
+            $this->add(Inputs\InputElement::fromArray($element));
+        }
+
+        parent::hydrate($data);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception, Inputs, Partials, Type};
+use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData, Inputs, Partials, Type};
 
 class Section extends BlockElement
 {
@@ -76,7 +76,7 @@ class Section extends BlockElement
      * @param bool $emoji
      * @return self
      */
-    public function plainText(string $text, bool $emoji = true): self
+    public function plainText(string $text, ?bool $emoji = null): self
     {
         return $this->setText(new Partials\PlainText($text, $emoji));
     }
@@ -233,5 +233,22 @@ class Section extends BlockElement
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('text')) {
+            $this->setText(Partials\Text::fromArray($data->useElement('text')));
+        }
+
+        if ($data->has('fields')) {
+            $this->setFields(Partials\Fields::fromArray($data->useElements('fields')));
+        }
+
+        if ($data->has('accessory')) {
+            $this->setAccessory(Inputs\InputElement::fromArray($data->useElement('accessory')));
+        }
+
+        parent::hydrate($data);
     }
 }

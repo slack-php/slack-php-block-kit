@@ -49,7 +49,7 @@ $msg->newSection('b4')
     ->newMultiSelectMenuAccessory('m5')
         ->forStaticOptions()
         ->placeholder('Choose a letter?')
-        ->setMaxSelectedItems(2)
+        ->maxSelectedItems(2)
         ->optionGroups([
             'Letters' => [
                 'a' => 'l1',

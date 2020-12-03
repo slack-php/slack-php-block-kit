@@ -9,10 +9,10 @@ use Throwable;
 
 class Exception extends RuntimeException
 {
-    public function __construct($message = "", array $args = [], $code = 0, Throwable $previous = null)
+    public function __construct(string $message, array $args = [], Throwable $previous = null)
     {
         $message = $args ? vsprintf($message, $args) : $message;
 
-        parent::__construct("Slack BlockKit Error: {$message}", $code, $previous);
+        parent::__construct("Slack Block Kit Error: {$message}", 0, $previous);
     }
 }

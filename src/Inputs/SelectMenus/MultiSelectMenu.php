@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
+use Jeremeamia\Slack\BlockKit\HydrationData;
+
 abstract class MultiSelectMenu extends SelectMenu
 {
     /** @var int|null */
@@ -12,6 +14,18 @@ abstract class MultiSelectMenu extends SelectMenu
     /**
      * @param int $maxSelectedItems
      * @return static
+     */
+    public function maxSelectedItems(int $maxSelectedItems): self
+    {
+        $this->maxSelectedItems = $maxSelectedItems;
+
+        return $this;
+    }
+
+    /**
+     * @param int $maxSelectedItems
+     * @return static
+     * @deprecated Inconsistent method name. Use MultiSelectMenu::maxSelectedItems() instead.
      */
     public function setMaxSelectedItems(int $maxSelectedItems): self
     {
@@ -32,5 +46,14 @@ abstract class MultiSelectMenu extends SelectMenu
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('max_selected_items')) {
+            $this->maxSelectedItems($data->useValue('max_selected_items'));
+        }
+
+        parent::hydrate($data);
     }
 }

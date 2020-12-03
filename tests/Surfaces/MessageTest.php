@@ -79,6 +79,17 @@ class MessageTest extends TestCase
         ], $msg);
     }
 
+    public function testCannotInvalidDirective()
+    {
+        $msg = Message::new()
+            ->text('foo')
+            ->ephemeral()
+            ->directives(['foo' => 'bar']);
+
+        $this->expectException(Exception::class);
+        $msg->validate();
+    }
+
     public function testDoesNotApplyDirectivesWhenNotSet()
     {
         $data = Message::new()->text('foo')->toArray();

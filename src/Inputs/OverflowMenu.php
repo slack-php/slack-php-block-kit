@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Partials\{HasOptions, Option, OptionsConfig};
+use Jeremeamia\Slack\BlockKit\Partials\{Confirm, HasOptions, Option, OptionsConfig, PlainText};
+use Jeremeamia\Slack\BlockKit\HydrationData;
 
 class OverflowMenu extends InputElement
 {
@@ -53,5 +54,16 @@ class OverflowMenu extends InputElement
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        $this->hydrateOptions($data);
+
+        if ($data->has('confirm')) {
+            $this->setConfirm(Confirm::fromArray($data->useElement('confirm')));
+        }
+
+        parent::hydrate($data);
     }
 }

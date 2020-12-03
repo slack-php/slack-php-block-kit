@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
+use Jeremeamia\Slack\BlockKit\HydrationData;
+
 class ConversationSelectMenu extends SelectMenu
 {
     /** @var string */
@@ -70,5 +72,22 @@ class ConversationSelectMenu extends SelectMenu
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('initial_conversation')) {
+            $this->initialConversation($data->useValue('initial_conversation'));
+        }
+
+        if ($data->has('response_url_enabled')) {
+            $this->responseUrlEnabled($data->useValue('response_url_enabled'));
+        }
+
+        if ($data->has('default_to_current_conversation')) {
+            $this->defaultToCurrentConversation($data->useValue('default_to_current_conversation'));
+        }
+
+        parent::hydrate($data);
     }
 }

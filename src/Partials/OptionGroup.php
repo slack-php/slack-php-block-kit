@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception};
+use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData};
 
 class OptionGroup extends Element
 {
@@ -16,7 +16,7 @@ class OptionGroup extends Element
     /**
      * @param string|null $label
      * @param array|null $options
-     * @return OptionGroup
+     * @return self
      */
     public static function new(?string $label = null, ?array $options = null): self
     {
@@ -40,7 +40,7 @@ class OptionGroup extends Element
 
     /**
      * @param PlainText $label
-     * @return self
+     * @return static
      */
     public function setLabel(PlainText $label): self
     {
@@ -76,5 +76,16 @@ class OptionGroup extends Element
         return parent::toArray()
             + ['label' => $this->label->toArray()]
             + $this->getOptionsAsArray();
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('label')) {
+            $this->setLabel(PlainText::fromArray($data->useElement('label')));
+        }
+
+        $this->hydrateOptions($data);
+
+        parent::hydrate($data);
     }
 }

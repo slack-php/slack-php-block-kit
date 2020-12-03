@@ -7,13 +7,13 @@
         "sort-packages": true
     },
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.3",
         "ext-json": "*"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.11.0",
-        "phpunit/phpunit": "^8.0",
-        "squizlabs/php_codesniffer": "^3.4"
+        "phpstan/phpstan": "^0.12.0",
+        "phpunit/phpunit": "^9.0",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
         "psr-4": {
@@ -26,12 +26,8 @@
         }
     },
     "scripts": {
-        "docs-codesniffer": "open https://github.com/squizlabs/PHP_CodeSniffer/wiki",
-        "docs-composer": "open https://getcomposer.org/doc/",
-        "docs-phpunit": "open https://phpunit.readthedocs.io/en/latest/",
-        "docs-stan": "open https://github.com/phpstan/phpstan/blob/master/README.md",
         "gen-test": "php bin/gen-test.php",
-        "stan": "phpstan analyse --level=7 src tests",
+        "stan": "phpstan analyse -c phpstan.neon",
         "style-fix": "phpcbf --standard=PSR12 src tests",
         "style-lint": "phpcs --standard=PSR12 src tests",
         "test": "phpunit --bootstrap=vendor/autoload.php --no-coverage tests",

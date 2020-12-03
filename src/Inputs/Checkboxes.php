@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Partials\{HasOptions, OptionsConfig};
+use Jeremeamia\Slack\BlockKit\Partials\{Confirm, HasOptions, OptionsConfig, PlainText};
+use Jeremeamia\Slack\BlockKit\HydrationData;
 
 class Checkboxes extends InputElement
 {
@@ -41,5 +42,16 @@ class Checkboxes extends InputElement
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        $this->hydrateOptions($data);
+
+        if ($data->has('confirm')) {
+            $this->setConfirm(Confirm::fromArray($data->useElement('confirm')));
+        }
+
+        parent::hydrate($data);
     }
 }

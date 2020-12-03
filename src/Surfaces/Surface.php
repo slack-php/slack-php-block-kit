@@ -14,7 +14,12 @@ use Jeremeamia\Slack\BlockKit\Blocks\{
     Section,
 };
 use Jeremeamia\Slack\BlockKit\Blocks\Virtual\{VirtualBlock, TwoColumnTable};
-use Jeremeamia\Slack\BlockKit\{Exception, Element, Type};
+use Jeremeamia\Slack\BlockKit\{
+    Exception,
+    Element,
+    HydrationData,
+    Type,
+};
 
 /**
  * A Slack app surface is something within a Slack app that renders blocks from the block kit (e.g., a Message).
@@ -183,5 +188,14 @@ abstract class Surface extends Element
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        foreach ($data->useElements('blocks') as $block) {
+            $this->add(BlockElement::fromArray($block));
+        }
+
+        parent::hydrate($data);
     }
 }

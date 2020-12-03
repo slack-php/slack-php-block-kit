@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Inputs;
 
 use Jeremeamia\Slack\BlockKit\Element;
+use Jeremeamia\Slack\BlockKit\HydrationData;
+use Jeremeamia\Slack\BlockKit\Partials\{Confirm, PlainText};
 
 abstract class InputElement extends Element
 {
@@ -44,5 +46,14 @@ abstract class InputElement extends Element
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('action_id')) {
+            $this->actionId($data->useValue('action_id'));
+        }
+
+        parent::hydrate($data);
     }
 }

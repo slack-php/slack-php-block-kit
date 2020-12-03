@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
 use Jeremeamia\Slack\BlockKit\Exception;
+use Jeremeamia\Slack\BlockKit\HydrationData;
 
 trait HasOptionGroups
 {
@@ -12,6 +13,18 @@ trait HasOptionGroups
 
     /** @var OptionGroup[] */
     private $optionGroups;
+
+    /**
+     * @param OptionGroup $group
+     * @return static
+     */
+    public function addOptionGroup(OptionGroup $group): self
+    {
+        $group->setParent($this);
+        $this->optionGroups[] = $group;
+
+        return $this;
+    }
 
     /**
      * @param array $optionGroups
@@ -33,14 +46,10 @@ trait HasOptionGroups
      */
     public function optionGroup(string $label, array $options): self
     {
-        $group = OptionGroup::new($label, $options);
-        $group->setParent($this);
-        $this->optionGroups[] = $group;
-
-        return $this;
+        return $this->addOptionGroup(OptionGroup::new($label, $options));
     }
 
-    protected function validateOptionGroups()
+    protected function validateOptionGroups(): void
     {
         if (!(empty($this->options) xor empty($this->optionGroups))) {
             throw new Exception('You must provide "options" or "option_groups", but not both.');
@@ -64,5 +73,16 @@ trait HasOptionGroups
         } else {
             return $this->getOptionsAsArray();
         }
+    }
+
+    protected function hydrateOptionGroups(HydrationData $data): void
+    {
+        if ($data->has('option_groups')) {
+            foreach ($data->useElements('option_groups') as $optionGroup) {
+                $this->addOptionGroup(OptionGroup::fromArray($optionGroup));
+            }
+        }
+
+        $this->hydrateOptions($data);
     }
 }

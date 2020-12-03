@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Exception;
+use Jeremeamia\Slack\BlockKit\{Exception, HydrationData};
 
 /**
  * App-published messages are dynamic yet transient spaces. They allow users to complete workflows among their
@@ -19,23 +19,18 @@ class Message extends Surface
     private const REPLACE_ORIGINAL = ['replace_original' => 'true'];
     private const DELETE_ORIGINAL = ['delete_original' => 'true'];
 
+    private const VALID_DIRECTIVES = [
+        self::EPHEMERAL,
+        self::IN_CHANNEL,
+        self::REPLACE_ORIGINAL,
+        self::DELETE_ORIGINAL,
+    ];
+
     /** @var array|string[] A message can have a directive (e.g., response_type) included along with its blocks. */
     private $directives = [];
 
     /** @var array|Attachment[] Attachments containing secondary content. */
     private $attachments = [];
-
-    /**
-     * Configures message to send to the entire channel.
-     *
-     * @return static
-     */
-    public function inChannel(): self
-    {
-        $this->directives = self::IN_CHANNEL;
-
-        return $this;
-    }
 
     /**
      * Configures message to send privately to the user.
@@ -46,9 +41,17 @@ class Message extends Surface
      */
     public function ephemeral(): self
     {
-        $this->directives = self::EPHEMERAL;
+        return $this->directives(self::EPHEMERAL);
+    }
 
-        return $this;
+    /**
+     * Configures message to send to the entire channel.
+     *
+     * @return static
+     */
+    public function inChannel(): self
+    {
+        return $this->directives(self::IN_CHANNEL);
     }
 
     /**
@@ -58,9 +61,7 @@ class Message extends Surface
      */
     public function replaceOriginal(): self
     {
-        $this->directives = self::REPLACE_ORIGINAL;
-
-        return $this;
+        return $this->directives(self::REPLACE_ORIGINAL);
     }
 
     /**
@@ -70,7 +71,16 @@ class Message extends Surface
      */
     public function deleteOriginal(): self
     {
-        $this->directives = self::DELETE_ORIGINAL;
+        return $this->directives(self::DELETE_ORIGINAL);
+    }
+
+    /**
+     * @param array $directives
+     * @return static
+     */
+    public function directives(array $directives): self
+    {
+        $this->directives = $directives;
 
         return $this;
     }
@@ -99,6 +109,10 @@ class Message extends Surface
 
     public function validate(): void
     {
+        if (!empty($this->directives) && !in_array($this->directives, self::VALID_DIRECTIVES, true)) {
+            throw new Exception('Invalid directives for message');
+        }
+
         $hasBlocks = !empty($this->getBlocks());
         if ($hasBlocks) {
             parent::validate();
@@ -129,5 +143,20 @@ class Message extends Surface
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        $this->directives(array_filter([
+            'response_type' => $data->useValue('response_type'),
+            'replace_original' => $data->useValue('replace_original'),
+            'delete_original' => $data->useValue('delete_original'),
+        ]));
+
+        foreach ($data->useElements('attachments') as $attachment) {
+            $this->addAttachment(Attachment::fromArray($attachment));
+        }
+
+        parent::hydrate($data);
     }
 }

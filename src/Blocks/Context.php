@@ -6,6 +6,8 @@ namespace Jeremeamia\Slack\BlockKit\Blocks;
 
 use Jeremeamia\Slack\BlockKit\Element;
 use Jeremeamia\Slack\BlockKit\Exception;
+use Jeremeamia\Slack\BlockKit\HydrationData;
+use Jeremeamia\Slack\BlockKit\HydrationException;
 use Jeremeamia\Slack\BlockKit\Type;
 use Jeremeamia\Slack\BlockKit\Partials\{MrkdwnText, PlainText};
 
@@ -43,7 +45,7 @@ class Context extends BlockElement
         return $this;
     }
 
-    public function plainText(string $text, bool $emoji = true): self
+    public function plainText(string $text, ?bool $emoji = null): self
     {
         return $this->add(new PlainText($text, $emoji));
     }
@@ -82,5 +84,23 @@ class Context extends BlockElement
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        foreach ($data->useElements('elements') as $element) {
+            if (!isset($element['type']) || !in_array($element['type'], Type::CONTEXT_ELEMENTS, true)) {
+                throw new HydrationException('Invalid context element type');
+            }
+
+            $fromArray = [Type::mapType($element['type']), 'fromArray'];
+            if (!is_callable($fromArray)) {
+                throw new HydrationException('Invalid element fromArray method');
+            }
+
+            $this->add($fromArray($element));
+        }
+
+        parent::hydrate($data);
     }
 }

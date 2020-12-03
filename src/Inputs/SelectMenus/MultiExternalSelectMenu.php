@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
+use Jeremeamia\Slack\BlockKit\HydrationData;
 use Jeremeamia\Slack\BlockKit\Partials\Option;
 
 class MultiExternalSelectMenu extends MultiSelectMenu
@@ -62,5 +63,21 @@ class MultiExternalSelectMenu extends MultiSelectMenu
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('initial_options')) {
+            $this->initialOptions = [];
+            foreach ($data->useElements('initial_options') as $option) {
+                $this->initialOptions[] = Option::fromArray($option);
+            }
+        }
+
+        if ($data->has('min_query_length')) {
+            $this->minQueryLength($data->useValue('min_query_length'));
+        }
+
+        parent::hydrate($data);
     }
 }

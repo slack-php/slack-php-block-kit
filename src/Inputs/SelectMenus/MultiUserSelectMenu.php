@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
+use Jeremeamia\Slack\BlockKit\HydrationData;
+
 class MultiUserSelectMenu extends MultiSelectMenu
 {
     /** @var string[] */
@@ -32,5 +34,14 @@ class MultiUserSelectMenu extends MultiSelectMenu
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('initial_users')) {
+            $this->initialUsers($data->useArray('initial_users'));
+        }
+
+        parent::hydrate($data);
     }
 }

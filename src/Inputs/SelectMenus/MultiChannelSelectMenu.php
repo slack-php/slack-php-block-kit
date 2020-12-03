@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
+use Jeremeamia\Slack\BlockKit\HydrationData;
+
 class MultiChannelSelectMenu extends MultiSelectMenu
 {
     /** @var string[] */
@@ -32,5 +34,14 @@ class MultiChannelSelectMenu extends MultiSelectMenu
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('initial_channels')) {
+            $this->initialChannels($data->useArray('initial_channels'));
+        }
+
+        parent::hydrate($data);
     }
 }

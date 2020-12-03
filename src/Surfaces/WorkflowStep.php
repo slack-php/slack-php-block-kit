@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
 use Jeremeamia\Slack\BlockKit\Blocks\Input;
+use Jeremeamia\Slack\BlockKit\HydrationData;
 
 /**
  * A Workflow Step surface are a special case of a Modal, with limited properties, and are used to configure an app's
@@ -57,5 +58,18 @@ class WorkflowStep extends Surface
         $data += parent::toArray();
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('callback_id')) {
+            $this->callbackId($data->useValue('callback_id'));
+        }
+
+        if ($data->has('private_metadata')) {
+            $this->privateMetadata($data->useValue('private_metadata'));
+        }
+
+        parent::hydrate($data);
     }
 }

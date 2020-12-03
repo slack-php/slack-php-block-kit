@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception};
+use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData, Type};
 
 abstract class Text extends Element
 {
@@ -66,5 +66,12 @@ abstract class Text extends Element
     public function toArray(): array
     {
         return parent::toArray() + ['text' => $this->text];
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        $this->text($data->useValue('text'));
+
+        parent::hydrate($data);
     }
 }

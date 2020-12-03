@@ -11,5 +11,5 @@ namespace Jeremeamia\Slack\BlockKit\Surfaces;
  */
 class AppHome extends Surface
 {
-    // Nothing special.
+    // No additions to base Surface functionality.
 }

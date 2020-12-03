@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
 use Jeremeamia\Slack\BlockKit\Exception;
+use Jeremeamia\Slack\BlockKit\HydrationData;
 use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
 class Header extends BlockElement
@@ -34,10 +35,10 @@ class Header extends BlockElement
 
     /**
      * @param string $text
-     * @param bool $emoji
+     * @param bool|null $emoji
      * @return self
      */
-    public function text(string $text, bool $emoji = true): self
+    public function text(string $text, ?bool $emoji = null): self
     {
         return $this->setText(new PlainText($text, $emoji));
     }
@@ -49,14 +50,20 @@ class Header extends BlockElement
         }
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
         $data = parent::toArray();
         $data['text'] = $this->text->toArray();
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('text')) {
+            $this->setText(PlainText::fromArray($data->useElement('text')));
+        }
+
+        parent::hydrate($data);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Jeremeamia\Slack\BlockKit\Tests;
 
-use Jeremeamia\Slack\BlockKit\{Blocks\Section, Element, Exception, Type};
+use Jeremeamia\Slack\BlockKit\Blocks\Section;
+use Jeremeamia\Slack\BlockKit\{Element, Exception, Type};
+use Jeremeamia\Slack\BlockKit\Surfaces\Modal;
 
 /**
  * @covers \Jeremeamia\Slack\BlockKit\Element
@@ -55,14 +57,6 @@ class ElementTest extends TestCase
         ]);
     }
 
-    public function testErrorIfExtraFieldIsInvalid()
-    {
-        $element = $this->getMockElement();
-
-        $this->expectException(Exception::class);
-        $element->setExtra('fizz', new \SplQueue());
-    }
-
     public function testCanTapIntoElementForChaining()
     {
         $element = $this->getMockElement()->tap(function (Element $e) {
@@ -106,5 +100,57 @@ class ElementTest extends TestCase
                 return parent::toArray() + ['text' => $this->text];
             }
         };
+    }
+
+    public function testHydration()
+    {
+        $beforeJson = <<<JSON
+        {
+            "type": "modal",
+            "title": {
+                "type": "plain_text",
+                "text": "Foo Bar"
+            },
+            "submit": {
+                "type": "plain_text",
+                "text": "Submit"
+            },
+            "close": {
+                "type": "plain_text",
+                "text": "Cancel"
+            },
+            "foo": "bar",
+            "blocks": [
+                {
+                    "type": "header",
+                    "block_id": "id1",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "Foo Bar"
+                    }
+                },
+                {
+                    "type": "input",
+                    "block_id": "id2",
+                    "label": {
+                        "type": "plain_text",
+                        "text": "Type Something"
+                    },
+                    "element": {
+                        "type": "plain_text_input",
+                        "action_id": "a1",
+                        "placeholder": {
+                            "type": "plain_text",
+                            "text": "anything"
+                        }
+                    }
+                }
+            ]
+        }
+        JSON;
+
+        $modal = Modal::fromJson($beforeJson);
+        $afterJson = json_encode($modal);
+        $this->assertJsonStringEqualsJsonString($beforeJson, $afterJson);
     }
 }

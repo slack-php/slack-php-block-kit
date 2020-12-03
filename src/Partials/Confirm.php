@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception};
+use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData};
 
 class Confirm extends Element
 {
@@ -38,6 +38,10 @@ class Confirm extends Element
         $this->deny($deny ?? 'Cancel');
     }
 
+    /**
+     * @param PlainText $title
+     * @return static
+     */
     public function setTitle(PlainText $title): self
     {
         $this->title = $title->setParent($this);
@@ -45,6 +49,10 @@ class Confirm extends Element
         return $this;
     }
 
+    /**
+     * @param Text $text
+     * @return static
+     */
     public function setText(Text $text): self
     {
         $this->text = $text->setParent($this);
@@ -52,6 +60,10 @@ class Confirm extends Element
         return $this;
     }
 
+    /**
+     * @param PlainText $confirm
+     * @return static
+     */
     public function setConfirm(PlainText $confirm): self
     {
         $this->confirm = $confirm->setParent($this);
@@ -59,6 +71,10 @@ class Confirm extends Element
         return $this;
     }
 
+    /**
+     * @param PlainText $deny
+     * @return static
+     */
     public function setDeny(PlainText $deny): self
     {
         $this->deny = $deny->setParent($this);
@@ -137,5 +153,26 @@ class Confirm extends Element
             'confirm' => $this->confirm->toArray(),
             'deny' => $this->deny->toArray(),
         ];
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('title')) {
+            $this->setTitle(PlainText::fromArray($data->useElement('title')));
+        }
+
+        if ($data->has('text')) {
+            $this->setText(Text::fromArray($data->useElement('text')));
+        }
+
+        if ($data->has('confirm')) {
+            $this->setConfirm(PlainText::fromArray($data->useElement('confirm')));
+        }
+
+        if ($data->has('deny')) {
+            $this->setDeny(PlainText::fromArray($data->useElement('deny')));
+        }
+
+        parent::hydrate($data);
     }
 }

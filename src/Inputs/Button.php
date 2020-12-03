@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Inputs;
 
 use Jeremeamia\Slack\BlockKit\Exception;
+use Jeremeamia\Slack\BlockKit\HydrationData;
+use Jeremeamia\Slack\BlockKit\Partials\Confirm;
 use Jeremeamia\Slack\BlockKit\Partials\PlainText;
 
 class Button extends InputElement
@@ -104,5 +106,37 @@ class Button extends InputElement
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('text')) {
+            $this->setText(PlainText::fromArray($data->useElement('text')));
+        }
+
+        if ($data->has('value')) {
+            $this->value($data->useValue('value'));
+        }
+
+        if ($data->has('url')) {
+            $this->url($data->useValue('url'));
+        }
+
+        if ($data->has('style')) {
+            switch ($data->useValue('style')) {
+                case self::STYLE_PRIMARY:
+                    $this->asPrimary();
+                    break;
+                case self::STYLE_DANGER:
+                    $this->asDangerous();
+                    break;
+            }
+        }
+
+        if ($data->has('confirm')) {
+            $this->setConfirm(Confirm::fromArray($data->useElement('confirm')));
+        }
+
+        parent::hydrate($data);
     }
 }

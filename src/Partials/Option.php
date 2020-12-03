@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception, Type};
+use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData, Type};
 
 /**
  * @see https://api.slack.com/reference/block-kit/composition-objects#option
@@ -26,7 +26,7 @@ class Option extends Element
     /**
      * @param string|null $text
      * @param string|null $value
-     * @return Option
+     * @return self
      */
     public static function new(?string $text = null, ?string $value = null): self
     {
@@ -45,7 +45,7 @@ class Option extends Element
 
     /**
      * @param PlainText $text
-     * @return self
+     * @return static
      */
     public function setText(PlainText $text): self
     {
@@ -76,7 +76,7 @@ class Option extends Element
 
     /**
      * @param PlainText $description
-     * @return self
+     * @return static
      */
     public function setDescription(PlainText $description): self
     {
@@ -155,5 +155,26 @@ class Option extends Element
         }
 
         return parent::toArray() + $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('text')) {
+            $this->setText(PlainText::fromArray($data->useElement('text')));
+        }
+
+        if ($data->has('value')) {
+            $this->value($data->useValue('value'));
+        }
+
+        if ($data->has('description')) {
+            $this->setDescription(PlainText::fromArray($data->useElement('description')));
+        }
+
+        if ($data->has('url')) {
+            $this->value($data->useValue('url'));
+        }
+
+        parent::hydrate($data);
     }
 }

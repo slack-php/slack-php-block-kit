@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
 use Jeremeamia\Slack\BlockKit\Element;
+use Jeremeamia\Slack\BlockKit\HydrationData;
 
 abstract class BlockElement extends Element
 {
@@ -52,5 +53,14 @@ abstract class BlockElement extends Element
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('block_id')) {
+            $this->blockId($data->useValue('block_id'));
+        }
+
+        parent::hydrate($data);
     }
 }

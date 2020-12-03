@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Element;
+use Jeremeamia\Slack\BlockKit\{Element, HydrationData};
 
 /**
  * Attachments are a surface that represent secondary content within a message, and can only exist within a message.
@@ -46,5 +46,14 @@ class Attachment extends Surface
         }
 
         return $data;
+    }
+
+    protected function hydrate(HydrationData $data): void
+    {
+        if ($data->has('color')) {
+            $this->color($data->useValue('color'));
+        }
+
+        parent::hydrate($data);
     }
 }
