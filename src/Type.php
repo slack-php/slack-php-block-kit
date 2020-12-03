@@ -49,6 +49,7 @@ abstract class Type
     // Partials
     public const CONFIRM      = 'confirm';
     public const FIELDS       = 'fields';
+    public const FILTER       = 'filter';
     public const MRKDWNTEXT   = 'mrkdwn';
     public const OPTION       = 'option';
     public const OPTION_GROUP = 'option_group';
@@ -161,6 +162,7 @@ abstract class Type
         self::ATTACHMENT,
         self::CONFIRM,
         self::FIELDS,
+        self::FILTER,
         self::MESSAGE,
         self::OPTION,
         self::OPTION_GROUP,
@@ -212,6 +214,7 @@ abstract class Type
         // Partials
         Partials\Confirm::class     => self::CONFIRM,
         Partials\Fields::class      => self::FIELDS,
+        Partials\Filter::class      => self::FILTER,
         Partials\MrkdwnText::class  => self::MRKDWNTEXT,
         Partials\Option::class      => self::OPTION,
         Partials\OptionGroup::class => self::OPTION_GROUP,

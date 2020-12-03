@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
 use Jeremeamia\Slack\BlockKit\HydrationData;
+use Jeremeamia\Slack\BlockKit\Partials\Filter;
 
 class MultiConversationSelectMenu extends MultiSelectMenu
 {
@@ -13,6 +14,9 @@ class MultiConversationSelectMenu extends MultiSelectMenu
 
     /** @var bool */
     private $defaultToCurrentConversation;
+
+    /** @var Filter */
+    private $filter;
 
     /**
      * @param string[] $initialConversations
@@ -36,7 +40,36 @@ class MultiConversationSelectMenu extends MultiSelectMenu
         return $this;
     }
 
-    // @TODO: filter - https://api.slack.com/reference/block-kit/block-elements#conversation_select
+    /**
+     * @param Filter $filter
+     * @return static
+     */
+    public function setFilter(Filter $filter): self
+    {
+        $this->filter = $filter->setParent($this);
+
+        return $this;
+    }
+
+    /**
+     * @return Filter
+     */
+    public function newFilter(): Filter
+    {
+        $filter = Filter::new();
+        $this->setFilter($filter);
+
+        return $filter;
+    }
+
+    public function validate(): void
+    {
+        parent::validate();
+
+        if (!empty($this->filter)) {
+            $this->filter->validate();
+        }
+    }
 
     /**
      * @return array
@@ -53,6 +86,10 @@ class MultiConversationSelectMenu extends MultiSelectMenu
             $data['default_to_current_conversation'] = $this->defaultToCurrentConversation;
         }
 
+        if (!empty($this->filter)) {
+            $data['filter'] = $this->filter->toArray();
+        }
+
         return $data;
     }
 
@@ -64,6 +101,10 @@ class MultiConversationSelectMenu extends MultiSelectMenu
 
         if ($data->has('default_to_current_conversation')) {
             $this->defaultToCurrentConversation($data->useValue('default_to_current_conversation'));
+        }
+
+        if ($data->has('filter')) {
+            $this->setFilter(Filter::fromArray($data->useElement('filter')));
         }
 
         parent::hydrate($data);

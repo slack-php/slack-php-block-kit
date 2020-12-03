@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit;
 
 use JsonSerializable;
+use Throwable;
 
 abstract class Element implements JsonSerializable
 {
@@ -120,7 +121,13 @@ abstract class Element implements JsonSerializable
      */
     final public static function fromJson(string $json)
     {
-        return static::fromArray(json_decode($json, true));
+        try {
+            $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        } catch (Throwable $err) {
+            throw new HydrationException('JSON error (%s) hydrating %s', [$err->getMessage(), static::class], $err);
+        }
+
+        return static::fromArray($data);
     }
 
     /**

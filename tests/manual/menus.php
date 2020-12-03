@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Jeremeamia\Slack\BlockKit\Kit;
 use Jeremeamia\Slack\BlockKit\Partials\Confirm;
+use Jeremeamia\Slack\BlockKit\Surfaces\Message;
 
 require __DIR__ . '/bootstrap.php';
 
@@ -70,5 +71,11 @@ $msg->newSection('b5')
     ->urlOption('bar', 'bar', 'https://example.org')
     ->option('foobar', 'foobar')
     ->setConfirm(new Confirm('Choose', 'Do you really want to choose this?', 'Yes choose'));
+$msg->newActions('b6')
+    ->newSelectMenu('m7')
+    ->forConversations()
+    ->placeholder('Choose a conversation')
+    ->newFilter()
+    ->includePrivate();
 
 view($msg);

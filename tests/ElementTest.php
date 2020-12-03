@@ -3,7 +3,12 @@
 namespace Jeremeamia\Slack\BlockKit\Tests;
 
 use Jeremeamia\Slack\BlockKit\Blocks\Section;
-use Jeremeamia\Slack\BlockKit\{Element, Exception, Type};
+use Jeremeamia\Slack\BlockKit\{
+    Element,
+    Exception,
+    HydrationException,
+    Type,
+};
 use Jeremeamia\Slack\BlockKit\Surfaces\Modal;
 
 /**
@@ -152,5 +157,18 @@ class ElementTest extends TestCase
         $modal = Modal::fromJson($beforeJson);
         $afterJson = $modal->toJson();
         $this->assertJsonStringEqualsJsonString($beforeJson, $afterJson);
+    }
+
+    public function testFromJsonThrowsExceptionOnBadJson()
+    {
+        $this->expectException(HydrationException::class);
+        Modal::fromJson('{"foo":"Bar",}');
+    }
+
+    public function testCanExportToJsonWithPrettyPrint()
+    {
+        $element = $this->getMockElement();
+        $json = $element->toJson(true);
+        $this->assertStringContainsString("\n", $json);
     }
 }
