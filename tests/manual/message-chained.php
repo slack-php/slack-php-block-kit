@@ -5,10 +5,9 @@ declare(strict_types=1);
 use Jeremeamia\Slack\BlockKit\Blocks\{Actions, Context, Header, Image, Section};
 use Jeremeamia\Slack\BlockKit\Inputs\Button;
 use Jeremeamia\Slack\BlockKit\Inputs\DatePicker;
-use Jeremeamia\Slack\BlockKit\Renderers;
 use Jeremeamia\Slack\BlockKit\Surfaces\Message;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/bootstrap.php';
 
 $msg = Message::new()
     ->add(Header::new()->text('Header'))
@@ -42,6 +41,4 @@ $msg = Message::new()
             ->initialDate('2020-01-01')
             ->confirm('Proceed?', 'If this is correct, click "OK".')));
 
-// echo (new Renderers\Json())->render($msg) . "\n";
-echo (new Renderers\KitBuilder())->render($msg) . "\n";
-// echo (new Renderers\Cli())->render($msg) . "\n";
+view($msg);

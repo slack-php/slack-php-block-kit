@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
+use Jeremeamia\Slack\BlockKit\Kit;
 use Jeremeamia\Slack\BlockKit\Partials\Confirm;
-use Jeremeamia\Slack\BlockKit\Slack;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/bootstrap.php';
 
-$msg = Slack::newMessage();
+$msg = Kit::newMessage();
 $actions = $msg->newActions('b1');
 $actions->newSelectMenu('m1')
     ->forStaticOptions()
@@ -70,6 +70,5 @@ $msg->newSection('b5')
     ->urlOption('bar', 'bar', 'https://example.org')
     ->option('foobar', 'foobar')
     ->setConfirm(new Confirm('Choose', 'Do you really want to choose this?', 'Yes choose'));
-//echo Slack::newRenderer()->forJson()->render($msg) . "\n";
-echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";
-// echo Slack::newRenderer()->forCli()->render($msg) . "\n";
+
+view($msg);

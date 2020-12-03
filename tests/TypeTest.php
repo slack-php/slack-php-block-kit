@@ -3,7 +3,7 @@
 namespace Jeremeamia\Slack\BlockKit\Tests;
 
 use Jeremeamia\Slack\BlockKit\Blocks\Section;
-use Jeremeamia\Slack\BlockKit\{Exception, Slack, Type};
+use Jeremeamia\Slack\BlockKit\{Exception, Kit, Type};
 
 /**
  * @covers \Jeremeamia\Slack\BlockKit\Type
@@ -18,6 +18,6 @@ class TypeTest extends TestCase
     public function testThrowsErrorIfMappingClassesNotRegisteredInTypeMaps()
     {
         $this->expectException(Exception::class);
-        Type::mapClass(Slack::class);
+        Type::mapClass(Kit::class);
     }
 }

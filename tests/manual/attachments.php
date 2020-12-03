@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Slack;
 use Jeremeamia\Slack\BlockKit\Surfaces\Message;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/bootstrap.php';
 
 $msg = Message::new()->tap(function (Message $msg) {
     $msg->text('Primary Content');
@@ -14,6 +13,4 @@ $msg = Message::new()->tap(function (Message $msg) {
     $msg->newAttachment()->color('#0000ff')->text('Attachment 3');
 });
 
-//echo Slack::newRenderer()->forJson()->render($msg) . "\n";
-echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";
-// echo Slack::newRenderer()->forCli()->render($msg) . "\n";
+view($msg);

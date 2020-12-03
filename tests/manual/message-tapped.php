@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 use Jeremeamia\Slack\BlockKit\Blocks\Actions;
 use Jeremeamia\Slack\BlockKit\Blocks\Section;
-use Jeremeamia\Slack\BlockKit\Slack;
+use Jeremeamia\Slack\BlockKit\Kit;
 use Jeremeamia\Slack\BlockKit\Surfaces\Message;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/bootstrap.php';
 
-$msg = Slack::newMessage()->tap(function (Message $msg) {
+$msg = Kit::newMessage()->tap(function (Message $msg) {
     $msg->newSection('b1')
         ->mrkdwnText('*foo* _bar_')
         ->fieldMap(['foo' => 'bar', 'fizz' => 'buzz'])
@@ -49,6 +49,4 @@ $msg = Slack::newMessage()->tap(function (Message $msg) {
     });
 });
 
-// echo Slack::newRenderer()->forJson()->render($msg) . "\n";
-echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";
-// echo Slack::newRenderer()->forCli()->render($msg) . "\n";
+view($msg);

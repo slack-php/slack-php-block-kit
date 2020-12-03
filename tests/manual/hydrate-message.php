@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Slack;
 use Jeremeamia\Slack\BlockKit\Surfaces\Message;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/bootstrap.php';
 
 $json = <<<JSON
 {
@@ -117,5 +116,4 @@ JSON;
 $data = json_decode($json, true);
 $message = Message::fromArray($data);
 assert(json_encode($data) === json_encode($message));
-echo Slack::newRenderer()->forJson()->render($message) . "\n";
-echo Slack::newRenderer()->forKitBuilder()->render($message) . "\n";
+view($message);

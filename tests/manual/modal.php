@@ -3,12 +3,11 @@
 declare(strict_types=1);
 
 use Jeremeamia\Slack\BlockKit\Partials\Confirm;
-use Jeremeamia\Slack\BlockKit\Slack;
-use Jeremeamia\Slack\BlockKit\Partials\Option;
+use Jeremeamia\Slack\BlockKit\Kit;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/bootstrap.php';
 
-$msg = Slack::newModal()
+$msg = Kit::newModal()
     ->title('My Modal')
     ->submit('Submit')
     ->close('Cancel')
@@ -41,6 +40,4 @@ $msg->newInput('c3')
     ->option('foobar', 'foobar', true)
     ->setConfirm(new Confirm('Switch', 'Do you really want to switch?', 'Yes switch'));
 
-// echo Slack::newRenderer()->forJson()->render($msg) . "\n";
-echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";
-// echo Slack::newRenderer()->forCli()->render($msg) . "\n";
+view($msg);

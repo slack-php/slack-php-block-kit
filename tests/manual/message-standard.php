@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Slack;
+use Jeremeamia\Slack\BlockKit\Kit;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/bootstrap.php';
 
-$msg = Slack::newMessage();
+$msg = Kit::newMessage();
 $msg->newSection('b1')
     ->mrkdwnText('*foo* _bar_')
     ->fieldMap(['foo' => 'bar', 'fizz' => 'buzz'])
@@ -41,6 +41,4 @@ $msg->newActions('b7')
         ->initialDate('2020-01-01')
         ->confirm('Proceed?', 'If this is correct, click "OK".');
 
-// echo Slack::newRenderer()->forJson()->render($msg) . "\n";
-echo Slack::newRenderer()->forKitBuilder()->render($msg) . "\n";
-// echo Slack::newRenderer()->forCli()->render($msg) . "\n";
+view($msg);

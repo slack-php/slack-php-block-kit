@@ -150,7 +150,7 @@ class ElementTest extends TestCase
         JSON;
 
         $modal = Modal::fromJson($beforeJson);
-        $afterJson = json_encode($modal);
+        $afterJson = $modal->toJson();
         $this->assertJsonStringEqualsJsonString($beforeJson, $afterJson);
     }
 }

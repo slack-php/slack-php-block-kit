@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Slack;
 use Jeremeamia\Slack\BlockKit\Surfaces\Modal;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/bootstrap.php';
 
 $modal = Modal::new()
     ->title('Foo Bar')
@@ -21,8 +20,7 @@ $modal = Modal::new()
         $m->newInput('id2')->label('Stuff')->newTextInput('a1')->placeholder('type something');
     });
 
-$json = json_encode($modal);
+$json = $modal->toJson();
 $hydratedModal = Modal::fromJson($json);
-assert($json === json_encode($hydratedModal));
-echo Slack::newRenderer()->forJson()->render($hydratedModal) . "\n";
-echo Slack::newRenderer()->forKitBuilder()->render($hydratedModal) . "\n";
+assert($json === $hydratedModal->toJson());
+view($hydratedModal);

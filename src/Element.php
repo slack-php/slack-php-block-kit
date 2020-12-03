@@ -96,10 +96,20 @@ abstract class Element implements JsonSerializable
         return $data;
     }
 
+    public function toJson(bool $prettyPrint = false): string
+    {
+        $opts = JSON_THROW_ON_ERROR;
+        if ($prettyPrint) {
+            $opts |= JSON_PRETTY_PRINT;
+        }
+
+        return (string) json_encode($this, $opts);
+    }
+
     /**
      * @return array
      */
-    final public function jsonSerialize()
+    public function jsonSerialize()
     {
         return $this->toArray();
     }

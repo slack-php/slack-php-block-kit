@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Tests\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Slack;
+use Jeremeamia\Slack\BlockKit\Surfaces\WorkflowStep;
 use Jeremeamia\Slack\BlockKit\Tests\TestCase;
 
 /**
@@ -14,7 +14,7 @@ class WorkflowStepTest extends TestCase
 {
     public function testCanConfigureTextInput()
     {
-        $workflowStep = Slack::newWorkflowStep()
+        $workflowStep = WorkflowStep::new()
             ->callbackId('my_step')
             ->privateMetadata('foo=bar');
         $workflowStep->newInput()
