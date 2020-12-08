@@ -260,7 +260,7 @@ The `Kit` façade provides ways to create _surfaces_. Surfaces contain one or mo
 element of the Block Kit. Blocks contain other elements, including other blocks, _inputs_ (interactive elements), and
 _partials_ (element parts that are not uniquely identifiable).
 
-![UML diagram for slack-block-kit](https://yuml.me/d667870c.png)
+![UML diagram for slack-block-kit](https://yuml.me/55e7f996.png)
 
 <details>
 <summary>See the YUML</summary>
@@ -269,12 +269,13 @@ _partials_ (element parts that are not uniquely identifiable).
 [Surface]^[Message]
 [Surface]^[Modal]
 [Surface]^[AppHome]
+[Surface]^[Attachment]
 [Element]^[Surface]
 [Element]^[Block]
 [Element]^[Input]
 [Element]^[Partial]
 [Surface]<>->[Block]
-[Block]<>->[Block]
+[Message]<>->[Attachment]
 [Block]<>->[Input]
 [Block]<>->[Partial]
 [Input]-[note:Examples: Button
@@ -288,7 +289,7 @@ Actions {bg:cornsilk}]
 
 ### Contributions
 
-Contributions welcome to support new elements, write tests, setup github actions, etc. See the Project tab.
+Contributions welcome to support new elements, add tests, improve, etc.
 
 When implementing elements, to fit within the existing DSL, consider these points:
 
