@@ -18,7 +18,7 @@ class File extends BlockElement
     /**
      * @param string|null $blockId
      * @param string|null $externalId
-     * @param string|null $source
+     * @param string $source
      */
     public function __construct(?string $blockId = null, ?string $externalId = null, string $source = 'remote')
     {
