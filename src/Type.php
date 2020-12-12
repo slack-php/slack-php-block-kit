@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit;
 
-use Jeremeamia\Slack\BlockKit\{Blocks, Inputs, Inputs\SelectMenus, Partials, Surfaces};
+use Jeremeamia\Slack\BlockKit\{Blocks, Inputs, Partials, Surfaces};
+use Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
 
 abstract class Type
 {
@@ -19,7 +20,7 @@ abstract class Type
     public const ACTIONS = 'actions';
     public const CONTEXT = 'context';
     public const DIVIDER = 'divider';
-    // public const FILE = 'file'; // Not yet supported.
+    public const FILE    = 'file';
     public const HEADER  = 'header';
     public const IMAGE   = 'image';
     public const INPUT   = 'input';
@@ -68,7 +69,7 @@ abstract class Type
             self::ACTIONS,
             self::CONTEXT,
             self::DIVIDER,
-            // self::FILE, // Not yet supported.
+            self::FILE,
             self::HEADER,
             self::IMAGE,
             self::SECTION,
@@ -77,7 +78,7 @@ abstract class Type
             self::ACTIONS,
             self::CONTEXT,
             self::DIVIDER,
-            // self::FILE, // Not yet supported.
+            self::FILE,
             self::HEADER,
             self::IMAGE,
             self::SECTION,
@@ -181,7 +182,7 @@ abstract class Type
         Blocks\Actions::class => self::ACTIONS,
         Blocks\Context::class => self::CONTEXT,
         Blocks\Divider::class => self::DIVIDER,
-        // Block\File::class  => self::FILE, // Not yet supported.
+        Blocks\File::class     => self::FILE,
         Blocks\Header::class  => self::HEADER,
         Blocks\Image::class   => self::IMAGE,
         Blocks\Input::class   => self::INPUT,

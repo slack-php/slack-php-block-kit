@@ -228,7 +228,7 @@ The following are supported elements from the Block Kit documentation:
 | Block    | Checkboxes         | ✅             |
 | Block    | Context            | ✅             |
 | Block    | Divider            | ✅             |
-| Block    | File               | ❌             |
+| Block    | File               | ✅             |
 | Block    | Header             | ✅             |
 | Block    | Image              | ✅             |
 | Block    | Input              | ✅             |

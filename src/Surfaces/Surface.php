@@ -161,6 +161,18 @@ abstract class Surface extends Element
         return $this->add($block);
     }
 
+    /**
+     * @param string $text
+     * @param string|null $blockId
+     * @return static
+     */
+    public function header(string $text, ?string $blockId = null): self
+    {
+        $block = new Header($blockId, $text);
+
+        return $this->add($block);
+    }
+
     public function validate(): void
     {
         $blocks = $this->getBlocks();
