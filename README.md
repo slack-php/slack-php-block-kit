@@ -93,9 +93,9 @@ echo json_encode($msg);
 echo $msg->toJson(true);
 ```
 
-### Fluid Interface
+### Fluent Interface
 
-When using the fluid interface, every method that sets a property or adds a sub-element returns the original element's
+When using the fluent interface, every method that sets a property or adds a sub-element returns the original element's
 object, so you can chain additional method calls.
 
 ```php
@@ -104,7 +104,7 @@ $msg = Message::new()
     ->divider();
 ```
 
-Methods with a `new` prefix will return the new element's object, so be careful with how you are using the fluid
+Methods with a `new` prefix will return the new element's object, so be careful with how you are using the fluent
 interface in those cases.
 
 ```php
@@ -133,7 +133,7 @@ echo json_encode($msg);
 
 #### Tapping
 
-Tapping is a way to keep the fluid interface going, but makes sure the whole message is preserved.
+Tapping is a way to keep the fluent interface going, but makes sure the whole message is preserved.
 
 ```php
 // Correctly renders the whole message, by using tap()
