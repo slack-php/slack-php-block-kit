@@ -6,10 +6,7 @@ namespace Jeremeamia\Slack\BlockKit\Tests\Surfaces;
 
 use Jeremeamia\Slack\BlockKit\Blocks\Section;
 use Jeremeamia\Slack\BlockKit\Blocks\Virtual\TwoColumnTable;
-use Jeremeamia\Slack\BlockKit\Blocks\Virtual\VirtualBlock;
-use Jeremeamia\Slack\BlockKit\Surfaces\Surface;
 use Jeremeamia\Slack\BlockKit\Tests\TestCase;
-use Jeremeamia\Slack\BlockKit\Type;
 
 /**
  * @covers \Jeremeamia\Slack\BlockKit\Surfaces\Surface

@@ -215,42 +215,47 @@ $message = Message::fromArray($decodedMessageJson);
 $message = Message::fromJson($messageJson);
 ```
 
-## Supported Elements
+### Message Formatting
 
-The following are supported elements from the Block Kit documentation:
+The `Formatter` class exists to provide helpers for formatting "mrkdwn" text. These helpers can be used so that you
+don't have to have the Slack mrkdwn syntax memorized. Also, these functions will properly escape `<`, `>`, and `&`
+characters automatically, if it's needed.
 
-| **Type** | **Element**        | **Supported?** |
-|----------|--------------------|----------------|
-| Surface  | App Home           | ✅             |
-| Surface  | Message            | ✅             |
-| Surface  | Model              | ✅             |
-| Block    | Actions            | ✅             |
-| Block    | Checkboxes         | ✅             |
-| Block    | Context            | ✅             |
-| Block    | Divider            | ✅             |
-| Block    | File               | ✅             |
-| Block    | Header             | ✅             |
-| Block    | Image              | ✅             |
-| Block    | Input              | ✅             |
-| Block    | Section            | ✅             |
-| Input    | Button             | ✅️             |
-| Input    | Date Picker        | ✅             |
-| Input    | Multi-select Menus | ✅✅✅✅✅    |
-| Input    | Overflow Menu      | ✅             |
-| Input    | Plain Text Input   | ✅             |
-| Input    | Radio Buttons      | ✅             |
-| Input    | Select Menus       | ✅✅✅✅✅    |
-| Input    | Time Picker        | ✅             |
-| Partial  | Confirm Dialog     | ✅             |
-| Partial  | Mrkdwn Text        | ✅             |
-| Partial  | Fields             | ✅             |
-| Partial  | Option             | ✅             |
-| Partial  | Option Group       | ✅             |
-| Partial  | Plain Text         | ✅             |
+Example:
+```php
+// Note: $event is meant to represent some kind of DTO from your own application.
+$fmt = Kit::formatter();
+$msg = Kit::newMessage()->text($fmt->sub(
+    'Hello, {audience}! On {date}, {host} will be hosting an AMA in the {channel} channel at {time}.',
+    [
+        'audience' => $fmt->atHere(),
+        'date'     => $fmt->date($event->timestamp),
+        'host'     => $fmt->user($event->hostId),
+        'channel'  => $fmt->channel($event->channelId),
+        'time'     => $fmt->time($event->timestamp),
+    ]
+));
+```
 
-### Virtual Elements
+Example Result:
+```json
+{
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Hello, <!here>! On <!date^1608322949^{date}|2020-12-18T20:22:29+00:00>, <@U12345678> will be hosting an AMA in the <#C12345678> channel at <!date^1608322949^{time}|2020-12-18T20:22:29+00:00>."
+			}
+		}
+	]
+}
+```
 
-The following are virtual/custom elements composed of one or more blocks:
+## Virtual Elements
+
+In addition to the standard Block Kit elements, the following are virtual/custom elements composed of one or
+more blocks:
 
 * `TwoColumnTable` - Uses Sections with Fields to create a two-column table with an optional header.
 

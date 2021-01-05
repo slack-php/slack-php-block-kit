@@ -27,13 +27,13 @@ abstract class Type
     public const SECTION = 'section';
 
     // Inputs
-    public const BUTTON            = 'button';
-    public const CHECKBOXES        = 'checkboxes';
-    public const DATEPICKER        = 'datepicker';
-    public const TEXT_INPUT        = 'plain_text_input';
-    public const TIMEPICKER        = 'timepicker';
-    public const OVERFLOW_MENU     = 'overflow';
-    public const RADIO_BUTTONS     = 'radio_buttons';
+    public const BUTTON        = 'button';
+    public const CHECKBOXES    = 'checkboxes';
+    public const DATEPICKER    = 'datepicker';
+    public const TEXT_INPUT    = 'plain_text_input';
+    public const TIMEPICKER    = 'timepicker';
+    public const OVERFLOW_MENU = 'overflow';
+    public const RADIO_BUTTONS = 'radio_buttons';
 
     // Select Menus
     public const MULTI_SELECT_MENU_CHANNELS      = 'multi_channels_select';
@@ -182,7 +182,7 @@ abstract class Type
         Blocks\Actions::class => self::ACTIONS,
         Blocks\Context::class => self::CONTEXT,
         Blocks\Divider::class => self::DIVIDER,
-        Blocks\File::class     => self::FILE,
+        Blocks\File::class    => self::FILE,
         Blocks\Header::class  => self::HEADER,
         Blocks\Image::class   => self::IMAGE,
         Blocks\Input::class   => self::INPUT,
@@ -192,13 +192,13 @@ abstract class Type
         Blocks\Virtual\TwoColumnTable::class => self::SECTION, // Composed of Sections
 
         // Inputs
-        Inputs\Button::class          => self::BUTTON,
-        Inputs\Checkboxes::class      => self::CHECKBOXES,
-        Inputs\DatePicker::class      => self::DATEPICKER,
-        Inputs\OverflowMenu::class    => self::OVERFLOW_MENU,
-        Inputs\RadioButtons::class    => self::RADIO_BUTTONS,
-        Inputs\TextInput::class       => self::TEXT_INPUT,
-        Inputs\TimePicker::class      => self::TIMEPICKER,
+        Inputs\Button::class       => self::BUTTON,
+        Inputs\Checkboxes::class   => self::CHECKBOXES,
+        Inputs\DatePicker::class   => self::DATEPICKER,
+        Inputs\OverflowMenu::class => self::OVERFLOW_MENU,
+        Inputs\RadioButtons::class => self::RADIO_BUTTONS,
+        Inputs\TextInput::class    => self::TEXT_INPUT,
+        Inputs\TimePicker::class   => self::TIMEPICKER,
 
         // Select Menus
         SelectMenus\MultiChannelSelectMenu::class       => self::MULTI_SELECT_MENU_CHANNELS,

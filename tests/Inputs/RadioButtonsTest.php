@@ -79,7 +79,6 @@ class RadioButtonsTest extends TestCase
 
     public function testTooManyOptions()
     {
-
         $this->expectException(Exception::class);
         $input = (new RadioButtons())
             ->option('foo', 'foo')

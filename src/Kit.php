@@ -6,10 +6,24 @@ namespace Jeremeamia\Slack\BlockKit;
 
 use Jeremeamia\Slack\BlockKit\Surfaces;
 
-use function rawurlencode;
-
+/**
+ * Kit act as a static façade to the whole block kit library.
+ *
+ * It provides methods to instantiate each type of surface, preview a surface using Slack's Block Kit Builder, and
+ * access the singleton Config and Formatter instances. The Kit's instances of Config and Formatter are used throughout
+ * the rest of the library.
+ */
 abstract class Kit
 {
+    /** @var Config */
+    private static $config;
+
+    /** @var Formatter */
+    private static $formatter;
+
+    /** @var Previewer */
+    private static $previewer;
+
     public static function newAppHome(): Surfaces\AppHome
     {
         return new Surfaces\AppHome();
@@ -25,20 +39,30 @@ abstract class Kit
         return new Surfaces\Modal();
     }
 
-    public static function preview(Surfaces\Surface $surface): string
+    public static function config(): Config
     {
-        if ($surface instanceof Surfaces\Message) {
-            // Block Kit Builder doesn't support message directives.
-            $surface->directives([]);
-        } elseif ($surface instanceof Surfaces\Attachment) {
-            // Block Kit Builder can only show an attachment within a message.
-            $surface = self::newMessage()->addAttachment($surface);
-        } elseif ($surface instanceof Surfaces\WorkflowStep) {
-            throw new Exception('The "workflow_step" surface is not compatible with Block Kit Builder');
+        if (!isset(self::$config)) {
+            self::$config = Config::new();
         }
 
-        $encoded = str_replace(['%22', '%3A'], ['"', ':'], rawurlencode($surface->toJson()));
+        return self::$config;
+    }
 
-        return "https://app.slack.com/block-kit-builder#{$encoded}";
+    public static function formatter(): Formatter
+    {
+        if (!isset(self::$formatter)) {
+            self::$formatter = Formatter::new();
+        }
+
+        return self::$formatter;
+    }
+
+    public static function preview(Surfaces\Surface $surface): string
+    {
+        if (!isset(self::$previewer)) {
+            self::$previewer = Previewer::new();
+        }
+
+        return self::$previewer->preview($surface);
     }
 }

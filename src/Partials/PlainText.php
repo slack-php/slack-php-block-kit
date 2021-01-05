@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
 use Jeremeamia\Slack\BlockKit\HydrationData;
+use Jeremeamia\Slack\BlockKit\Kit;
 
 class PlainText extends Text
 {
@@ -21,16 +22,15 @@ class PlainText extends Text
             $this->text($text);
         }
 
-        if ($emoji !== null) {
-            $this->emoji($emoji);
-        }
+        $emoji = $emoji ?? Kit::config()->getDefaultEmojiSetting();
+        $this->emoji($emoji);
     }
 
     /**
-     * @param bool $emoji
+     * @param bool|null $emoji
      * @return static
      */
-    public function emoji(bool $emoji): self
+    public function emoji(?bool $emoji): self
     {
         $this->emoji = $emoji;
 
@@ -53,9 +53,7 @@ class PlainText extends Text
 
     protected function hydrate(HydrationData $data): void
     {
-        if ($data->has('emoji')) {
-            $this->emoji($data->useValue('emoji', true));
-        }
+        $this->emoji($data->useValue('emoji'));
 
         parent::hydrate($data);
     }

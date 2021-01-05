@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData, Type};
+use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData};
 
 abstract class Text extends Element
 {

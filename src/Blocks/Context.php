@@ -50,7 +50,7 @@ class Context extends BlockElement
         return $this->add(new PlainText($text, $emoji));
     }
 
-    public function mrkdwnText(string $text, bool $verbatim = false): self
+    public function mrkdwnText(string $text, ?bool $verbatim = null): self
     {
         return $this->add(new MrkdwnText($text, $verbatim));
     }

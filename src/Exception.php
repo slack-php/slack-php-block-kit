@@ -7,6 +7,8 @@ namespace Jeremeamia\Slack\BlockKit;
 use RuntimeException;
 use Throwable;
 
+use function vsprintf;
+
 class Exception extends RuntimeException
 {
     public function __construct(string $message, array $args = [], Throwable $previous = null)

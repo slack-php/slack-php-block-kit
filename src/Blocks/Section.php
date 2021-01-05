@@ -4,7 +4,15 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData, Inputs, Partials, Type};
+use Jeremeamia\Slack\BlockKit\{
+    Element,
+    Exception,
+    HydrationData,
+    Inputs,
+    Kit,
+    Partials,
+    Type,
+};
 
 class Section extends BlockElement
 {
@@ -83,10 +91,10 @@ class Section extends BlockElement
 
     /**
      * @param string $text
-     * @param bool $verbatim
+     * @param bool|null $verbatim
      * @return self
      */
-    public function mrkdwnText(string $text, bool $verbatim = false): self
+    public function mrkdwnText(string $text, ?bool $verbatim = null): self
     {
         return $this->setText(new Partials\MrkdwnText($text, $verbatim));
     }
@@ -97,7 +105,7 @@ class Section extends BlockElement
      */
     public function code(string $code): self
     {
-        return $this->setText(new Partials\MrkdwnText("```\n{$code}\n```"));
+        return $this->setText(new Partials\MrkdwnText(Kit::formatter()->codeBlock($code), true));
     }
 
     /**

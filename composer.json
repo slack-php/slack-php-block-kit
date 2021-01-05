@@ -26,17 +26,22 @@
         }
     },
     "scripts": {
-        "gen-test": "php bin/gen-test.php",
         "stan": "phpstan analyse -c phpstan.neon",
         "style-fix": "phpcbf --standard=PSR12 src tests",
         "style-lint": "phpcs --standard=PSR12 src tests",
         "test": "phpunit --bootstrap=vendor/autoload.php --no-coverage tests",
+        "test-all":  [
+            "@style-lint",
+            "@stan",
+            "@test-coverage"
+        ],
         "test-ci": "phpunit --bootstrap=vendor/autoload.php --coverage-text --whitelist=src --do-not-cache-result tests",
         "test-coverage": [
             "phpunit --bootstrap=vendor/autoload.php --coverage-html=build/coverage --whitelist=src tests",
             "open build/coverage/index.html"
         ],
         "test-debug": "phpunit --bootstrap=vendor/autoload.php --no-coverage --debug tests",
-        "test-dox": "phpunit --bootstrap=vendor/autoload.php --no-coverage --testdox tests"
+        "test-dox": "phpunit --bootstrap=vendor/autoload.php --no-coverage --testdox tests",
+        "test-gen": "php bin/gen-test.php"
     }
 }

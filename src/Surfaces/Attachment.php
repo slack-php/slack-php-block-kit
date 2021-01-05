@@ -23,6 +23,16 @@ class Attachment extends Surface
     private $color;
 
     /**
+     * Returns the attachment as a new Message with the attachment attached.
+     *
+     * @return Message
+     */
+    public function asMessage(): Message
+    {
+        return Message::new()->addAttachment($this);
+    }
+
+    /**
      * Sets the hex color of the attachment. It Appears as a border along the left side.
      *
      * This makes sure the `#` is included in the color, in case you forget it.

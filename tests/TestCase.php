@@ -7,6 +7,8 @@ use Jeremeamia\Slack\BlockKit\Blocks\Virtual\VirtualBlock;
 use Jeremeamia\Slack\BlockKit\Surfaces\Surface;
 use Jeremeamia\Slack\BlockKit\Type;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
+use ReflectionException;
+use ReflectionProperty;
 
 class TestCase extends PhpUnitTestCase
 {
@@ -73,5 +75,19 @@ class TestCase extends PhpUnitTestCase
         }
 
         return $virtualBlock;
+    }
+
+    /**
+     * @param string $class
+     * @param array $properties
+     * @throws ReflectionException
+     */
+    protected function setStaticProperties(string $class, array $properties): void
+    {
+        foreach ($properties as $property => $value) {
+            $reflection = new ReflectionProperty($class, $property);
+            $reflection->setAccessible(true);
+            $reflection->setValue(null, $value);
+        }
     }
 }

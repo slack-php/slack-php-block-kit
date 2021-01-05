@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Tests\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Surfaces\Attachment;
+use Jeremeamia\Slack\BlockKit\Surfaces\{Attachment, Message};
 use Jeremeamia\Slack\BlockKit\Tests\TestCase;
 use Jeremeamia\Slack\BlockKit\Type;
 
@@ -15,7 +15,7 @@ class AttachmentTest extends TestCase
 {
     public function testCanCreateAttachment()
     {
-        $msg = Attachment::new()->color('00ff00')->text('foo');
+        $att = Attachment::new()->color('00ff00')->text('foo');
 
         $this->assertJsonData([
             'color' => '#00ff00',
@@ -28,6 +28,14 @@ class AttachmentTest extends TestCase
                     ],
                 ],
             ],
-        ], $msg);
+        ], $att);
+    }
+
+    public function testCanCreateMessageFromAttachment()
+    {
+        $att = Attachment::new()->color('00ff00')->text('foo');
+        $msg = $att->asMessage();
+
+        $this->assertInstanceOf(Message::class, $msg);
     }
 }
