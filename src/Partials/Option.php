@@ -117,7 +117,7 @@ class Option extends Element
             throw new Exception('Option element must have a "value" value');
         }
 
-        Text::validateString($this->value, 75, 1);
+        Text::validateString($this->value, 75);
 
         $parent = $this->getParent();
 

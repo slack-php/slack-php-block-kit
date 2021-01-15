@@ -24,8 +24,8 @@ final class Previewer
     {
         // Prepare/validate the surface.
         if ($surface instanceof Surfaces\Message) {
-            // Block Kit Builder doesn't support message directives.
-            $surface->directives([]);
+            // Block Kit Builder doesn't support message directives or fallback text.
+            $surface = $surface->asPreviewableMessage();
         } elseif ($surface instanceof Surfaces\Attachment) {
             // Block Kit Builder can only show an attachment within a message.
             $surface = $surface->asMessage();

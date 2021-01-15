@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jeremeamia\Slack\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\{Exception, HydrationData};
+use Jeremeamia\Slack\BlockKit\{Exception, HydrationData, Partials};
 
 /**
  * App-published messages are dynamic yet transient spaces. They allow users to complete workflows among their
@@ -26,11 +26,14 @@ class Message extends Surface
         self::DELETE_ORIGINAL,
     ];
 
+    /** @var array|Attachment[] Attachments containing secondary content. */
+    private $attachments = [];
+
     /** @var array|string[] A message can have a directive (e.g., response_type) included along with its blocks. */
     private $directives = [];
 
-    /** @var array|Attachment[] Attachments containing secondary content. */
-    private $attachments = [];
+    /** @var array */
+    private $fallbackText = [];
 
     /**
      * Configures message to send privately to the user.
@@ -78,9 +81,26 @@ class Message extends Surface
      * @param array $directives
      * @return static
      */
-    public function directives(array $directives): self
+    private function directives(array $directives): self
     {
         $this->directives = $directives;
+
+        return $this;
+    }
+
+    /**
+     * Sets the legacy "text" property, that acts as a fallback in situations where blocks cannot be rendered.
+     *
+     * @param string $message
+     * @param bool|null $mrkdwn
+     * @return Message
+     */
+    public function fallbackText(string $message, ?bool $mrkdwn = null): self
+    {
+        $this->fallbackText = ['text' => $message];
+        if ($mrkdwn !== null) {
+            $this->fallbackText['mrkdwn'] = $mrkdwn;
+        }
 
         return $this;
     }
@@ -107,6 +127,21 @@ class Message extends Surface
         return $attachment;
     }
 
+    /**
+     * Clones a message for the purpose of generating a Block Kit Builder preview URL.
+     *
+     * @return Message
+     * @internal Used by Previewer only.
+     */
+    public function asPreviewableMessage(): self
+    {
+        $message = clone $this;
+        $message->directives = [];
+        $message->fallbackText = [];
+
+        return $message;
+    }
+
     public function validate(): void
     {
         if (!empty($this->directives) && !in_array($this->directives, self::VALID_DIRECTIVES, true)) {
@@ -118,18 +153,24 @@ class Message extends Surface
             parent::validate();
         }
 
-        if (!$hasBlocks && empty($this->attachments)) {
-            throw new Exception('A message must contain blocks and/or attachments');
-        }
-
+        $hasAttachments = !empty($this->attachments);
         foreach ($this->attachments as $attachment) {
             $attachment->validate();
+        }
+
+        $hasText = !empty($this->fallbackText);
+        if ($hasText) {
+            Partials\Text::validateString($this->fallbackText['text']);
+        }
+
+        if (!($hasBlocks || $hasAttachments || $hasText)) {
+            throw new Exception('A message must contain at least one of: blocks, attachments, text');
         }
     }
 
     public function toArray(): array
     {
-        $data = $this->directives + parent::toArray();
+        $data = $this->directives + $this->fallbackText + parent::toArray();
 
         if ($this->attachments) {
             $data['attachments'] = [];
@@ -152,6 +193,10 @@ class Message extends Surface
             'replace_original' => $data->useValue('replace_original'),
             'delete_original' => $data->useValue('delete_original'),
         ]));
+
+        if ($data->has('text')) {
+            $this->fallbackText($data->useValue('text'), $data->useValue('mrkdwn'));
+        }
 
         foreach ($data->useElements('attachments') as $attachment) {
             $this->addAttachment(Attachment::fromArray($attachment));

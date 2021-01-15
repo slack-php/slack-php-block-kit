@@ -33,7 +33,7 @@ abstract class Text extends Element
      * @param int|null $max Max length, or null if it doesn't have a max.
      * @param int $min Min length, defaults to 0.
      */
-    public function validateWithLength(?int $max = null, int $min = 0): void
+    public function validateWithLength(?int $max = null, int $min = 1): void
     {
         self::validateString($this->text, $max, $min);
     }
@@ -45,7 +45,7 @@ abstract class Text extends Element
      * @param int|null $max Max length, or null if it doesn't have a max.
      * @param int $min Min length, defaults to 0.
      */
-    public static function validateString(string $text, ?int $max = null, int $min = 0): void
+    public static function validateString(?string $text, ?int $max = null, int $min = 1): void
     {
         if (!is_string($text)) {
             throw new Exception('Text element must have a "text" value');

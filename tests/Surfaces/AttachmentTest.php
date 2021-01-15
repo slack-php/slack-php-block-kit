@@ -13,7 +13,7 @@ use Jeremeamia\Slack\BlockKit\Type;
  */
 class AttachmentTest extends TestCase
 {
-    public function testCanCreateAttachment()
+    public function testCanCreateAttachment(): void
     {
         $att = Attachment::new()->color('00ff00')->text('foo');
 
@@ -31,7 +31,7 @@ class AttachmentTest extends TestCase
         ], $att);
     }
 
-    public function testCanCreateMessageFromAttachment()
+    public function testCanCreateMessageFromAttachment(): void
     {
         $att = Attachment::new()->color('00ff00')->text('foo');
         $msg = $att->asMessage();

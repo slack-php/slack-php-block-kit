@@ -105,7 +105,7 @@ class Section extends BlockElement
      */
     public function code(string $code): self
     {
-        return $this->setText(new Partials\MrkdwnText(Kit::formatter()->codeBlock($code), true));
+        return $this->mrkdwnText(Kit::formatter()->codeBlock($code), true);
     }
 
     /**
