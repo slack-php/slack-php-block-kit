@@ -27,7 +27,7 @@ trait HasOptionGroups
     }
 
     /**
-     * @param array $optionGroups
+     * @param array<string, array<string, string>|string[]> $optionGroups
      * @return static
      */
     public function optionGroups(array $optionGroups): self
@@ -41,7 +41,7 @@ trait HasOptionGroups
 
     /**
      * @param string $label
-     * @param array $options
+     * @param array<string, string>|string[] $options
      * @return static
      */
     public function optionGroup(string $label, array $options): self

@@ -46,4 +46,35 @@ class OptionListTest extends TestCase
             ]
         ], $optionsList);
     }
+
+    public function testCanCreateAnOptionsListWithOptionsFromArray()
+    {
+        $optionsList = OptionList::new()->options(['foo', 'bar', 'baz']);
+
+        $this->assertJsonData([
+            'options' => [
+                [
+                    'text' => [
+                        'type' => 'plain_text',
+                        'text' => 'foo',
+                    ],
+                    'value' => 'foo',
+                ],
+                [
+                    'text' => [
+                        'type' => 'plain_text',
+                        'text' => 'bar',
+                    ],
+                    'value' => 'bar',
+                ],
+                [
+                    'text' => [
+                        'type' => 'plain_text',
+                        'text' => 'baz',
+                    ],
+                    'value' => 'baz',
+                ],
+            ]
+        ], $optionsList);
+    }
 }

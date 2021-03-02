@@ -80,26 +80,28 @@ trait HasOptions
     }
 
     /**
-     * @param array|string[] $options
+     * @param array<string, string>|string[] $options
      * @return static
      */
     public function options(array $options): self
     {
         foreach ($options as $text => $value) {
-            $this->addOption(Option::new((string) $text, (string) $value));
+            $value = (string) $value;
+            $text = is_int($text) ? $value : (string) $text;
+            $this->addOption(Option::new($text, $value));
         }
 
         return $this;
     }
 
     /**
-     * @param string $name
+     * @param string $text
      * @param string $value
      * @return self
      */
-    public function initialOption(string $name, string $value): self
+    public function initialOption(string $text, string $value): self
     {
-        $initialOption = Option::new($name, $value);
+        $initialOption = Option::new($text, $value);
         $initialOption->setParent($this);
         $this->initialOptions[] = $initialOption;
 
@@ -107,13 +109,15 @@ trait HasOptions
     }
 
     /**
-     * @param array $options
+     * @param array<string, string>|string[] $options
      * @return self
      */
     public function initialOptions(array $options): self
     {
-        foreach ($options as $name => $value) {
-            $this->initialOption((string) $name, (string) $value);
+        foreach ($options as $text => $value) {
+            $value = (string) $value;
+            $text = is_int($text) ? $value : (string) $text;
+            $this->initialOption($text, $value);
         }
 
         return $this;

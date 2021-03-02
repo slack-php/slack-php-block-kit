@@ -15,7 +15,7 @@ class OptionGroup extends Element
 
     /**
      * @param string|null $label
-     * @param array|null $options
+     * @param array<string, string>|string[]|null $options
      * @return self
      */
     public static function new(?string $label = null, ?array $options = null): self
