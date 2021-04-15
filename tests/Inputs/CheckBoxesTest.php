@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Inputs;
+namespace SlackPhp\BlockKit\Tests\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Inputs\Checkboxes;
-use Jeremeamia\Slack\BlockKit\Partials\Confirm;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
-use Jeremeamia\Slack\BlockKit\Type;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\Inputs\Checkboxes;
+use SlackPhp\BlockKit\Partials\Confirm;
+use SlackPhp\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Type;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Inputs\Checkboxes
+ * @covers \SlackPhp\BlockKit\Inputs\Checkboxes
  */
 class CheckBoxesTest extends TestCase
 {

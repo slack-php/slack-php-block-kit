@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Surfaces;
+namespace SlackPhp\BlockKit\Tests\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Blocks\Section;
-use Jeremeamia\Slack\BlockKit\Blocks\Virtual\TwoColumnTable;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Blocks\Section;
+use SlackPhp\BlockKit\Blocks\Virtual\TwoColumnTable;
+use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Surfaces\Surface
+ * @covers \SlackPhp\BlockKit\Surfaces\Surface
  */
 class SurfaceTest extends TestCase
 {

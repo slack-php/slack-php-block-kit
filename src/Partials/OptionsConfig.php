@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Partials;
+namespace SlackPhp\BlockKit\Partials;
 
 class OptionsConfig
 {

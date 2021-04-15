@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Kit;
+use SlackPhp\BlockKit\Kit;
 
 require __DIR__ . '/bootstrap.php';
 

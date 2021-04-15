@@ -4,18 +4,18 @@
 </header>
 
 <p align="center">
-  <img src="https://repository-images.githubusercontent.com/220265593/f2249880-0872-11ea-9eba-fb8f1b1c5ffb" alt="Slack Block Kit for PHP" width="50%">
+  <img src="https://repository-images.githubusercontent.com/358292134/398fbb00-9dbe-11eb-9167-fd67cf034596" alt="Slack logo placed on top of blocks" width="50%">
 </p>
 
 <p align="center">
   <a href="http://php.net/">
     <img src="https://img.shields.io/badge/code-php7-8892bf.svg" alt="Coded in PHP 7">
   </a>
-  <a href="https://packagist.org/packages/jeremeamia/slack-block-kit">
-    <img src="https://img.shields.io/packagist/v/jeremeamia/slack-block-kit.svg" alt="Packagist Version">
+  <a href="https://packagist.org/packages/slack-php/slack-block-kit">
+    <img src="https://img.shields.io/packagist/v/slack-php/slack-block-kit.svg" alt="Packagist Version">
   </a>
-  <a href="https://github.com/jeremeamia/slack-block-kit/actions">
-    <img src="https://img.shields.io/github/workflow/status/jeremeamia/slack-block-kit/PHP%20Composer.svg" alt="Build Status">
+  <a href="https://github.com/slack-php/slack-php-block-kit/actions">
+    <img src="https://img.shields.io/github/workflow/status/slack-php/slack-php-block-kit/PHP%20Composer.svg" alt="Build Status">
   </a>
 </p>
 
@@ -54,7 +54,7 @@ In general, we refer to all of the different things in Block Kit collectively as
 Install easily via Composer:
 
 ```bash
-composer require jeremeamia/slack-block-kit
+composer require slack-php/slack-block-kit
 ```
 
 Then include the Composer-generated autoloader in your project's initialization code.
@@ -69,8 +69,8 @@ class acts as a façade to the library, and let's you start new messages/modals.
 ```php
 <?php
 
-use Jeremeamia\Slack\BlockKit\Kit;
-use Jeremeamia\Slack\BlockKit\Surfaces\Message;
+use SlackPhp\BlockKit\Kit;
+use SlackPhp\BlockKit\Surfaces\Message;
 
 // ...
 

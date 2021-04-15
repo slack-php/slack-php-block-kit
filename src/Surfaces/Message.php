@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Surfaces;
+namespace SlackPhp\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\{Exception, HydrationData, Partials};
+use SlackPhp\BlockKit\{Exception, HydrationData, Partials};
 
 /**
  * App-published messages are dynamic yet transient spaces. They allow users to complete workflows among their

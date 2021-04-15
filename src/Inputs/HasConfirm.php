@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Inputs;
+namespace SlackPhp\BlockKit\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Partials\Confirm;
+use SlackPhp\BlockKit\Partials\Confirm;
 
 trait HasConfirm
 {

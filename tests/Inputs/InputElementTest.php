@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Inputs;
+namespace SlackPhp\BlockKit\Tests\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Inputs\InputElement;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Inputs\InputElement;
+use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Inputs\InputElement
+ * @covers \SlackPhp\BlockKit\Inputs\InputElement
  */
 class InputElementTest extends TestCase
 {

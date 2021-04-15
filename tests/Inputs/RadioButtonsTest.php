@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Inputs;
+namespace SlackPhp\BlockKit\Tests\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Inputs\RadioButtons;
-use Jeremeamia\Slack\BlockKit\Partials\Confirm;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
-use Jeremeamia\Slack\BlockKit\Type;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\Inputs\RadioButtons;
+use SlackPhp\BlockKit\Partials\Confirm;
+use SlackPhp\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Type;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Inputs\RadioButtons
+ * @covers \SlackPhp\BlockKit\Inputs\RadioButtons
  */
 class RadioButtonsTest extends TestCase
 {

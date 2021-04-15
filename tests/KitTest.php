@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests;
+namespace SlackPhp\BlockKit\Tests;
 
-use Jeremeamia\Slack\BlockKit\Config;
-use Jeremeamia\Slack\BlockKit\Formatter;
-use Jeremeamia\Slack\BlockKit\Kit;
-use Jeremeamia\Slack\BlockKit\Surfaces\{AppHome, Message, Modal};
+use SlackPhp\BlockKit\Config;
+use SlackPhp\BlockKit\Formatter;
+use SlackPhp\BlockKit\Kit;
+use SlackPhp\BlockKit\Surfaces\{AppHome, Message, Modal};
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Kit
+ * @covers \SlackPhp\BlockKit\Kit
  */
 class KitTest extends TestCase
 {

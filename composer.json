@@ -1,6 +1,6 @@
 {
-    "name": "jeremeamia/slack-block-kit",
-    "description": "OOP interface for writing Slack Block Kit messages",
+    "name": "slack-php/slack-block-kit",
+    "description": "OOP interface for writing Slack Block Kit messages and modals",
     "type": "library",
     "license": "MIT",
     "config": {
@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Jeremeamia\\Slack\\BlockKit\\": "src/"
+            "SlackPhp\\BlockKit\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jeremeamia\\Slack\\BlockKit\\Tests\\": "tests/"
+            "SlackPhp\\BlockKit\\Tests\\": "tests/"
         }
     },
     "scripts": {

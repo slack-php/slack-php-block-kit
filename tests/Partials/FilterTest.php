@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Partials;
+namespace SlackPhp\BlockKit\Tests\Partials;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Partials\Filter;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\Partials\Filter;
+use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Partials\Filter
+ * @covers \SlackPhp\BlockKit\Partials\Filter
  */
 class FilterTest extends TestCase
 {

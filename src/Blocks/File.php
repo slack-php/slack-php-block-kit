@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Blocks;
+namespace SlackPhp\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\HydrationData;
 
 class File extends BlockElement
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit;
+namespace SlackPhp\BlockKit;
 
 /**
  * @internal Used by fromArray implementations.

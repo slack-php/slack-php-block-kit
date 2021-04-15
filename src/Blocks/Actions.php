@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Blocks;
+namespace SlackPhp\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData, Inputs, Type};
+use SlackPhp\BlockKit\{Element, Exception, HydrationData, Inputs, Type};
 
 class Actions extends BlockElement
 {

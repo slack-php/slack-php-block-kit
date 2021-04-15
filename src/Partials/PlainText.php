@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Partials;
+namespace SlackPhp\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\HydrationData;
-use Jeremeamia\Slack\BlockKit\Kit;
+use SlackPhp\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Kit;
 
 class PlainText extends Text
 {

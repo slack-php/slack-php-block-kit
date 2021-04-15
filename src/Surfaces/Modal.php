@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Surfaces;
+namespace SlackPhp\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\{
+use SlackPhp\BlockKit\{
     Blocks\Input,
     Exception,
     HydrationData,

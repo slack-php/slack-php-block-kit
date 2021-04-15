@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Blocks;
+namespace SlackPhp\BlockKit\Tests\Blocks;
 
-use Jeremeamia\Slack\BlockKit\Blocks\Header;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
-use Jeremeamia\Slack\BlockKit\Type;
+use SlackPhp\BlockKit\Blocks\Header;
+use SlackPhp\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Type;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Blocks\Header
+ * @covers \SlackPhp\BlockKit\Blocks\Header
  */
 class HeaderTest extends TestCase
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Blocks;
+namespace SlackPhp\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\Element;
-use Jeremeamia\Slack\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Element;
+use SlackPhp\BlockKit\HydrationData;
 
 abstract class BlockElement extends Element
 {

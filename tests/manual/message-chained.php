@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Blocks\{Actions, Context, Header, Image, Section};
-use Jeremeamia\Slack\BlockKit\Inputs\Button;
-use Jeremeamia\Slack\BlockKit\Inputs\DatePicker;
-use Jeremeamia\Slack\BlockKit\Surfaces\Message;
+use SlackPhp\BlockKit\Blocks\{Actions, Context, Header, Image, Section};
+use SlackPhp\BlockKit\Inputs\Button;
+use SlackPhp\BlockKit\Inputs\DatePicker;
+use SlackPhp\BlockKit\Surfaces\Message;
 
 require __DIR__ . '/bootstrap.php';
 

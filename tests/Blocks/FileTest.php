@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Blocks;
+namespace SlackPhp\BlockKit\Tests\Blocks;
 
-use Jeremeamia\Slack\BlockKit\Blocks\File;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
-use Jeremeamia\Slack\BlockKit\Type;
+use SlackPhp\BlockKit\Blocks\File;
+use SlackPhp\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Type;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Blocks\File
+ * @covers \SlackPhp\BlockKit\Blocks\File
  */
 class FileTest extends TestCase
 {

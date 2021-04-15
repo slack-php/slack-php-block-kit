@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
+namespace SlackPhp\BlockKit\Inputs\SelectMenus;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\HydrationData;
-use Jeremeamia\Slack\BlockKit\Inputs\{HasPlaceholder, HasConfirm, InputElement};
-use Jeremeamia\Slack\BlockKit\Partials\{Confirm, PlainText};
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Inputs\{HasPlaceholder, HasConfirm, InputElement};
+use SlackPhp\BlockKit\Partials\{Confirm, PlainText};
 
 abstract class SelectMenu extends InputElement
 {

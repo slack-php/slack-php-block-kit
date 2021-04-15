@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
+namespace SlackPhp\BlockKit\Inputs\SelectMenus;
 
-use Jeremeamia\Slack\BlockKit\Partials\{HasOptionGroups, OptionsConfig};
-use Jeremeamia\Slack\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Partials\{HasOptionGroups, OptionsConfig};
+use SlackPhp\BlockKit\HydrationData;
 
 class MultiStaticSelectMenu extends MultiSelectMenu
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Jeremeamia\Slack\BlockKit\Tests;
+namespace SlackPhp\BlockKit\Tests;
 
-use Jeremeamia\Slack\BlockKit\Config;
+use SlackPhp\BlockKit\Config;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Config
+ * @covers \SlackPhp\BlockKit\Config
  */
 class ConfigTest extends TestCase
 {

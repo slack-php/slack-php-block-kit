@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Surfaces;
+namespace SlackPhp\BlockKit\Tests\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Surfaces\Message;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
-use Jeremeamia\Slack\BlockKit\Type;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\Surfaces\Message;
+use SlackPhp\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Type;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Surfaces\Message
+ * @covers \SlackPhp\BlockKit\Surfaces\Message
  */
 class MessageTest extends TestCase
 {
@@ -200,6 +200,6 @@ class MessageTest extends TestCase
     public function testCannotHaveInvalidDirective(): void
     {
         $this->expectException(Exception::class);
-        $msg = Message::fromArray(['response_type' => 'foo']);
+        Message::fromArray(['response_type' => 'foo']);
     }
 }

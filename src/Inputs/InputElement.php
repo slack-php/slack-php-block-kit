@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Inputs;
+namespace SlackPhp\BlockKit\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Element;
-use Jeremeamia\Slack\BlockKit\HydrationData;
-use Jeremeamia\Slack\BlockKit\Partials\{Confirm, PlainText};
+use SlackPhp\BlockKit\Element;
+use SlackPhp\BlockKit\HydrationData;
 
 abstract class InputElement extends Element
 {

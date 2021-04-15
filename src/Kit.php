@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit;
+namespace SlackPhp\BlockKit;
 
-use Jeremeamia\Slack\BlockKit\Surfaces;
+use SlackPhp\BlockKit\Surfaces;
 
 /**
  * Kit act as a static façade to the whole block kit library.

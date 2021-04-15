@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Inputs;
+namespace SlackPhp\BlockKit\Tests\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Inputs\DatePicker;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\Inputs\DatePicker;
+use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Inputs\DatePicker
+ * @covers \SlackPhp\BlockKit\Inputs\DatePicker
  */
 class DatePickerTest extends TestCase
 {
@@ -34,6 +34,6 @@ class DatePickerTest extends TestCase
     public function testMustAdhereToCorrectTimeFormat()
     {
         $this->expectException(Exception::class);
-        $input = (new DatePicker())->initialDate('nope');
+        (new DatePicker())->initialDate('nope');
     }
 }

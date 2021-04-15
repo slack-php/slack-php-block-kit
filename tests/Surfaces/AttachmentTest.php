@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Surfaces;
+namespace SlackPhp\BlockKit\Tests\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Surfaces\{Attachment, Message};
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
-use Jeremeamia\Slack\BlockKit\Type;
+use SlackPhp\BlockKit\Surfaces\{Attachment, Message};
+use SlackPhp\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Type;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Surfaces\Attachment
+ * @covers \SlackPhp\BlockKit\Surfaces\Attachment
  */
 class AttachmentTest extends TestCase
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Jeremeamia\Slack\BlockKit\Tests;
+namespace SlackPhp\BlockKit\Tests;
 
-use Jeremeamia\Slack\BlockKit\Blocks\Section;
-use Jeremeamia\Slack\BlockKit\{Exception, Kit, Type};
+use SlackPhp\BlockKit\Blocks\Section;
+use SlackPhp\BlockKit\{Exception, Kit, Type};
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Type
+ * @covers \SlackPhp\BlockKit\Type
  */
 class TypeTest extends TestCase
 {

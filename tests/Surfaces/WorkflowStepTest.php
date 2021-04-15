@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Surfaces;
+namespace SlackPhp\BlockKit\Tests\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Surfaces\WorkflowStep;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Surfaces\WorkflowStep;
+use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Surfaces\WorkflowStep
+ * @covers \SlackPhp\BlockKit\Surfaces\WorkflowStep
  */
 class WorkflowStepTest extends TestCase
 {

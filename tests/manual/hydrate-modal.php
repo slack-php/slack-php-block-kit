@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Surfaces\Modal;
+use SlackPhp\BlockKit\Surfaces\Modal;
 
 require __DIR__ . '/bootstrap.php';
 

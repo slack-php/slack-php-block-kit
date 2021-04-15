@@ -1,11 +1,11 @@
 <?php
 
-namespace Jeremeamia\Slack\BlockKit\Tests;
+namespace SlackPhp\BlockKit\Tests;
 
-use Jeremeamia\Slack\BlockKit\Formatter;
+use SlackPhp\BlockKit\Formatter;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Formatter
+ * @covers \SlackPhp\BlockKit\Formatter
  */
 class FormatterTest extends TestCase
 {

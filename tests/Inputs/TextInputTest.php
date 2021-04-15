@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Inputs;
+namespace SlackPhp\BlockKit\Tests\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Inputs\TextInput;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\Inputs\TextInput;
+use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Inputs\TextInput
+ * @covers \SlackPhp\BlockKit\Inputs\TextInput
  */
 class TextInputTest extends TestCase
 {
@@ -38,13 +38,13 @@ class TextInputTest extends TestCase
     public function testCannotSetMinLengthLessThanZero()
     {
         $this->expectException(Exception::class);
-        $input = (new TextInput())->minLength(-1);
+        (new TextInput())->minLength(-1);
     }
 
     public function testCannotSetMaxLengthLessThanOne()
     {
         $this->expectException(Exception::class);
-        $input = (new TextInput())->maxLength(0);
+        (new TextInput())->maxLength(0);
     }
 
     public function testCannotSetMaxLengthLessThanMinLength()

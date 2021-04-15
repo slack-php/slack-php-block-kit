@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit;
+namespace SlackPhp\BlockKit;
 
-use Jeremeamia\Slack\BlockKit\{Blocks, Inputs, Partials, Surfaces};
-use Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
+use SlackPhp\BlockKit\{Blocks, Inputs, Partials, Surfaces};
+use SlackPhp\BlockKit\Inputs\SelectMenus;
 
 abstract class Type
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Blocks;
+namespace SlackPhp\BlockKit\Blocks;
 
 class Divider extends BlockElement
 {

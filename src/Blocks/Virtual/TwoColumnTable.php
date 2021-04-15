@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Blocks\Virtual;
+namespace SlackPhp\BlockKit\Blocks\Virtual;
 
-use Jeremeamia\Slack\BlockKit\Blocks\Section;
-use Jeremeamia\Slack\BlockKit\Exception;
+use SlackPhp\BlockKit\Blocks\Section;
+use SlackPhp\BlockKit\Exception;
 
 /**
  * A virtual, multi-block element using sections to create a two-column table.

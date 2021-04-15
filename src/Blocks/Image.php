@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Blocks;
+namespace SlackPhp\BlockKit\Blocks;
 
-use Jeremeamia\Slack\BlockKit\{Exception, HydrationData, Surfaces\Surface};
-use Jeremeamia\Slack\BlockKit\Partials\PlainText;
+use SlackPhp\BlockKit\{Exception, HydrationData, Surfaces\Surface};
+use SlackPhp\BlockKit\Partials\PlainText;
 
 class Image extends BlockElement
 {

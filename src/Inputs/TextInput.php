@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Inputs;
+namespace SlackPhp\BlockKit\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\HydrationData;
-use Jeremeamia\Slack\BlockKit\Partials\PlainText;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Partials\PlainText;
 
 class TextInput extends InputElement
 {

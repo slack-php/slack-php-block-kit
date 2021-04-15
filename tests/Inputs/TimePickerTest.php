@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Inputs;
+namespace SlackPhp\BlockKit\Tests\Inputs;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\Inputs\TimePicker;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\Inputs\TimePicker;
+use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Inputs\TimePicker
+ * @covers \SlackPhp\BlockKit\Inputs\TimePicker
  */
 class TimePickerTest extends TestCase
 {
@@ -34,6 +34,6 @@ class TimePickerTest extends TestCase
     public function testMustAdhereToCorrectTimeFormat()
     {
         $this->expectException(Exception::class);
-        $input = (new TimePicker())->initialTime('nope');
+        (new TimePicker())->initialTime('nope');
     }
 }

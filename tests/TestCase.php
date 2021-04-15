@@ -1,11 +1,11 @@
 <?php
 
-namespace Jeremeamia\Slack\BlockKit\Tests;
+namespace SlackPhp\BlockKit\Tests;
 
-use Jeremeamia\Slack\BlockKit\Blocks\BlockElement;
-use Jeremeamia\Slack\BlockKit\Blocks\Virtual\VirtualBlock;
-use Jeremeamia\Slack\BlockKit\Surfaces\Surface;
-use Jeremeamia\Slack\BlockKit\Type;
+use SlackPhp\BlockKit\Blocks\BlockElement;
+use SlackPhp\BlockKit\Blocks\Virtual\VirtualBlock;
+use SlackPhp\BlockKit\Surfaces\Surface;
+use SlackPhp\BlockKit\Type;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 use ReflectionException;
 use ReflectionProperty;

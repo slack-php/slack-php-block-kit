@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Partials;
+namespace SlackPhp\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\HydrationData;
 
 trait HasOptionGroups
 {

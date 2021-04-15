@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Partials\Confirm;
-use Jeremeamia\Slack\BlockKit\Surfaces\WorkflowStep;
+use SlackPhp\BlockKit\Partials\Confirm;
+use SlackPhp\BlockKit\Surfaces\WorkflowStep;
 
 require __DIR__ . '/bootstrap.php';
 

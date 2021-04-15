@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Kit;
-use Jeremeamia\Slack\BlockKit\Partials\Confirm;
-use Jeremeamia\Slack\BlockKit\Surfaces\Message;
+use SlackPhp\BlockKit\Kit;
+use SlackPhp\BlockKit\Partials\Confirm;
 
 require __DIR__ . '/bootstrap.php';
 
@@ -65,7 +64,7 @@ $msg->newSection('b4')
         ])
         ->initialOptions(['b' => 'l2', 'c' => 'l3']);
 $msg->newSection('b5')
-    ->mrkdwnText('Select from Overflow Menu')
+    ->mrkdwnText('Choose from Overflow Menu')
     ->newOverflowMenuAccessory('m6')
     ->option('foo', 'foo')
     ->urlOption('bar', 'bar', 'https://example.org')

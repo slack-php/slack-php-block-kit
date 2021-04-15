@@ -6,7 +6,7 @@ declare(strict_types=1);
 $classFullname = $argv[1] ?? null;
 if (!$classFullname) {
     echo "The class name to be tested was not provided\n";
-    echo "Please provide a class name (including namespace) relative to Jeremeamia\\Slack\\BlockKit.\n";
+    echo "Please provide a class name (including namespace) relative to SlackPhp\\BlockKit.\n";
     exit(1);
 }
 

@@ -8,18 +8,18 @@ if (!isset($classNamespace, $classFullname, $className)) {
 declare(strict_types=1);
 
 <?php if ($classNamespace): ?>
-namespace Jeremeamia\Slack\BlockKit\Tests\<?= $classNamespace ?>;
+namespace SlackPhp\BlockKit\Tests\<?= $classNamespace ?>;
 <?php else: ?>
-namespace Jeremeamia\Slack\BlockKit\Tests;
+namespace SlackPhp\BlockKit\Tests;
 <?php endif ?>
 
-use Jeremeamia\Slack\BlockKit\<?= $classFullname ?>;
+use SlackPhp\BlockKit\<?= $classFullname ?>;
 <?php if ($classNamespace): ?>
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Tests\TestCase;
 <?php endif ?>
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\<?= $classFullname ?>
+ * @covers \SlackPhp\BlockKit\<?= $classFullname ?>
 
  */
 class <?= $className ?>Test extends TestCase

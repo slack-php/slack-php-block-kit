@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Blocks;
+namespace SlackPhp\BlockKit\Tests\Blocks;
 
-use Jeremeamia\Slack\BlockKit\Blocks\BlockElement;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Blocks\BlockElement;
+use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Blocks\BlockElement
+ * @covers \SlackPhp\BlockKit\Blocks\BlockElement
  */
 class BlockElementTest extends TestCase
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Partials;
+namespace SlackPhp\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\{Element, Exception, HydrationData};
+use SlackPhp\BlockKit\{Element, Exception, HydrationData};
 
 class OptionGroup extends Element
 {

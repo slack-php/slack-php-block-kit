@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
+namespace SlackPhp\BlockKit\Inputs\SelectMenus;
 
-use Jeremeamia\Slack\BlockKit\HydrationData;
-use Jeremeamia\Slack\BlockKit\Partials\Filter;
+use SlackPhp\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Partials\Filter;
 
 class MultiConversationSelectMenu extends MultiSelectMenu
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Surfaces;
+namespace SlackPhp\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\{Element, HydrationData};
+use SlackPhp\BlockKit\{Element, HydrationData};
 
 /**
  * Attachments are a surface that represent secondary content within a message, and can only exist within a message.

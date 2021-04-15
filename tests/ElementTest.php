@@ -1,18 +1,18 @@
 <?php
 
-namespace Jeremeamia\Slack\BlockKit\Tests;
+namespace SlackPhp\BlockKit\Tests;
 
-use Jeremeamia\Slack\BlockKit\Blocks\Section;
-use Jeremeamia\Slack\BlockKit\{
+use SlackPhp\BlockKit\Blocks\Section;
+use SlackPhp\BlockKit\{
     Element,
     Exception,
     HydrationException,
     Type,
 };
-use Jeremeamia\Slack\BlockKit\Surfaces\Modal;
+use SlackPhp\BlockKit\Surfaces\Modal;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Element
+ * @covers \SlackPhp\BlockKit\Element
  */
 class ElementTest extends TestCase
 {

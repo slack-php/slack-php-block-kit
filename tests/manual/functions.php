@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Kit;
-use Jeremeamia\Slack\BlockKit\Surfaces\Surface;
+use SlackPhp\BlockKit\Kit;
+use SlackPhp\BlockKit\Surfaces\Surface;
 
 function view(Surface $surface)
 {

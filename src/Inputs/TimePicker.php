@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Inputs;
+namespace SlackPhp\BlockKit\Inputs;
 
 use DateTime;
-use Jeremeamia\Slack\BlockKit\Exception;
-use Jeremeamia\Slack\BlockKit\HydrationData;
-use Jeremeamia\Slack\BlockKit\Partials\Confirm;
-use Jeremeamia\Slack\BlockKit\Partials\PlainText;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Partials\Confirm;
+use SlackPhp\BlockKit\Partials\PlainText;
 
 class TimePicker extends InputElement
 {

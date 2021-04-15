@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
+namespace SlackPhp\BlockKit\Inputs\SelectMenus;
 
-use Jeremeamia\Slack\BlockKit\HydrationData;
+use SlackPhp\BlockKit\HydrationData;
 
 class UserSelectMenu extends SelectMenu
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Blocks\Virtual;
+namespace SlackPhp\BlockKit\Blocks\Virtual;
 
-use Jeremeamia\Slack\BlockKit\Blocks\BlockElement;
-use Jeremeamia\Slack\BlockKit\HydrationData;
-use Jeremeamia\Slack\BlockKit\HydrationException;
+use SlackPhp\BlockKit\Blocks\BlockElement;
+use SlackPhp\BlockKit\HydrationData;
+use SlackPhp\BlockKit\HydrationException;
 
 /**
  * An encapsulation of multiple blocks acting as one virtual element.

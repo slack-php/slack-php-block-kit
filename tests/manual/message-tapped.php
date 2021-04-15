@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Jeremeamia\Slack\BlockKit\Blocks\Actions;
-use Jeremeamia\Slack\BlockKit\Blocks\Section;
-use Jeremeamia\Slack\BlockKit\Kit;
-use Jeremeamia\Slack\BlockKit\Surfaces\Message;
+use SlackPhp\BlockKit\Blocks\Actions;
+use SlackPhp\BlockKit\Blocks\Section;
+use SlackPhp\BlockKit\Kit;
+use SlackPhp\BlockKit\Surfaces\Message;
 
 require __DIR__ . '/bootstrap.php';
 

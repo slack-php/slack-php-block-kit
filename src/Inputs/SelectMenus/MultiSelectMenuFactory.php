@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Inputs\SelectMenus;
+namespace SlackPhp\BlockKit\Inputs\SelectMenus;
 
 class MultiSelectMenuFactory extends MenuFactory
 {

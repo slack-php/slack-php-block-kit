@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Surfaces;
+namespace SlackPhp\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Blocks\Input;
-use Jeremeamia\Slack\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Blocks\Input;
+use SlackPhp\BlockKit\HydrationData;
 
 /**
  * A Workflow Step surface are a special case of a Modal, with limited properties, and are used to configure an app's

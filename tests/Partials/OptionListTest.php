@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Tests\Partials;
+namespace SlackPhp\BlockKit\Tests\Partials;
 
-use Jeremeamia\Slack\BlockKit\Partials\OptionList;
-use Jeremeamia\Slack\BlockKit\Tests\TestCase;
+use SlackPhp\BlockKit\Partials\OptionList;
+use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
- * @covers \Jeremeamia\Slack\BlockKit\Partials\OptionList
- * @covers \Jeremeamia\Slack\BlockKit\Partials\HasOptions
+ * @covers \SlackPhp\BlockKit\Partials\OptionList
+ * @covers \SlackPhp\BlockKit\Partials\HasOptions
  */
 class OptionListTest extends TestCase
 {

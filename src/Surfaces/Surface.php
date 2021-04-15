@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Surfaces;
+namespace SlackPhp\BlockKit\Surfaces;
 
-use Jeremeamia\Slack\BlockKit\Blocks\{
+use SlackPhp\BlockKit\Blocks\{
     Actions,
     BlockElement,
     Context,
@@ -13,8 +13,8 @@ use Jeremeamia\Slack\BlockKit\Blocks\{
     Image,
     Section,
 };
-use Jeremeamia\Slack\BlockKit\Blocks\Virtual\{VirtualBlock, TwoColumnTable};
-use Jeremeamia\Slack\BlockKit\{
+use SlackPhp\BlockKit\Blocks\Virtual\{VirtualBlock, TwoColumnTable};
+use SlackPhp\BlockKit\{
     Exception,
     Element,
     HydrationData,

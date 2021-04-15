@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jeremeamia\Slack\BlockKit\Partials;
+namespace SlackPhp\BlockKit\Partials;
 
-use Jeremeamia\Slack\BlockKit\Element;
-use Jeremeamia\Slack\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Element;
+use SlackPhp\BlockKit\HydrationData;
 
 /**
  * A standalone element to use for building a list of options or options group.
