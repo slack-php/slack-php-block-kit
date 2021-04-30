@@ -10,7 +10,7 @@ use SlackPhp\BlockKit\Inputs\SelectMenus;
 abstract class Type
 {
     // Surfaces
-    public const APPHOME       = 'home';
+    public const APP_HOME      = 'home';
     public const ATTACHMENT    = 'attachment';
     public const MESSAGE       = 'message';
     public const MODAL         = 'modal';
@@ -48,16 +48,17 @@ abstract class Type
     public const SELECT_MENU_USERS               = 'users_select';
 
     // Partials
-    public const CONFIRM      = 'confirm';
-    public const FIELDS       = 'fields';
-    public const FILTER       = 'filter';
-    public const MRKDWNTEXT   = 'mrkdwn';
-    public const OPTION       = 'option';
-    public const OPTION_GROUP = 'option_group';
-    public const PLAINTEXT    = 'plain_text';
+    public const CONFIRM                = 'confirm';
+    public const DISPATCH_ACTION_CONFIG = 'dispatch_action_config';
+    public const FIELDS                 = 'fields';
+    public const FILTER                 = 'filter';
+    public const MRKDWNTEXT             = 'mrkdwn';
+    public const OPTION                 = 'option';
+    public const OPTION_GROUP           = 'option_group';
+    public const PLAINTEXT              = 'plain_text';
 
     public const SURFACE_BLOCKS = [
-        self::APPHOME => [
+        self::APP_HOME => [
             self::ACTIONS,
             self::CONTEXT,
             self::DIVIDER,
@@ -72,6 +73,7 @@ abstract class Type
             self::FILE,
             self::HEADER,
             self::IMAGE,
+            self::INPUT,
             self::SECTION,
         ],
         self::MESSAGE => [
@@ -162,6 +164,7 @@ abstract class Type
     public const HIDDEN_TYPES = [
         self::ATTACHMENT,
         self::CONFIRM,
+        self::DISPATCH_ACTION_CONFIG,
         self::FIELDS,
         self::FILTER,
         self::MESSAGE,
@@ -172,7 +175,7 @@ abstract class Type
     /** @var array<string, string> */
     private static $typeMap = [
         // Surfaces
-        Surfaces\AppHome::class      => self::APPHOME,
+        Surfaces\AppHome::class      => self::APP_HOME,
         Surfaces\Attachment::class   => self::ATTACHMENT,
         Surfaces\Message::class      => self::MESSAGE,
         Surfaces\Modal::class        => self::MODAL,
@@ -213,13 +216,14 @@ abstract class Type
         SelectMenus\UserSelectMenu::class               => self::SELECT_MENU_USERS,
 
         // Partials
-        Partials\Confirm::class     => self::CONFIRM,
-        Partials\Fields::class      => self::FIELDS,
-        Partials\Filter::class      => self::FILTER,
-        Partials\MrkdwnText::class  => self::MRKDWNTEXT,
-        Partials\Option::class      => self::OPTION,
-        Partials\OptionGroup::class => self::OPTION_GROUP,
-        Partials\PlainText::class   => self::PLAINTEXT,
+        Partials\Confirm::class              => self::CONFIRM,
+        Partials\DispatchActionConfig::class => self::DISPATCH_ACTION_CONFIG,
+        Partials\Fields::class               => self::FIELDS,
+        Partials\Filter::class               => self::FILTER,
+        Partials\MrkdwnText::class           => self::MRKDWNTEXT,
+        Partials\Option::class               => self::OPTION,
+        Partials\OptionGroup::class          => self::OPTION_GROUP,
+        Partials\PlainText::class            => self::PLAINTEXT,
     ];
 
     public static function mapClass(string $class): string

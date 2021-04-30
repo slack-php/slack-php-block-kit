@@ -13,6 +13,11 @@ use SlackPhp\BlockKit\{
     Type,
 };
 
+/**
+ * A block that collects information from users.
+ *
+ * @see https://api.slack.com/reference/block-kit/blocks#input
+ */
 class Input extends BlockElement
 {
     /** @var Partials\PlainText */
@@ -26,6 +31,9 @@ class Input extends BlockElement
 
     /** @var bool */
     private $optional;
+
+    /** @var bool */
+    private $dispatchAction;
 
     /**
      * @param string|null $blockId
@@ -45,6 +53,7 @@ class Input extends BlockElement
         }
 
         $this->optional = false;
+        $this->dispatchAction = false;
     }
 
     public function setLabel(Partials\PlainText $label): self
@@ -86,9 +95,16 @@ class Input extends BlockElement
         return $this->setHint(new Partials\PlainText($text, $emoji));
     }
 
-    public function optional(bool $optional): self
+    public function optional(bool $optional = true): self
     {
         $this->optional = $optional;
+
+        return $this;
+    }
+
+    public function dispatchAction(bool $dispatchAction = true): self
+    {
+        $this->dispatchAction = $dispatchAction;
 
         return $this;
     }
@@ -175,6 +191,10 @@ class Input extends BlockElement
             $data['optional'] = $this->optional;
         }
 
+        if ($this->dispatchAction) {
+            $data['dispatch_action'] = $this->dispatchAction;
+        }
+
         return $data;
     }
 
@@ -194,6 +214,10 @@ class Input extends BlockElement
 
         if ($data->has('optional')) {
             $this->optional($data->useValue('optional'));
+        }
+
+        if ($data->has('dispatch_action')) {
+            $this->dispatchAction($data->useValue('dispatch_action'));
         }
 
         parent::hydrate($data);

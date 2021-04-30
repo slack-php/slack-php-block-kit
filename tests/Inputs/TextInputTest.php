@@ -20,7 +20,9 @@ class TextInputTest extends TestCase
             ->initialValue('bar')
             ->multiline(false)
             ->minLength(1)
-            ->maxLength(3);
+            ->maxLength(3)
+            ->triggerActionOnCharacterEntered()
+            ->triggerActionOnEnterPressed();
 
         $this->assertJsonData([
             'type' => 'plain_text_input',
@@ -32,6 +34,9 @@ class TextInputTest extends TestCase
             'multiline' => false,
             'min_length' => 1,
             'max_length' => 3,
+            'dispatch_action_config' => [
+                'trigger_actions_on' => ['on_character_entered', 'on_enter_pressed'],
+            ],
         ], $input);
     }
 

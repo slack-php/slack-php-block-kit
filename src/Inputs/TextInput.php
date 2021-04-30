@@ -6,7 +6,7 @@ namespace SlackPhp\BlockKit\Inputs;
 
 use SlackPhp\BlockKit\Exception;
 use SlackPhp\BlockKit\HydrationData;
-use SlackPhp\BlockKit\Partials\PlainText;
+use SlackPhp\BlockKit\Partials\{DispatchActionConfig, PlainText};
 
 class TextInput extends InputElement
 {
@@ -25,6 +25,9 @@ class TextInput extends InputElement
 
     /** @var int */
     private $maxLength;
+
+    /** @var DispatchActionConfig */
+    private $dispatchActionConfig;
 
     public function initialValue(string $text): self
     {
@@ -62,6 +65,29 @@ class TextInput extends InputElement
         return $this;
     }
 
+    public function setDispatchActionConfig(DispatchActionConfig $config): self
+    {
+        $this->dispatchActionConfig = $config;
+
+        return $this;
+    }
+
+    public function triggerActionOnEnterPressed(): self
+    {
+        $config = $this->dispatchActionConfig ?? DispatchActionConfig::new();
+        $config->triggerActionsOnEnterPressed();
+
+        return $this->setDispatchActionConfig($config);
+    }
+
+    public function triggerActionOnCharacterEntered(): self
+    {
+        $config = $this->dispatchActionConfig ?? DispatchActionConfig::new();
+        $config->triggerActionsOnCharacterEntered();
+
+        return $this->setDispatchActionConfig($config);
+    }
+
     public function validate(): void
     {
         if (!empty($this->placeholder)) {
@@ -76,6 +102,10 @@ class TextInput extends InputElement
             if (isset($this->maxLength) && $this->maxLength <= $this->minLength) {
                 throw new Exception('Text input max length must be greater than min length');
             }
+        }
+
+        if (isset($this->dispatchActionConfig)) {
+            $this->dispatchActionConfig->validate();
         }
     }
 
@@ -106,6 +136,10 @@ class TextInput extends InputElement
             $data['max_length'] = $this->maxLength;
         }
 
+        if (isset($this->dispatchActionConfig)) {
+            $data['dispatch_action_config'] = $this->dispatchActionConfig->toArray();
+        }
+
         return $data;
     }
 
@@ -129,6 +163,12 @@ class TextInput extends InputElement
 
         if ($data->has('placeholder')) {
             $this->setPlaceholder(PlainText::fromArray($data->useElement('placeholder')));
+        }
+
+        if ($data->has('dispatch_action_config')) {
+            $this->setDispatchActionConfig(
+                DispatchActionConfig::fromArray($data->useElement('dispatch_action_config'))
+            );
         }
 
         parent::hydrate($data);

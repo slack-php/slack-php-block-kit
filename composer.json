@@ -35,9 +35,9 @@
             "@stan",
             "@test-coverage"
         ],
-        "test-ci": "phpunit --bootstrap=vendor/autoload.php --coverage-text --whitelist=src --do-not-cache-result tests",
+        "test-ci": "XDEBUG_MODE=coverage phpunit --bootstrap=vendor/autoload.php --coverage-text --whitelist=src --do-not-cache-result tests",
         "test-coverage": [
-            "phpunit --bootstrap=vendor/autoload.php --coverage-html=build/coverage --whitelist=src tests",
+            "XDEBUG_MODE=coverage phpunit --bootstrap=vendor/autoload.php --coverage-html=build/coverage --whitelist=src tests",
             "open build/coverage/index.html"
         ],
         "test-debug": "phpunit --bootstrap=vendor/autoload.php --no-coverage --debug tests",
