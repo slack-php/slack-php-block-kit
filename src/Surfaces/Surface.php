@@ -4,15 +4,7 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Surfaces;
 
-use SlackPhp\BlockKit\Blocks\{
-    Actions,
-    BlockElement,
-    Context,
-    Divider,
-    Header,
-    Image,
-    Section,
-};
+use SlackPhp\BlockKit\Blocks\{Actions, BlockElement, Context, Divider, Header, Image, Input, Section};
 use SlackPhp\BlockKit\Blocks\Virtual\{VirtualBlock, TwoColumnTable};
 use SlackPhp\BlockKit\{
     Exception,
@@ -45,6 +37,19 @@ abstract class Surface extends Element
         }
 
         $this->blocks[] = $block->setParent($this);
+
+        return $this;
+    }
+
+    /**
+     * @param iterable|BlockElement[] $blocks
+     * @return static
+     */
+    public function blocks(iterable $blocks): self
+    {
+        foreach ($blocks as $block) {
+            $this->add($block);
+        }
 
         return $this;
     }
@@ -111,6 +116,14 @@ abstract class Surface extends Element
     public function newImage(?string $blockId = null): Image
     {
         $block = new Image($blockId);
+        $this->add($block);
+
+        return $block;
+    }
+
+    public function newInput(?string $blockId = null): Input
+    {
+        $block = new Input($blockId);
         $this->add($block);
 
         return $block;

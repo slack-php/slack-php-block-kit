@@ -76,6 +76,27 @@ class ElementTest extends TestCase
         ]);
     }
 
+    public function testCanConditionallyTapIntoElementForChaining()
+    {
+        $callable = function (Element $e) {
+            $e->setExtra('fizz', 'buzz');
+        };
+        $tappedElement = $this->getMockElement()->tapIf(true, $callable);
+        $untappedElement = $this->getMockElement()->tapIf(false, $callable);
+
+        $this->assertInstanceOf(Element::class, $tappedElement);
+        $this->assertInstanceOf(Element::class, $untappedElement);
+        $this->assertJsonData($tappedElement, [
+            'type' => 'mock',
+            'text' => 'foo',
+            'fizz' => 'buzz',
+        ]);
+        $this->assertJsonData($untappedElement, [
+            'type' => 'mock',
+            'text' => 'foo',
+        ]);
+    }
+
     private function getMockElement(bool $valid = true): Element
     {
         return new class ($valid) extends Element {

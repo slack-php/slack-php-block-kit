@@ -9,7 +9,7 @@ namespace SlackPhp\BlockKit\Surfaces;
  *
  * @see https://api.slack.com/surfaces
  */
-class AppHome extends Surface
+class AppHome extends View
 {
-    // No additions to base Surface functionality.
+    // No additions to base View and Surface functionality.
 }

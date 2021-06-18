@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks\Virtual;
 
+use Iterator;
+use IteratorAggregate;
 use SlackPhp\BlockKit\Blocks\BlockElement;
 use SlackPhp\BlockKit\HydrationData;
 use SlackPhp\BlockKit\HydrationException;
 
 /**
  * An encapsulation of multiple blocks acting as one virtual element.
+ *
+ * @implements IteratorAggregate<BlockElement>
  */
-abstract class VirtualBlock extends BlockElement
+abstract class VirtualBlock extends BlockElement implements IteratorAggregate
 {
     /** @var int */
     private $index = 1;
@@ -68,6 +72,13 @@ abstract class VirtualBlock extends BlockElement
     public function getBlocks(): array
     {
         return $this->blocks;
+    }
+
+    public function getIterator(): Iterator
+    {
+        foreach ($this->getBlocks() as $block) {
+            yield $block;
+        }
     }
 
     public function validate(): void

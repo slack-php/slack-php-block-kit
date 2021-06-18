@@ -65,12 +65,42 @@ abstract class Element implements JsonSerializable
     }
 
     /**
+     * Allows you to "tap" into the fluent syntax with a callable.
+     *
+     *     $element = Elem::new()
+     *         ->foo('bar')
+     *         ->tap(function (Elem $elem) {
+     *             $elem->newSubElem()->fizz('buzz');
+     *         });
+     *
      * @param callable $tap
      * @return static
      */
     final public function tap(callable $tap): self
     {
         $tap($this);
+
+        return $this;
+    }
+
+    /**
+     * Allows you to "tap" into the fluent syntax with a callable, if the condition is met.
+     *
+     *     $element = Elem::new()
+     *         ->foo('bar')
+     *         ->tapIf($needsSubElem, function (Elem $elem) {
+     *             $elem->newSubElem()->fizz('buzz');
+     *         });
+     *
+     * @param bool $condition
+     * @param callable $tap
+     * @return static
+     */
+    final public function tapIf(bool $condition, callable $tap): self
+    {
+        if ($condition) {
+            $tap($this);
+        }
 
         return $this;
     }
