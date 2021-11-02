@@ -18,7 +18,8 @@ class TextTest extends TestCase
 
     public function testCanValidateEnglishText()
     {
-        $text = new class() extends Text{};
+        $text = new class () extends Text {
+        };
 
         $text->validateString('abc', self::MAX_LENGTH);
 
@@ -33,7 +34,8 @@ class TextTest extends TestCase
 
     public function testCanValidateJapaneseText()
     {
-        $text = new class() extends Text{};
+        $text = new class () extends Text {
+        };
 
         $text->validateString('いろは', self::MAX_LENGTH);
 
