@@ -100,8 +100,8 @@ class ElementTest extends TestCase
     private function getMockElement(bool $valid = true): Element
     {
         return new class ($valid) extends Element {
-            private $text;
-            private $valid;
+            private string $text;
+            private bool $valid;
 
             public function __construct(bool $valid)
             {
