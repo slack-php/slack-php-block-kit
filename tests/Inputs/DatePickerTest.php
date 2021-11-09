@@ -13,7 +13,7 @@ use SlackPhp\BlockKit\Tests\TestCase;
  */
 class DatePickerTest extends TestCase
 {
-    public function testCanConfigureDatePicker()
+    public function testCanConfigureDatePicker(): void
     {
         $input = (new DatePicker())
             ->actionId('my_id')
@@ -31,7 +31,7 @@ class DatePickerTest extends TestCase
         ], $input);
     }
 
-    public function testMustAdhereToCorrectTimeFormat()
+    public function testMustAdhereToCorrectTimeFormat(): void
     {
         $this->expectException(Exception::class);
         (new DatePicker())->initialDate('nope');

@@ -13,7 +13,7 @@ use SlackPhp\BlockKit\Tests\TestCase;
  */
 class TextInputTest extends TestCase
 {
-    public function testCanConfigureTextInput()
+    public function testCanConfigureTextInput(): void
     {
         $input = (new TextInput())
             ->placeholder('foo')
@@ -40,26 +40,26 @@ class TextInputTest extends TestCase
         ], $input);
     }
 
-    public function testCannotSetMinLengthLessThanZero()
+    public function testCannotSetMinLengthLessThanZero(): void
     {
         $this->expectException(Exception::class);
         (new TextInput())->minLength(-1);
     }
 
-    public function testCannotSetMaxLengthLessThanOne()
+    public function testCannotSetMaxLengthLessThanOne(): void
     {
         $this->expectException(Exception::class);
         (new TextInput())->maxLength(0);
     }
 
-    public function testCannotSetMaxLengthLessThanMinLength()
+    public function testCannotSetMaxLengthLessThanMinLength(): void
     {
         $this->expectException(Exception::class);
         $input = (new TextInput())->minLength(5)->maxLength(3);
         $input->validate();
     }
 
-    public function testCannotSetMinLengthGreaterThan3000()
+    public function testCannotSetMinLengthGreaterThan3000(): void
     {
         $this->expectException(Exception::class);
         $input = (new TextInput())->minLength(3001);

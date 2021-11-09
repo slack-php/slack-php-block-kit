@@ -13,7 +13,7 @@ use SlackPhp\BlockKit\Type;
  */
 class DividerTest extends TestCase
 {
-    public function testThatDividerRendersToJsonCorrectly()
+    public function testThatDividerRendersToJsonCorrectly(): void
     {
         $divider = new Divider();
         $this->assertJsonData([

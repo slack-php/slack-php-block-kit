@@ -15,7 +15,7 @@ use SlackPhp\BlockKit\Type;
  */
 class CheckBoxesTest extends TestCase
 {
-    public function testCheckboxesWithConfirm()
+    public function testCheckboxesWithConfirm(): void
     {
         $input = (new Checkboxes('checkboxes-identifier'))
             ->option('foo', 'foo')
@@ -86,7 +86,7 @@ class CheckBoxesTest extends TestCase
         ], $input);
     }
 
-    public function testTooManyOptions()
+    public function testTooManyOptions(): void
     {
 
         $this->expectException(Exception::class);
@@ -105,7 +105,7 @@ class CheckBoxesTest extends TestCase
         $input->validate();
     }
 
-    public function testNoOptions()
+    public function testNoOptions(): void
     {
         $this->expectException(Exception::class);
         $input = new Checkboxes();

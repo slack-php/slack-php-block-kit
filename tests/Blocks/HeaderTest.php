@@ -13,7 +13,7 @@ use SlackPhp\BlockKit\Type;
  */
 class HeaderTest extends TestCase
 {
-    public function testThatHeaderRendersToJsonCorrectly()
+    public function testThatHeaderRendersToJsonCorrectly(): void
     {
         $header = new Header('id1');
         $header->text('foo');

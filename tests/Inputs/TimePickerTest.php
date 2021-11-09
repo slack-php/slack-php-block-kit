@@ -13,7 +13,7 @@ use SlackPhp\BlockKit\Tests\TestCase;
  */
 class TimePickerTest extends TestCase
 {
-    public function testCanConfigureTimePicker()
+    public function testCanConfigureTimePicker(): void
     {
         $input = (new TimePicker())
             ->actionId('my_id')
@@ -31,7 +31,7 @@ class TimePickerTest extends TestCase
         ], $input);
     }
 
-    public function testMustAdhereToCorrectTimeFormat()
+    public function testMustAdhereToCorrectTimeFormat(): void
     {
         $this->expectException(Exception::class);
         (new TimePicker())->initialTime('nope');

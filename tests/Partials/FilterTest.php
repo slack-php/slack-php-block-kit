@@ -13,7 +13,7 @@ use SlackPhp\BlockKit\Tests\TestCase;
  */
 class FilterTest extends TestCase
 {
-    public function testCanCreateConversationFilter()
+    public function testCanCreateConversationFilter(): void
     {
         $filter = Filter::new()
             ->includeIm()
@@ -30,14 +30,14 @@ class FilterTest extends TestCase
         ], $filter);
     }
 
-    public function testCannotCreateConversationFilterWithNoProperties()
+    public function testCannotCreateConversationFilterWithNoProperties(): void
     {
         $filter = Filter::new();
         $this->expectException(Exception::class);
         $filter->validate();
     }
 
-    public function testCanHydrateConversationFilter()
+    public function testCanHydrateConversationFilter(): void
     {
         $json = <<<JSON
         {
