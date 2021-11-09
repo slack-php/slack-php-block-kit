@@ -47,18 +47,15 @@ abstract class Text extends Element
      */
     public static function validateString(?string $text, ?int $max = null, int $min = 1): void
     {
-        /** @var string */
-        $encoding = mb_detect_encoding($text);
-
         if (!is_string($text)) {
             throw new Exception('Text element must have a "text" value');
         }
 
-        if (mb_strlen($text, $encoding) < $min) {
+        if (mb_strlen($text, 'UTF-8') < $min) {
             throw new Exception('Text element must have a "text" value with a length of at least %d', [$min]);
         }
 
-        if (is_int($max) && mb_strlen($text, $encoding) > $max) {
+        if (is_int($max) && mb_strlen($text, 'UTF-8') > $max) {
             throw new Exception('Text element must have a "text" value with a length of at most %d', [$max]);
         }
     }

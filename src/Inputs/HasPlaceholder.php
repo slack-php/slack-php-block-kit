@@ -29,9 +29,7 @@ trait HasPlaceholder
      */
     public function placeholder(string $placeholder): self
     {
-        /** @var string */
-        $encoding = mb_detect_encoding($placeholder);
-        if (mb_strlen($placeholder, $encoding) > 150) {
+        if (mb_strlen($placeholder, 'UTF-8') > 150) {
             throw new Exception('Placeholder cannot exceed 150 characters');
         }
 
