@@ -13,7 +13,7 @@ use SlackPhp\BlockKit\Tests\TestCase;
  */
 class SurfaceTest extends TestCase
 {
-    public function testCanAddSingleBlocks()
+    public function testCanAddSingleBlocks(): void
     {
         $surface = $this->getMockSurface();
 
@@ -29,7 +29,7 @@ class SurfaceTest extends TestCase
         }
     }
 
-    public function testCanAddVirtualBlocks()
+    public function testCanAddVirtualBlocks(): void
     {
         $surface = $this->getMockSurface();
 
@@ -46,7 +46,7 @@ class SurfaceTest extends TestCase
         }
     }
 
-    public function testCanAddVirtualBlockEarlyOrLateAndBlockCountIsTheSame()
+    public function testCanAddVirtualBlockEarlyOrLateAndBlockCountIsTheSame(): void
     {
         $rows = [
             'a' => '1',
@@ -68,5 +68,10 @@ class SurfaceTest extends TestCase
             ->cols('Foo', 'Bar')
             ->rows($rows);
         $this->assertCount(4, $surface2->getBlocks());
+    }
+
+    public function testCanValidateDupilcateBlockId(): void
+    {
+
     }
 }
