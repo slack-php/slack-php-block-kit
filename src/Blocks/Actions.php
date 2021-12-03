@@ -127,7 +127,9 @@ class Actions extends BlockElement
             }
 
             if (count($duplicateActionIds) > 0) {
-                throw new Exception('The following action_ids are duplicated : ' . implode(', ', $duplicateActionIds) . ' ]');
+                throw new Exception(
+                    'The following action_ids are duplicated : ' . implode(', ', $duplicateActionIds) . ' ]'
+                );
             }
         }
     }

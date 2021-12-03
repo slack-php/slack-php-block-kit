@@ -17,7 +17,9 @@ class ActionsTest extends TestCase
     public function testCanValidateDupilcateActionId(): void
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Slack Block Kit Error: The following action_ids are duplicated : test-action-1, test-action-3 ]');
+        $this->expectExceptionMessage(
+            'Slack Block Kit Error: The following action_ids are duplicated : test-action-1, test-action-3 ]'
+        );
 
         $surface = $this->getMockSurface()
             ->add(

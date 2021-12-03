@@ -216,7 +216,9 @@ abstract class Surface extends Element
             }
 
             if (count($duplicateBlockIds) > 0) {
-                throw new Exception('The following block_ids are duplicated : ' . implode(', ', $duplicateBlockIds) . ' ]');
+                throw new Exception(
+                    'The following block_ids are duplicated : ' . implode(', ', $duplicateBlockIds) . ' ]'
+                );
             }
         }
     }
