@@ -75,7 +75,7 @@ class SurfaceTest extends TestCase
     public function testCanValidateDupilcateBlockId(): void
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Slack Block Kit Error: The following IDs are duplicated : test-block-1, test-block-3 ]');
+        $this->expectExceptionMessage('Slack Block Kit Error: The following block_ids are duplicated : test-block-1, test-block-3 ]');
 
         $surface = $this->getMockSurface()
             ->add(
