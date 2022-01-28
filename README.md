@@ -145,8 +145,8 @@ $msg = Kit::message()
         Kit::divider(),
         Kit::blockImage()
             ->title('Team Chat')
-            ->imageUrl('https://imgs.xkcd.com/comics/team_chat.png'),
-            ->altText('Comic about the stubbornness of some people switching chat clients'),
+            ->imageUrl('https://imgs.xkcd.com/comics/team_chat.png')
+            ->altText('Comic about the stubbornness of some people switching chat clients')
         ),
     );
 ```
@@ -162,8 +162,8 @@ $msg = Message::new()
         Divider::new(),
         BlockImage::new()
             ->title('Team Chat')
-            ->imageUrl('https://imgs.xkcd.com/comics/team_chat.png'),
-            ->altText('Comic about the stubbornness of some people switching chat clients'),
+            ->imageUrl('https://imgs.xkcd.com/comics/team_chat.png')
+            ->altText('Comic about the stubbornness of some people switching chat clients')
         ),
     );
 ```
@@ -232,7 +232,7 @@ It will show up in the Block Kit Builder looking something like this:
 
 ![Screenshot of rendered message in Block Kit Builder](block-kit-screenshot.png)
 
-### Surface Hydration
+### Component Hydration
 
 Some Slack application integrations (such as with Modals) require receiving the JSON of an existing surface and then 
 modifying or replacing that surface with another. You can "hydrate" the JSON of a surface (or element) into its object
