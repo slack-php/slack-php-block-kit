@@ -4,222 +4,97 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks;
 
-use SlackPhp\BlockKit\{
-    Element,
-    Exception,
-    HydrationData,
-    Inputs,
-    Partials,
-    Type,
-};
+use SlackPhp\BlockKit\{Tools\HydrationData, Tools\Validator};
+use SlackPhp\BlockKit\Elements\Input as InputElement;
+use SlackPhp\BlockKit\Parts\PlainText;
 
 /**
  * A block that collects information from users.
  *
  * @see https://api.slack.com/reference/block-kit/blocks#input
  */
-class Input extends BlockElement
+class Input extends Block
 {
-    /** @var Partials\PlainText */
-    private $label;
+    public ?PlainText $label;
+    public ?PlainText $hint;
 
-    /** @var Element */
-    private $element;
-
-    /** @var Partials\PlainText */
-    private $hint;
-
-    /** @var bool */
-    private $optional;
-
-    /** @var bool */
-    private $dispatchAction;
-
-    /**
-     * @param string|null $blockId
-     * @param string|null $label
-     * @param Element|null $element
-     */
-    public function __construct(?string $blockId = null, ?string $label = null, ?Element $element = null)
-    {
+    public function __construct(
+        PlainText|string|null $label = null,
+        public ?InputElement $element = null,
+        public ?bool $optional = null,
+        PlainText|string|null $hint = null,
+        public ?bool $dispatchAction = null,
+        ?string $blockId = null,
+    ) {
         parent::__construct($blockId);
-
-        if (!empty($label)) {
-            $this->label($label);
-        }
-
-        if (!empty($element)) {
-            $this->setElement($element);
-        }
-
-        $this->optional = false;
-        $this->dispatchAction = false;
+        $this->label($label);
+        $this->element($element);
+        $this->optional($optional);
+        $this->hint($hint);
+        $this->dispatchAction($dispatchAction);
     }
 
-    public function setLabel(Partials\PlainText $label): self
+    public function label(PlainText|string|null $label): self
     {
-        $this->label = $label->setParent($this);
+        $this->label = PlainText::wrap($label)?->limitLength(2000);
 
         return $this;
     }
 
-    public function setElement(Element $element): self
+    public function element(InputElement|null $element): self
     {
-        if (!empty($this->element)) {
-            throw new Exception('Input element already set as type %s', [$this->element->getType()]);
-        }
-
-        if (!in_array($element->getType(), Type::INPUT_ELEMENTS)) {
-            throw new Exception('Invalid input element type: %s', [$element->getType()]);
-        }
-
-        $this->element = $element->setParent($this);
+        $this->element = $element;
 
         return $this;
     }
 
-    public function setHint(Partials\PlainText $hint): self
+    public function hint(PlainText|string|null $hint): self
     {
-        $this->hint = $hint->setParent($this);
+        $this->hint = PlainText::wrap($hint)?->limitLength(2000);
 
         return $this;
     }
 
-    public function label(string $text, ?bool $emoji = null): self
-    {
-        return $this->setLabel(new Partials\PlainText($text, $emoji));
-    }
-
-    public function hint(string $text, ?bool $emoji = null): self
-    {
-        return $this->setHint(new Partials\PlainText($text, $emoji));
-    }
-
-    public function optional(bool $optional = true): self
+    public function optional(?bool $optional = true): self
     {
         $this->optional = $optional;
 
         return $this;
     }
 
-    public function dispatchAction(bool $dispatchAction = true): self
+    public function dispatchAction(?bool $dispatchAction = true): self
     {
         $this->dispatchAction = $dispatchAction;
 
         return $this;
     }
 
-    public function newDatePicker(?string $actionId = null): Inputs\DatePicker
+    protected function validateInternalData(Validator $validator): void
     {
-        $action = new Inputs\DatePicker($actionId);
-        $this->setElement($action);
-
-        return $action;
+        $validator->requireAllOf('label', 'element')
+            ->validateSubComponents('label', 'element', 'hint');
+        parent::validateInternalData($validator);
     }
 
-    public function newSelectMenu(?string $actionId = null): Inputs\SelectMenus\SelectMenuFactory
+    protected function prepareArrayData(): array
     {
-        return new Inputs\SelectMenus\SelectMenuFactory($actionId, function (Inputs\SelectMenus\SelectMenu $menu) {
-            $this->setElement($menu);
-        });
+        return [
+            ...parent::prepareArrayData(),
+            'label' => $this->label?->toArray(),
+            'element' => $this->element?->toArray(),
+            'hint' => $this->hint?->toArray(),
+            'optional' => $this->optional,
+            'dispatch_action' => $this->dispatchAction,
+        ];
     }
 
-    public function newMultiSelectMenu(?string $actionId = null): Inputs\SelectMenus\MultiSelectMenuFactory
+    protected function hydrateFromArrayData(HydrationData $data): void
     {
-        return new Inputs\SelectMenus\MultiSelectMenuFactory($actionId, function (Inputs\SelectMenus\SelectMenu $menu) {
-            $this->setElement($menu);
-        });
-    }
-
-    public function newTextInput(?string $actionId = null): Inputs\TextInput
-    {
-        $action = new Inputs\TextInput($actionId);
-        $this->setElement($action);
-
-        return $action;
-    }
-
-    public function newRadioButtons(?string $actionId = null): Inputs\RadioButtons
-    {
-        $action = new Inputs\RadioButtons($actionId);
-        $this->setElement($action);
-
-        return $action;
-    }
-
-    public function newCheckboxes(?string $actionId = null): Inputs\Checkboxes
-    {
-        $action = new Inputs\Checkboxes($actionId);
-        $this->setElement($action);
-
-        return $action;
-    }
-
-    public function validate(): void
-    {
-        if (empty($this->label)) {
-            throw new Exception('Input must contain a "label"');
-        }
-
-        if (empty($this->element)) {
-            throw new Exception('Input must contain an "element"');
-        }
-
-        $this->label->validate();
-        $this->element->validate();
-
-        if (!empty($this->hint)) {
-            $this->hint->validate();
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        $data = parent::toArray();
-
-        $data['label'] = $this->label->toArray();
-        $data['element'] = $this->element->toArray();
-
-        if (!empty($this->hint)) {
-            $data['hint'] = $this->hint->toArray();
-        }
-
-        if ($this->optional) {
-            $data['optional'] = $this->optional;
-        }
-
-        if ($this->dispatchAction) {
-            $data['dispatch_action'] = $this->dispatchAction;
-        }
-
-        return $data;
-    }
-
-    protected function hydrate(HydrationData $data): void
-    {
-        if ($data->has('label')) {
-            $this->setLabel(Partials\PlainText::fromArray($data->useElement('label')));
-        }
-
-        if ($data->has('element')) {
-            $this->setElement(Inputs\InputElement::fromArray($data->useElement('element')));
-        }
-
-        if ($data->has('hint')) {
-            $this->setHint(Partials\PlainText::fromArray($data->useElement('hint')));
-        }
-
-        if ($data->has('optional')) {
-            $this->optional($data->useValue('optional'));
-        }
-
-        if ($data->has('dispatch_action')) {
-            $this->dispatchAction($data->useValue('dispatch_action'));
-        }
-
-        parent::hydrate($data);
+        $this->label(PlainText::fromArray($data->useComponent('label')));
+        $this->element(InputElement::fromArray($data->useComponent('element')));
+        $this->hint(PlainText::fromArray($data->useComponent('hint')));
+        $this->optional($data->useValue('optional'));
+        $this->dispatchAction($data->useValue('dispatch_action'));
+        parent::hydrateFromArrayData($data);
     }
 }

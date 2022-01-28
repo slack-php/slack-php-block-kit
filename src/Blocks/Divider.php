@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks;
 
-class Divider extends BlockElement
+class Divider extends Block
 {
-    public function validate(): void
-    {
-        // No validation needed.
-    }
+    // No additional features or specific overrides.
 }

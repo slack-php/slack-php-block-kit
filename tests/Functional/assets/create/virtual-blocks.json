@@ -1,0 +1,76 @@
+{
+    "blocks": [
+        {
+            "type": "divider"
+        },
+        {
+            "type": "section",
+            "block_id": "foo.1",
+            "fields": [
+                {
+                    "type": "mrkdwn",
+                    "text": "*left*"
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": "*right*"
+                }
+            ]
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "section",
+            "block_id": "foo.2",
+            "fields": [
+                {
+                    "type": "mrkdwn",
+                    "text": "a"
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": "b"
+                }
+            ]
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "section",
+            "block_id": "foo.3",
+            "fields": [
+                {
+                    "type": "mrkdwn",
+                    "text": "c"
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": "d"
+                }
+            ]
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "context",
+            "block_id": "bar.1",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": "my-code.txt"
+                }
+            ]
+        },
+        {
+            "type": "section",
+            "block_id": "bar.2",
+            "text": {
+                "type": "mrkdwn",
+                "text": "```\nThis is\nmy code\n```"
+            }
+        }
+    ]
+}

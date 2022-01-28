@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Surfaces;
 
-use SlackPhp\BlockKit\HydrationData;
-
-use function base64_encode;
-use function http_build_query;
+use SlackPhp\BlockKit\Blocks\Block;
+use SlackPhp\BlockKit\Collections\BlockCollection;
+use SlackPhp\BlockKit\Tools\{HydrationData, PrivateMetadata, Validator};
 
 /**
  * View represents the commonalities between the Modal and App Home surfaces.
@@ -16,96 +15,58 @@ use function http_build_query;
  */
 abstract class View extends Surface
 {
-    /** @var string */
-    private $callbackId;
+    use HasIdAndMetadata;
 
-    /** @var string */
-    private $externalId;
+    protected const MAX_BLOCKS = 100;
 
-    /** @var string */
-    private $privateMetadata;
+    public ?string $externalId;
 
     /**
-     * @param string $callbackId
-     * @return static
+     * @param BlockCollection|array<Block|string>|null $blocks
      */
-    public function callbackId(string $callbackId): self
-    {
-        $this->callbackId = $callbackId;
-
-        return $this;
+    public function __construct(
+        BlockCollection|array|null $blocks = null,
+        ?string $callbackId = null,
+        ?string $externalId = null,
+        PrivateMetadata|array|string|null $privateMetadata = null,
+    ) {
+        parent::__construct($blocks);
+        $this->callbackId($callbackId);
+        $this->externalId($externalId);
+        $this->privateMetadata($privateMetadata);
     }
 
-    /**
-     * @param string $externalId
-     * @return static
-     */
-    public function externalId(string $externalId): self
+    public function externalId(?string $externalId): static
     {
         $this->externalId = $externalId;
 
         return $this;
     }
 
-    /**
-     * @param string $privateMetadata
-     * @return static
-     */
-    public function privateMetadata(string $privateMetadata): self
+    protected function validateInternalData(Validator $validator): void
     {
-        $this->privateMetadata = $privateMetadata;
-
-        return $this;
+        $validator->requireAllOf('blocks')
+            ->validateCollection('blocks', max: static::MAX_BLOCKS, min: 1)
+            ->validateString('callback_id', 255)
+            ->validateString('private_metadata', 3000);
+        parent::validateInternalData($validator);
     }
 
-    /**
-     * Encodes the provided associative array of data into a string for `private_metadata`.
-     *
-     * Note: Can be decoded using `base64_decode()` and `parse_str()`.
-     *
-     * @param array $data
-     * @return static
-     */
-    public function encodePrivateMetadata(array $data): self
+    protected function prepareArrayData(): array
     {
-        return $this->privateMetadata(base64_encode(http_build_query($data)));
+        return [
+            ...parent::prepareArrayData(),
+            'callback_id' => $this->callbackId,
+            'external_id' => $this->externalId,
+            'private_metadata' => $this->privateMetadata,
+        ];
     }
 
-    public function toArray(): array
+    protected function hydrateFromArrayData(HydrationData $data): void
     {
-        $data = [];
-
-        if (!empty($this->callbackId)) {
-            $data['callback_id'] = $this->callbackId;
-        }
-
-        if (!empty($this->externalId)) {
-            $data['external_id'] = $this->externalId;
-        }
-
-        if (!empty($this->privateMetadata)) {
-            $data['private_metadata'] = $this->privateMetadata;
-        }
-
-        $data += parent::toArray();
-
-        return $data;
-    }
-
-    protected function hydrate(HydrationData $data): void
-    {
-        if ($data->has('callback_id')) {
-            $this->callbackId($data->useValue('callback_id'));
-        }
-
-        if ($data->has('external_id')) {
-            $this->externalId($data->useValue('external_id'));
-        }
-
-        if ($data->has('private_metadata')) {
-            $this->privateMetadata($data->useValue('private_metadata'));
-        }
-
-        parent::hydrate($data);
+        $this->callbackId($data->useValue('callback_id'));
+        $this->externalId($data->useValue('external_id'));
+        $this->privateMetadata($data->useValue('private_metadata'));
+        parent::hydrateFromArrayData($data);
     }
 }

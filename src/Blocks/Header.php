@@ -4,66 +4,44 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks;
 
-use SlackPhp\BlockKit\Exception;
-use SlackPhp\BlockKit\HydrationData;
-use SlackPhp\BlockKit\Partials\PlainText;
+use SlackPhp\BlockKit\{Tools\HydrationData, Tools\Validator};
+use SlackPhp\BlockKit\Parts\PlainText;
 
-class Header extends BlockElement
+class Header extends Block
 {
-    /** @var PlainText */
-    private $text;
+    public ?PlainText $text;
 
-    /**
-     * @param string|null $blockId
-     * @param string|null $text
-     */
-    public function __construct(?string $blockId = null, ?string $text = null)
+    public function __construct(PlainText|string|null $text = null, ?string $blockId = null)
     {
         parent::__construct($blockId);
-
-        if (!empty($text)) {
-            $this->text($text);
-        }
+        $this->text($text);
     }
 
-    public function setText(PlainText $text): self
+    public function text(PlainText|string|null $text): static
     {
-        $this->text = $text->setParent($this);
+        $this->text = PlainText::wrap($text)?->limitLength(150);
 
         return $this;
     }
 
-    /**
-     * @param string $text
-     * @param bool|null $emoji
-     * @return self
-     */
-    public function text(string $text, ?bool $emoji = null): self
+    protected function validateInternalData(Validator $validator): void
     {
-        return $this->setText(new PlainText($text, $emoji));
+        $validator->requireAllOf('text')
+            ->validateSubComponents('text');
+        parent::validateInternalData($validator);
     }
 
-    public function validate(): void
+    protected function prepareArrayData(): array
     {
-        if (empty($this->text)) {
-            throw new Exception('Header must contain "text"');
-        }
+        return [
+            ...parent::prepareArrayData(),
+            'text' => $this->text?->toArray(),
+        ];
     }
 
-    public function toArray(): array
+    protected function hydrateFromArrayData(HydrationData $data): void
     {
-        $data = parent::toArray();
-        $data['text'] = $this->text->toArray();
-
-        return $data;
-    }
-
-    protected function hydrate(HydrationData $data): void
-    {
-        if ($data->has('text')) {
-            $this->setText(PlainText::fromArray($data->useElement('text')));
-        }
-
-        parent::hydrate($data);
+        $this->text(PlainText::fromArray($data->useComponent('text')));
+        parent::hydrateFromArrayData($data);
     }
 }

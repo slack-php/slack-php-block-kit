@@ -7,13 +7,12 @@
         "sort-packages": true
     },
     "require": {
-        "php": ">=7.3",
+        "php": ">=8.1",
         "ext-json": "*"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12.0",
-        "phpunit/phpunit": "^9.0",
-        "squizlabs/php_codesniffer": "^3.5"
+        "phpstan/phpstan": "^1.4",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
@@ -36,12 +35,9 @@
             "@test-coverage"
         ],
         "test-ci": "XDEBUG_MODE=coverage phpunit --bootstrap=vendor/autoload.php --coverage-text --whitelist=src --do-not-cache-result tests",
-        "test-coverage": [
-            "XDEBUG_MODE=coverage phpunit --bootstrap=vendor/autoload.php --coverage-html=build/coverage --whitelist=src tests",
-            "open build/coverage/index.html"
-        ],
-        "test-debug": "phpunit --bootstrap=vendor/autoload.php --no-coverage --debug tests",
+        "test-coverage": "XDEBUG_MODE=coverage phpunit --bootstrap=vendor/autoload.php --coverage-html=build/coverage --whitelist=src tests",
+        "test-debug": "XDEBUG_MODE=debug phpunit --bootstrap=vendor/autoload.php --no-coverage --debug tests",
         "test-dox": "phpunit --bootstrap=vendor/autoload.php --no-coverage --testdox tests",
-        "test-gen": "php bin/gen-test.php"
+        "test-gen": "php tests/bin/gen-test.php"
     }
 }

@@ -1,0 +1,109 @@
+{
+    "type": "modal",
+    "title": {
+        "type": "plain_text",
+        "text": "My App"
+    },
+    "submit": {
+        "type": "plain_text",
+        "text": "Submit"
+    },
+    "close": {
+        "type": "plain_text",
+        "text": "Cancel"
+    },
+    "blocks": [
+        {
+            "type": "input",
+            "label": {
+                "type": "plain_text",
+                "text": "Choose a letter"
+            },
+            "element": {
+                "type": "multi_static_select",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "Select letter"
+                },
+                "option_groups": [
+                    {
+                        "label": {
+                            "type": "plain_text",
+                            "text": "Group 1"
+                        },
+                        "options": [
+                            {
+                                "text": {
+                                    "type": "plain_text",
+                                    "text": "a"
+                                },
+                                "value": "value-a"
+                            },
+                            {
+                                "text": {
+                                    "type": "plain_text",
+                                    "text": "b"
+                                },
+                                "value": "value-b"
+                            },
+                            {
+                                "text": {
+                                    "type": "plain_text",
+                                    "text": "c"
+                                },
+                                "value": "value-c"
+                            }
+                        ]
+                    },
+                    {
+                        "label": {
+                            "type": "plain_text",
+                            "text": "Group 2"
+                        },
+                        "options": [
+                            {
+                                "text": {
+                                    "type": "plain_text",
+                                    "text": "x"
+                                },
+                                "value": "value-x"
+                            },
+                            {
+                                "text": {
+                                    "type": "plain_text",
+                                    "text": "y"
+                                },
+                                "value": "value-y"
+                            },
+                            {
+                                "text": {
+                                    "type": "plain_text",
+                                    "text": "z"
+                                },
+                                "value": "value-z"
+                            }
+                        ]
+                    }
+                ],
+                "confirm": {
+                    "title": {
+                        "type": "plain_text",
+                        "text": "Are you sure?"
+                    },
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Think about it."
+                    },
+                    "confirm": {
+                        "type": "plain_text",
+                        "text": "OK"
+                    },
+                    "deny": {
+                        "type": "plain_text",
+                        "text": "Cancel"
+                    }
+                }
+            }
+        }
+    ]
+}

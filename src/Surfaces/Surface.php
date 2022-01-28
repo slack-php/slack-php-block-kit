@@ -4,223 +4,60 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Surfaces;
 
-use SlackPhp\BlockKit\Blocks\{Actions, BlockElement, Context, Divider, Header, Image, Input, Section};
-use SlackPhp\BlockKit\Blocks\Virtual\{VirtualBlock, TwoColumnTable};
-use SlackPhp\BlockKit\{
-    Exception,
-    Element,
-    HydrationData,
-    Type,
-};
+use SlackPhp\BlockKit\Blocks\Block;
+use SlackPhp\BlockKit\Collections\BlockCollection;
+use SlackPhp\BlockKit\{Component, Kit};
+use SlackPhp\BlockKit\Tools\HydrationData;
 
 /**
  * A Slack app surface is something within a Slack app that renders blocks from the block kit (e.g., a Message).
  */
-abstract class Surface extends Element
+abstract class Surface extends Component
 {
-    private const MAX_BLOCKS = 50;
+    protected const MAX_BLOCKS = 50;
 
-    /** @var BlockElement[] */
-    private $blocks = [];
+    public BlockCollection $blocks;
 
     /**
-     * @param BlockElement $block
-     * @return static
+     * @param BlockCollection|array<Block|string>|null $blocks
      */
-    public function add(BlockElement $block): self
+    public function __construct(BlockCollection|array|null $blocks = null)
     {
-        if (!in_array($block->getType(), Type::SURFACE_BLOCKS[$this->getType()], true)) {
-            throw new Exception(
-                'Block type %s is not supported for surface type %s',
-                [$block->getType(), $this->getType()]
-            );
-        }
+        parent::__construct();
+        $this->blocks = BlockCollection::wrap($blocks);
+    }
 
-        $this->blocks[] = $block->setParent($this);
+    public function blocks(BlockCollection|Block|string|null ...$blocks): static
+    {
+        $this->blocks->append(...$blocks);
 
         return $this;
     }
 
     /**
-     * @param iterable|BlockElement[] $blocks
-     * @return static
-     */
-    public function blocks(iterable $blocks): self
-    {
-        foreach ($blocks as $block) {
-            $this->add($block);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return BlockElement[]
+     * @return Block[]
      */
     public function getBlocks(): array
     {
-        $blocks = [];
-        foreach ($this->blocks as $block) {
-            if ($block instanceof VirtualBlock) {
-                foreach ($block->getBlocks() as $subBlock) {
-                    $blocks[] = $subBlock;
-                }
-            } else {
-                $blocks[] = $block;
-            }
-        }
-
-        return $blocks;
+        return [...$this->blocks];
     }
 
-    /**
-     * @param string|null $blockId
-     * @return Actions
-     */
-    public function newActions(?string $blockId = null): Actions
+    public function getPreviewLink(): string
     {
-        $block = new Actions($blockId);
-        $this->add($block);
-
-        return $block;
+        return Kit::preview($this);
     }
 
-    /**
-     * @param string|null $blockId
-     * @return Context
-     */
-    public function newContext(?string $blockId = null): Context
+    protected function prepareArrayData(): array
     {
-        $block = new Context($blockId);
-        $this->add($block);
-
-        return $block;
+        return [
+            ...parent::prepareArrayData(),
+            'blocks' => $this->blocks->toArray(),
+        ];
     }
 
-    /**
-     * @param string|null $blockId
-     * @return Header
-     */
-    public function newHeader(?string $blockId = null): Header
+    protected function hydrateFromArrayData(HydrationData $data): void
     {
-        $block = new Header($blockId);
-        $this->add($block);
-
-        return $block;
-    }
-
-    /**
-     * @param string|null $blockId
-     * @return Image
-     */
-    public function newImage(?string $blockId = null): Image
-    {
-        $block = new Image($blockId);
-        $this->add($block);
-
-        return $block;
-    }
-
-    public function newInput(?string $blockId = null): Input
-    {
-        $block = new Input($blockId);
-        $this->add($block);
-
-        return $block;
-    }
-
-    /**
-     * @param string|null $blockId
-     * @return Section
-     */
-    public function newSection(?string $blockId = null): Section
-    {
-        $block = new Section($blockId);
-        $this->add($block);
-
-        return $block;
-    }
-
-    /**
-     * @param string|null $blockId
-     * @return TwoColumnTable
-     */
-    public function newTwoColumnTable(?string $blockId = null): TwoColumnTable
-    {
-        $block = new TwoColumnTable($blockId);
-        $this->add($block);
-
-        return $block;
-    }
-
-    /**
-     * @param string|null $blockId
-     * @return static
-     */
-    public function divider(?string $blockId = null): self
-    {
-        return $this->add(new Divider($blockId));
-    }
-
-    /**
-     * @param string $text
-     * @param string|null $blockId
-     * @return static
-     */
-    public function text(string $text, ?string $blockId = null): self
-    {
-        $block = new Section($blockId, $text);
-
-        return $this->add($block);
-    }
-
-    /**
-     * @param string $text
-     * @param string|null $blockId
-     * @return static
-     */
-    public function header(string $text, ?string $blockId = null): self
-    {
-        $block = new Header($blockId, $text);
-
-        return $this->add($block);
-    }
-
-    public function validate(): void
-    {
-        $blocks = $this->getBlocks();
-
-        if (empty($blocks)) {
-            throw new Exception('A surface must contain at least one block');
-        }
-
-        if (count($blocks) >= self::MAX_BLOCKS) {
-            throw new Exception('A surface cannot have more than %d blocks', [self::MAX_BLOCKS]);
-        }
-
-        foreach ($blocks as $block) {
-            $block->validate();
-        }
-    }
-
-    public function toArray(): array
-    {
-        $data = parent::toArray();
-
-        $data['blocks'] = [];
-        foreach ($this->getBlocks() as $block) {
-            $data['blocks'][] = $block->toArray();
-        }
-
-        return $data;
-    }
-
-    protected function hydrate(HydrationData $data): void
-    {
-        foreach ($data->useElements('blocks') as $block) {
-            $this->add(BlockElement::fromArray($block));
-        }
-
-        parent::hydrate($data);
+        $this->blocks = BlockCollection::fromArray($data->useComponents('blocks'));
+        parent::hydrateFromArrayData($data);
     }
 }

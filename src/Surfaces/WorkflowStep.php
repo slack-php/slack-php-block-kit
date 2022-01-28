@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Surfaces;
 
-use SlackPhp\BlockKit\Blocks\Input;
-use SlackPhp\BlockKit\HydrationData;
+use SlackPhp\BlockKit\Blocks\Block;
+use SlackPhp\BlockKit\Collections\BlockCollection;
+use SlackPhp\BlockKit\Tools\{HydrationData, PrivateMetadata, Validator};
 
 /**
  * A Workflow Step surface are a special case of a Modal, with limited properties, and are used to configure an app's
@@ -15,61 +16,55 @@ use SlackPhp\BlockKit\HydrationData;
  */
 class WorkflowStep extends Surface
 {
-    /** @var string */
-    private $privateMetadata;
+    use HasIdAndMetadata;
 
-    /** @var string */
-    private $callbackId;
+    public ?bool $submitDisabled;
 
-    public function callbackId(string $callbackId): self
+    /**
+     * @param BlockCollection|array<Block|string>|null $blocks
+     */
+    public function __construct(
+        BlockCollection|array|null $blocks = null,
+        ?string $callbackId = null,
+        PrivateMetadata|array|string|null $privateMetadata = null,
+        ?bool $submitDisabled = null,
+    ) {
+        parent::__construct($blocks);
+        $this->callbackId($callbackId);
+        $this->privateMetadata($privateMetadata);
+        $this->submitDisabled($submitDisabled);
+    }
+
+    public function submitDisabled(?bool $submitDisabled): self
     {
-        $this->callbackId = $callbackId;
+        $this->submitDisabled = $submitDisabled;
 
         return $this;
     }
 
-    public function privateMetadata(string $privateMetadata): self
+    protected function validateInternalData(Validator $validator): void
     {
-        $this->privateMetadata = $privateMetadata;
-
-        return $this;
+        $validator->requireAllOf('blocks')
+            ->validateCollection('blocks', max: static::MAX_BLOCKS, min: 1)
+            ->validateString('callback_id', 255)
+            ->validateString('private_metadata', 3000);
+        parent::validateInternalData($validator);
     }
 
-    public function newInput(?string $blockId = null): Input
+    protected function prepareArrayData(): array
     {
-        $block = new Input($blockId);
-        $this->add($block);
-
-        return $block;
+        return [
+            ...parent::prepareArrayData(),
+            'callback_id' => $this->callbackId,
+            'private_metadata' => $this->privateMetadata,
+            'submit_disabled' => $this->submitDisabled,
+        ];
     }
 
-    public function toArray(): array
+    protected function hydrateFromArrayData(HydrationData $data): void
     {
-        $data = [];
-
-        if (!empty($this->callbackId)) {
-            $data['callback_id'] = $this->callbackId;
-        }
-
-        if (!empty($this->privateMetadata)) {
-            $data['private_metadata'] = $this->privateMetadata;
-        }
-
-        $data += parent::toArray();
-
-        return $data;
-    }
-
-    protected function hydrate(HydrationData $data): void
-    {
-        if ($data->has('callback_id')) {
-            $this->callbackId($data->useValue('callback_id'));
-        }
-
-        if ($data->has('private_metadata')) {
-            $this->privateMetadata($data->useValue('private_metadata'));
-        }
-
-        parent::hydrate($data);
+        $this->callbackId($data->useValue('callback_id'));
+        $this->privateMetadata($data->useValue('private_metadata'));
+        parent::hydrateFromArrayData($data);
     }
 }

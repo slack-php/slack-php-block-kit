@@ -4,204 +4,141 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Surfaces;
 
-use SlackPhp\BlockKit\{Exception, HydrationData, Partials};
+use SlackPhp\BlockKit\Blocks\Block;
+use SlackPhp\BlockKit\Collections\{AttachmentCollection, BlockCollection};
+use SlackPhp\BlockKit\Enums\MessageDirective;
+use SlackPhp\BlockKit\Tools\{HydrationData, Validator};
 
 /**
- * App-published messages are dynamic yet transient spaces. They allow users to complete workflows among their
- * Slack conversations.
- *
  * @see https://api.slack.com/surfaces
  */
 class Message extends Surface
 {
-    private const EPHEMERAL = ['response_type' => 'ephemeral'];
-    private const IN_CHANNEL = ['response_type' => 'in_channel'];
-    private const REPLACE_ORIGINAL = ['replace_original' => 'true'];
-    private const DELETE_ORIGINAL = ['delete_original' => 'true'];
+    public ?MessageDirective $directive;
+    public ?string $text;
+    public ?AttachmentCollection $attachments;
+    public ?bool $mrkdwn;
+    public ?string $threadTs;
 
-    private const VALID_DIRECTIVES = [
-        self::EPHEMERAL,
-        self::IN_CHANNEL,
-        self::REPLACE_ORIGINAL,
-        self::DELETE_ORIGINAL,
-    ];
-
-    /** @var array|Attachment[] Attachments containing secondary content. */
-    private $attachments = [];
-
-    /** @var array|string[] A message can have a directive (e.g., response_type) included along with its blocks. */
-    private $directives = [];
-
-    /** @var array */
-    private $fallbackText = [];
+    /**
+     * @param BlockCollection|array<Block|string>|null $blocks
+     * @param AttachmentCollection|array<Attachment>|null $attachments
+     */
+    public function __construct(
+        BlockCollection|array|null $blocks = null,
+        ?MessageDirective $directive = null,
+        ?string $text = null,
+        AttachmentCollection|array|null $attachments = null,
+        ?bool $mrkdwn = null,
+        ?string $threadTs = null,
+        ?bool $ephemeral = null,
+    ) {
+        parent::__construct($blocks);
+        $this->attachments = AttachmentCollection::wrap($attachments);
+        $this->directive($directive ?? ($ephemeral ? MessageDirective::EPHEMERAL : null));
+        $this->text($text);
+        $this->mrkdwn($mrkdwn);
+        $this->threadTs($threadTs);
+    }
 
     /**
      * Configures message to send privately to the user.
      *
      * This is default behavior for most interactions, and doesn't necessarily need to be explicitly configured.
-     *
-     * @return static
      */
-    public function ephemeral(): self
+    public function ephemeral(): static
     {
-        return $this->directives(self::EPHEMERAL);
+        return $this->directive(MessageDirective::EPHEMERAL);
     }
 
     /**
      * Configures message to send to the entire channel.
-     *
-     * @return static
      */
-    public function inChannel(): self
+    public function inChannel(): static
     {
-        return $this->directives(self::IN_CHANNEL);
+        return $this->directive(MessageDirective::IN_CHANNEL);
     }
 
     /**
      * Configures message to "replace_original" mode.
-     *
-     * @return static
      */
-    public function replaceOriginal(): self
+    public function replaceOriginal(): static
     {
-        return $this->directives(self::REPLACE_ORIGINAL);
+        return $this->directive(MessageDirective::REPLACE_ORIGINAL);
     }
 
     /**
      * Configures message to "delete_original" mode.
-     *
-     * @return static
      */
-    public function deleteOriginal(): self
+    public function deleteOriginal(): static
     {
-        return $this->directives(self::DELETE_ORIGINAL);
+        return $this->directive(MessageDirective::DELETE_ORIGINAL);
     }
 
-    /**
-     * @param array $directives
-     * @return static
-     */
-    private function directives(array $directives): self
+    public function directive(MessageDirective|array|null $directive): static
     {
-        $this->directives = $directives;
+        $this->directive = MessageDirective::fromValue($directive);
 
         return $this;
     }
 
-    /**
-     * Sets the legacy "text" property, that acts as a fallback in situations where blocks cannot be rendered.
-     *
-     * @param string $message
-     * @param bool|null $mrkdwn
-     * @return Message
-     */
-    public function fallbackText(string $message, ?bool $mrkdwn = null): self
+    public function text(?string $text): static
     {
-        $this->fallbackText = ['text' => $message];
-        if ($mrkdwn !== null) {
-            $this->fallbackText['mrkdwn'] = $mrkdwn;
-        }
+        $this->text = $text;
 
         return $this;
     }
 
-    /**
-     * @param Attachment $attachment
-     * @return static
-     */
-    public function addAttachment(Attachment $attachment): self
+    public function mrkdwn(?bool $mrkdwn): static
     {
-        $this->attachments[] = $attachment->setParent($this);
+        $this->mrkdwn = $mrkdwn;
 
         return $this;
     }
 
-    /**
-     * @return Attachment
-     */
-    public function newAttachment(): Attachment
+    public function threadTs(?string $threadTs): static
     {
-        $attachment = new Attachment();
-        $this->addAttachment($attachment);
+        $this->threadTs = $threadTs;
 
-        return $attachment;
+        return $this;
     }
 
-    /**
-     * Clones a message for the purpose of generating a Block Kit Builder preview URL.
-     *
-     * @return Message
-     * @internal Used by Previewer only.
-     */
-    public function asPreviewableMessage(): self
+    public function attachments(AttachmentCollection|Attachment|null ...$attachments): static
     {
-        $message = clone $this;
-        $message->directives = [];
-        $message->fallbackText = [];
+        $this->attachments->append(...$attachments);
 
-        return $message;
+        return $this;
     }
 
-    public function validate(): void
+    protected function validateInternalData(Validator $validator): void
     {
-        if (!empty($this->directives) && !in_array($this->directives, self::VALID_DIRECTIVES, true)) {
-            throw new Exception('Invalid directives for message');
-        }
-
-        $hasBlocks = !empty($this->getBlocks());
-        if ($hasBlocks) {
-            parent::validate();
-        }
-
-        $hasAttachments = !empty($this->attachments);
-        foreach ($this->attachments as $attachment) {
-            $attachment->validate();
-        }
-
-        $hasText = !empty($this->fallbackText);
-        if ($hasText) {
-            Partials\Text::validateString($this->fallbackText['text']);
-        }
-
-        if (!($hasBlocks || $hasAttachments || $hasText)) {
-            throw new Exception('A message must contain at least one of: blocks, attachments, text');
-        }
+        $validator->requireSomeOf('text', 'blocks', 'attachments')
+            ->validateString('text')
+            ->validateString('thread_ts')
+            ->validateCollection('blocks', max: static::MAX_BLOCKS, min: 0)
+            ->validateCollection('attachments', max: 10, min: 0);
+        parent::validateInternalData($validator);
     }
 
-    public function toArray(): array
+    protected function prepareArrayData(): array
     {
-        $data = $this->directives + $this->fallbackText + parent::toArray();
-
-        if ($this->attachments) {
-            $data['attachments'] = [];
-            foreach ($this->attachments as $attachment) {
-                $data['attachments'][] = $attachment->toArray();
-            }
-        }
-
-        if (empty($data['blocks'])) {
-            unset($data['blocks']);
-        }
-
-        return $data;
+        return [
+            ...($this->directive?->toArray() ?? []),
+            'text' => $this->text,
+            'mrkdwn' => $this->mrkdwn,
+            'thread_ts' => $this->threadTs,
+            ...parent::prepareArrayData(),
+            'attachments' => $this->attachments?->toArray(),
+        ];
     }
 
-    protected function hydrate(HydrationData $data): void
+    protected function hydrateFromArrayData(HydrationData $data): void
     {
-        $this->directives(array_filter([
-            'response_type' => $data->useValue('response_type'),
-            'replace_original' => $data->useValue('replace_original'),
-            'delete_original' => $data->useValue('delete_original'),
-        ]));
-
-        if ($data->has('text')) {
-            $this->fallbackText($data->useValue('text'), $data->useValue('mrkdwn'));
-        }
-
-        foreach ($data->useElements('attachments') as $attachment) {
-            $this->addAttachment(Attachment::fromArray($attachment));
-        }
-
-        parent::hydrate($data);
+        $this->directive(array_filter($data->useValues('response_type', 'replace_original', 'delete_original')));
+        $this->text($data->useValue('text'));
+        $this->mrkdwn($data->useValue('mrkdwn'));
+        $this->threadTs($data->useValue('thread_ts'));
+        $this->attachments(...array_map(Attachment::fromArray(...), $data->useComponents('attachments')));
+        parent::hydrateFromArrayData($data);
     }
 }

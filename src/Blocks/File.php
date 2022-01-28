@@ -4,78 +4,53 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks;
 
-use SlackPhp\BlockKit\Exception;
-use SlackPhp\BlockKit\HydrationData;
+use SlackPhp\BlockKit\{Tools\HydrationData, Tools\Validator};
 
-class File extends BlockElement
+class File extends Block
 {
-    /** @var string */
-    private $externalId;
-
-    /** @var string */
-    private $source;
-
-    /**
-     * @param string|null $blockId
-     * @param string|null $externalId
-     * @param string $source
-     */
-    public function __construct(?string $blockId = null, ?string $externalId = null, string $source = 'remote')
-    {
+    public function __construct(
+        public ?string $externalId = null,
+        public ?string $source = 'remote',
+        ?string $blockId = null,
+    ) {
         parent::__construct($blockId);
-
-        if (!empty($externalId)) {
-            $this->externalId($externalId);
-        }
-
-        if (!empty($source)) {
-            $this->source($source);
-        }
+        $this->externalId($externalId);
+        $this->source($source);
     }
 
-    public function externalId(string $externalId): self
+    public function externalId(?string $externalId): self
     {
         $this->externalId = $externalId;
 
         return $this;
     }
 
-    public function source(string $source): self
+    public function source(?string $source): self
     {
         $this->source = $source;
 
         return $this;
     }
 
-    public function validate(): void
+    protected function validateInternalData(Validator $validator): void
     {
-        if (empty($this->externalId)) {
-            throw new Exception('File must contain "external_id"');
-        }
-
-        if (empty($this->source)) {
-            throw new Exception('File must contain "source"');
-        }
+        $validator->requireAllOf('external_id', 'source');
+        parent::validateInternalData($validator);
     }
 
-    public function toArray(): array
+    protected function prepareArrayData(): array
     {
-        return parent::toArray() + [
+        return [
+            ...parent::prepareArrayData(),
             'external_id' => $this->externalId,
             'source' => $this->source,
         ];
     }
 
-    protected function hydrate(HydrationData $data): void
+    protected function hydrateFromArrayData(HydrationData $data): void
     {
-        if ($data->has('external_id')) {
-            $this->externalId($data->useValue('external_id'));
-        }
-
-        if ($data->has('source')) {
-            $this->externalId($data->useValue('source'));
-        }
-
-        parent::hydrate($data);
+        $this->externalId($data->useValue('external_id'));
+        $this->source($data->useValue('source'));
+        parent::hydrateFromArrayData($data);
     }
 }

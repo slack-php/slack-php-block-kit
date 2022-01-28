@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Surfaces;
 
-use SlackPhp\BlockKit\{Element, HydrationData};
+use SlackPhp\BlockKit\Blocks\Block;
+use SlackPhp\BlockKit\Collections\BlockCollection;
+use SlackPhp\BlockKit\Component;
+use SlackPhp\BlockKit\Tools\HydrationData;
+use SlackPhp\BlockKit\Tools\Validator;
 
 /**
  * Attachments are a surface that represent secondary content within a message, and can only exist within a message.
@@ -14,56 +18,52 @@ use SlackPhp\BlockKit\{Element, HydrationData};
  * Attachments have other legacy attributes besides "color", but their use is discouraged. You can accomplish all of the
  * same things using blocks. If you want to set the legacy attributes, you can use `setExtra()`, inherited from Element.
  *
- * @see Element::setExtra()
+ * @see Component::extra()
  * @see https://api.slack.com/messaging/composing/layouts#attachments
  */
 class Attachment extends Surface
 {
-    /** @var string */
-    private $color;
+    public ?string $color;
 
     /**
-     * Returns the attachment as a new Message with the attachment attached.
-     *
-     * @return Message
+     * @param BlockCollection|array<Block|string>|null $blocks
      */
-    public function asMessage(): Message
+    public function __construct(BlockCollection|array|null $blocks = null, ?string $color = null)
     {
-        return Message::new()->addAttachment($this);
+        parent::__construct($blocks);
+        $this->color($color);
     }
 
     /**
      * Sets the hex color of the attachment. It Appears as a border along the left side.
      *
      * This makes sure the `#` is included in the color, in case you forget it.
-     *
-     * @param string $color
-     * @return Attachment
      */
-    public function color(string $color): self
+    public function color(?string $color): self
     {
-        $this->color = '#' . ltrim($color, '#');
+        $this->color = $color ? '#' . ltrim($color, '#') : null;
 
         return $this;
     }
 
-    public function toArray(): array
+    protected function validateInternalData(Validator $validator): void
     {
-        $data = parent::toArray();
-
-        if (!empty($this->color)) {
-            $data['color'] = $this->color;
-        }
-
-        return $data;
+        $validator->requireAllOf('blocks')
+            ->validateCollection('blocks', max: static::MAX_BLOCKS, min: 1);
+        parent::validateInternalData($validator);
     }
 
-    protected function hydrate(HydrationData $data): void
+    protected function prepareArrayData(): array
     {
-        if ($data->has('color')) {
-            $this->color($data->useValue('color'));
-        }
+        return [
+            ...parent::prepareArrayData(),
+            'color' => $this->color,
+        ];
+    }
 
-        parent::hydrate($data);
+    protected function hydrateFromArrayData(HydrationData $data): void
+    {
+        $this->color($data->useValue('color'));
+        parent::hydrateFromArrayData($data);
     }
 }

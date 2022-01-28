@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks\Virtual;
 
+use SlackPhp\BlockKit\Blocks\Block;
+use SlackPhp\BlockKit\Blocks\Divider;
 use SlackPhp\BlockKit\Blocks\Section;
-use SlackPhp\BlockKit\Exception;
+use Traversable;
 
 /**
  * A virtual, multi-block element using sections to create a two-column table.
@@ -15,29 +17,21 @@ use SlackPhp\BlockKit\Exception;
  */
 class TwoColumnTable extends VirtualBlock
 {
-    /** @var Section|null */
-    private $header;
-
-    /** @var bool */
-    private $hasRows = false;
+    public ?bool $borders;
 
     /**
-     * @param string|null $blockId
-     * @param array|null $rows
-     * @param array|null $cols
-     * @param string|null $caption
+     * @param array<string[]>|array<string, string>|null $rows
+     * @param array<string>|null $cols
      */
     public function __construct(
-        ?string $blockId = null,
         ?array $rows = null,
         ?array $cols = null,
-        ?string $caption = null
+        ?bool $borders = null,
+        ?string $blockId = null,
     ) {
-        parent::__construct($blockId);
-
-        if (!empty($caption)) {
-            $this->caption($caption);
-        }
+        parent::__construct();
+        $this->blockId($blockId);
+        $this->borders($borders);
 
         if (!empty($cols)) {
             [$left, $right] = $cols;
@@ -47,24 +41,6 @@ class TwoColumnTable extends VirtualBlock
         if (!empty($rows)) {
             $this->rows($rows);
         }
-    }
-
-    /**
-     * Sets a caption (text element) at the top of the table.
-     *
-     * @param string $caption
-     * @return self
-     */
-    public function caption(string $caption): self
-    {
-        if (!$this->header) {
-            $this->header = new Section();
-            $this->prependBlock($this->header);
-        }
-
-        $this->header->mrkdwnText($caption);
-
-        return $this;
     }
 
     /**
@@ -78,12 +54,7 @@ class TwoColumnTable extends VirtualBlock
      */
     public function cols(string $left, string $right): self
     {
-        if (!$this->header) {
-            $this->header = new Section();
-            $this->prependBlock($this->header);
-        }
-
-        $this->header->fieldList(["*{$left}*", "*{$right}*"]);
+        $this->prepend(new Section(fields: ["*{$left}*", "*{$right}*"]));
 
         return $this;
     }
@@ -97,11 +68,9 @@ class TwoColumnTable extends VirtualBlock
      */
     public function row(string $left, string $right): self
     {
-        $row = new Section();
-        $row->fieldList([$left, $right]);
-        $this->hasRows = true;
+        $this->append(new Section(fields: [$left, $right]));
 
-        return $this->appendBlock($row);
+        return $this;
     }
 
     /**
@@ -109,12 +78,12 @@ class TwoColumnTable extends VirtualBlock
      *
      * Supports list-format (e.g., [[$left, $right], ...]) or map-format (e.g., [$left => $right, ...]) as input.
      *
-     * @param array $rows
+     * @param array<string[]>|array<string, string> $rows
      * @return TwoColumnTable
      */
     public function rows(array $rows): self
     {
-        if (isset($rows[0])) {
+        if (array_is_list($rows)) {
             foreach ($rows as [$left, $right]) {
                 $this->row($left, $right);
             }
@@ -127,12 +96,24 @@ class TwoColumnTable extends VirtualBlock
         return $this;
     }
 
-    public function validate(): void
+    public function borders(?bool $borders): self
     {
-        if (!$this->hasRows) {
-            throw new Exception('TwoColumnTable must contain rows');
+        $this->borders = $borders;
+
+        return $this;
+    }
+
+    public function getIterator(): Traversable
+    {
+        if ($this->borders) {
+            yield new Divider();
         }
 
-        parent::validate();
+        foreach (parent::getIterator() as $block) {
+            yield $block;
+            if ($this->borders) {
+                yield new Divider();
+            }
+        }
     }
 }

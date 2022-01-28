@@ -4,113 +4,36 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks\Virtual;
 
-use Iterator;
-use IteratorAggregate;
-use SlackPhp\BlockKit\Blocks\BlockElement;
-use SlackPhp\BlockKit\HydrationData;
-use SlackPhp\BlockKit\HydrationException;
+use SlackPhp\BlockKit\Blocks\Block;
+use SlackPhp\BlockKit\Collections\BlockCollection;
+use Traversable;
 
 /**
- * An encapsulation of multiple blocks acting as one virtual element.
- *
- * @implements IteratorAggregate<BlockElement>
+ * An encapsulation of multiple blocks acting as one virtual block.
  */
-abstract class VirtualBlock extends BlockElement implements IteratorAggregate
+abstract class VirtualBlock extends BlockCollection
 {
-    /** @var int */
-    private $index = 1;
+    public ?string $blockId = null;
 
-    /** @var BlockElement[]\array */
-    private $blocks = [];
-
-    /**
-     * @param BlockElement $block
-     * @return static
-     */
-    protected function appendBlock(BlockElement $block): self
+    public function blockId(?string $blockId): static
     {
-        if ($this->getParent() !== null) {
-            $block->setParent($this->getParent());
-        }
-
-        $this->blocks[] = $this->assignBlockId($block);
+        $this->blockId = $blockId;
 
         return $this;
     }
 
-    protected function prependBlock(BlockElement $block): self
+    public function getIterator(): Traversable
     {
-        if ($this->getParent() !== null) {
-            $block->setParent($this->getParent());
+        $blocks = parent::getIterator();
+        if ($this->blockId === null) {
+            return $blocks;
         }
 
-        $this->blocks = array_merge(
-            [$this->assignBlockId($block, 1)],
-            array_map(function (BlockElement $block) {
-                return $this->assignBlockId($block);
-            }, $this->blocks)
-        );
-
-        return $this;
-    }
-
-    private function assignBlockId(BlockElement $block, ?int $index = null): BlockElement
-    {
-        $multiBlockId = $this->getBlockId();
-        if ($multiBlockId !== null) {
-            $this->index = $index ?? $this->index;
-            $block->blockId("{$this->getBlockId()}.{$this->index}");
-            $this->index++;
+        $index = 1;
+        /** @var Block $block */
+        foreach ($blocks as $block) {
+            yield $block->blockId("{$this->blockId}.{$index}");
+            $index++;
         }
-
-        return $block;
-    }
-
-    /**
-     * @return BlockElement[]
-     */
-    public function getBlocks(): array
-    {
-        return $this->blocks;
-    }
-
-    public function getIterator(): Iterator
-    {
-        foreach ($this->getBlocks() as $block) {
-            yield $block;
-        }
-    }
-
-    public function validate(): void
-    {
-        foreach ($this->blocks as $block) {
-            $block->validate();
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        $data = [];
-        foreach ($this->blocks as $block) {
-            $data[] = $block->toArray();
-        }
-
-        return $data;
-    }
-
-    /**
-     * Hydrating virtual blocks cannot be done.
-     *
-     * Virtual Blocks are a write-only construct. They won't come up during a regular surface hydration. This exception
-     * will only occur if someone calls `fromArray` manually on a virtual block class.
-     *
-     * @param HydrationData $data
-     */
-    protected function hydrate(HydrationData $data): void
-    {
-        throw new HydrationException('Cannot hydrate virtual blocks; they have no distinguishable representation');
     }
 }

@@ -4,133 +4,57 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks;
 
-use SlackPhp\BlockKit\{Element, Exception, HydrationData, Inputs, Type};
+use SlackPhp\BlockKit\Collections\ActionsCollection;
+use SlackPhp\BlockKit\Tools\{HydrationData, Validator};
+use SlackPhp\BlockKit\Elements\{
+    Button,
+    Checkboxes,
+    DatePicker,
+    OverflowMenu,
+    RadioButtons,
+    TimePicker,
+};
+use SlackPhp\BlockKit\Elements\Selects\SelectMenu;
 
-class Actions extends BlockElement
+class Actions extends Block
 {
-    private const MAX_ACTIONS = 5;
-
-    /** @var Element[] */
-    private $elements = [];
+    public ActionsCollection $elements;
 
     /**
-     * @param string|null $blockId
-     * @param Element[] $elements
+     * @param array<Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker|null> $elements
      */
-    public function __construct(?string $blockId = null, array $elements = [])
+    public function __construct(array $elements = [], ?string $blockId = null)
     {
         parent::__construct($blockId);
-        foreach ($elements as $element) {
-            $this->add($element);
-        }
+        $this->elements = new ActionsCollection();
+        $this->elements(...$elements);
     }
 
-    public function add(Element $element): self
-    {
-        if (!in_array($element->getType(), Type::ACTION_ELEMENTS)) {
-            throw new Exception('Invalid actions element type: %s', [$element->getType()]);
-        }
-
-        if (count($this->elements) >= self::MAX_ACTIONS) {
-            throw new Exception('Context cannot have more than %d elements', [self::MAX_ACTIONS]);
-        }
-
-        $this->elements[] = $element->setParent($this);
+    public function elements(
+        Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker|null ...$elements
+    ): self {
+        $this->elements->append(...$elements);
 
         return $this;
     }
 
-    public function newButton(?string $actionId = null): Inputs\Button
+    protected function validateInternalData(Validator $validator): void
     {
-        $action = new Inputs\Button($actionId);
-        $this->add($action);
-
-        return $action;
+        $validator->validateCollection('elements', max: 5, min: 1);
+        parent::validateInternalData($validator);
     }
 
-    public function newDatePicker(?string $actionId = null): Inputs\DatePicker
+    protected function prepareArrayData(): array
     {
-        $action = new Inputs\DatePicker($actionId);
-        $this->add($action);
-
-        return $action;
+        return [
+            ...parent::prepareArrayData(),
+            'elements' => $this->elements->toArray(),
+        ];
     }
 
-    public function newSelectMenu(?string $actionId = null): Inputs\SelectMenus\SelectMenuFactory
+    protected function hydrateFromArrayData(HydrationData $data): void
     {
-        return new Inputs\SelectMenus\SelectMenuFactory($actionId, function (Inputs\SelectMenus\SelectMenu $menu) {
-            $this->add($menu);
-        });
-    }
-
-    public function newMultiSelectMenu(?string $actionId = null): Inputs\SelectMenus\MultiSelectMenuFactory
-    {
-        return new Inputs\SelectMenus\MultiSelectMenuFactory($actionId, function (Inputs\SelectMenus\SelectMenu $menu) {
-            $this->add($menu);
-        });
-    }
-
-    public function newTextInput(?string $actionId = null): Inputs\TextInput
-    {
-        $action = new Inputs\TextInput($actionId);
-        $this->add($action);
-
-        return $action;
-    }
-
-    public function newRadioButtons(?string $actionId = null): Inputs\RadioButtons
-    {
-        $action = new Inputs\RadioButtons($actionId);
-        $this->add($action);
-
-        return $action;
-    }
-
-    public function newCheckboxes(?string $actionId = null): Inputs\Checkboxes
-    {
-        $action = new Inputs\Checkboxes($actionId);
-        $this->add($action);
-
-        return $action;
-    }
-
-    public function newOverflowMenu(?string $actionId = null): Inputs\OverflowMenu
-    {
-        $action = new Inputs\OverflowMenu($actionId);
-        $this->add($action);
-
-        return $action;
-    }
-
-    public function validate(): void
-    {
-        if (empty($this->elements)) {
-            throw new Exception('Context must contain at least one element');
-        }
-
-        foreach ($this->elements as $element) {
-            $element->validate();
-        }
-    }
-
-    public function toArray(): array
-    {
-        $data = parent::toArray();
-
-        $data['elements'] = [];
-        foreach ($this->elements as $element) {
-            $data['elements'][] = $element->toArray();
-        }
-
-        return $data;
-    }
-
-    protected function hydrate(HydrationData $data): void
-    {
-        foreach ($data->useElements('elements') as $element) {
-            $this->add(Inputs\InputElement::fromArray($element));
-        }
-
-        parent::hydrate($data);
+        $this->elements = ActionsCollection::fromArray($data->useComponents('elements'));
+        parent::hydrateFromArrayData($data);
     }
 }
