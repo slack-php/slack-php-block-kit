@@ -13,6 +13,9 @@ enum MessageDirective
     case REPLACE_ORIGINAL;
     case DELETE_ORIGINAL;
 
+    /**
+     * @return array<string, string>
+     */
     public function toArray(): array
     {
         return match ($this) {
@@ -23,7 +26,11 @@ enum MessageDirective
         };
     }
 
-    public static function fromValue(array|self|null $data): ?self
+    /**
+     * @param self|array<string, string>|null $data
+     * @return static|null
+     */
+    public static function fromValue(self|array|null $data): ?self
     {
         if ($data instanceof self) {
             return $data;

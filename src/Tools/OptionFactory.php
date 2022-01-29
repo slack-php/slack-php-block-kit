@@ -36,7 +36,7 @@ class OptionFactory
     }
 
     /**
-     * @param OptionGroupCollection|array<string, OptionSet|array>|array<OptionGroup>|null $optionGroups
+     * @param OptionGroupCollection|array<string, OptionSet|array<Option|string|null>>|array<OptionGroup>|null $optionGroups
      */
     public function optionGroups(OptionGroupCollection|array|null $optionGroups): OptionGroupCollection
     {

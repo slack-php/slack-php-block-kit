@@ -61,7 +61,7 @@ final class Formatter
      * Performs a string interpolation by substituting keys (in curly braces) for their values.
      *
      * @param string $text
-     * @param array $values
+     * @param array<string, mixed> $values
      * @return string
      */
     public function sub(string $text, array $values): string
@@ -142,20 +142,20 @@ final class Formatter
 
     //region Helpers for multi-line content blocks like lists and quotes.
     /**
-     * @param array|string $lines
+     * @param array<string>|string $lines
      * @return string
      */
-    public function blockQuote($lines): string
+    public function blockQuote(array|string $lines): string
     {
         return $this->lines($this->explode($lines), '> ', false);
     }
 
     /**
-     * @param array|string $items
+     * @param array<string>|string $items
      * @param string $bullet
      * @return string
      */
-    public function bulletedList($items, string $bullet = '•'): string
+    public function bulletedList(array|string $items, string $bullet = '•'): string
     {
         return $this->lines($this->explode($items), "{$bullet} ");
     }
@@ -166,10 +166,10 @@ final class Formatter
     }
 
     /**
-     * @param array|string $items
+     * @param array<string>|string $items
      * @return string
      */
-    public function numberedList($items): string
+    public function numberedList(array|string $items): string
     {
         $index = 0;
         return $this->lines($this->explode($items), function (string $item) use (&$index) {
@@ -183,12 +183,12 @@ final class Formatter
      *
      * Optionally applies a prefix to each line. You can use a closure if the prefix varies per line.
      *
-     * @param array $lines
+     * @param array<string> $lines
      * @param string|callable|null $prefix
      * @param bool $filter
      * @return string
      */
-    public function lines(array $lines, $prefix = null, bool $filter = true): string
+    public function lines(array $lines, string|callable|null $prefix = null, bool $filter = true): string
     {
         if (is_string($prefix)) {
             $prefix = function (string $value) use ($prefix) {
@@ -262,10 +262,10 @@ final class Formatter
      *
      * Explodes strings on "\n" if a string is provided.
      *
-     * @param array|string $items
-     * @return array
+     * @param array<string>|string $items
+     * @return array<string>
      */
-    private function explode($items): array
+    private function explode(array|string $items): array
     {
         if (is_string($items)) {
             return explode("\n", $items);

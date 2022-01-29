@@ -104,6 +104,10 @@ class Fields extends Component
         parent::hydrateFromArrayData($data);
     }
 
+    /**
+     * @param iterable<string, string|Text> $map
+     * @return iterable<string|Text>
+     */
     private static function mapToList(iterable $map): iterable
     {
         foreach ($map as $key => $value) {
@@ -111,6 +115,10 @@ class Fields extends Component
         }
     }
 
+    /**
+     * @param iterable<array<string|Text>> $pairs
+     * @return iterable<string|Text>
+     */
     private static function pairsToList(iterable $pairs): iterable
     {
         foreach ($pairs as $values) {
@@ -118,6 +126,10 @@ class Fields extends Component
         }
     }
 
+    /**
+     * @param iterable<string|Text> $fields
+     * @return iterable<string|Text>
+     */
     private static function rowsToGroups(iterable $fields): iterable
     {
         $regroup = function (array $items): array {

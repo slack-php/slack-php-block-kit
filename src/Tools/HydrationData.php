@@ -20,7 +20,7 @@ class HydrationData
     /**
      * HydrationData constructor.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      */
     public function __construct(array $data)
     {
@@ -40,6 +40,9 @@ class HydrationData
         return $this->data[$key] ?? $default;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function useValues(string ...$keys): array
     {
         $values = [];

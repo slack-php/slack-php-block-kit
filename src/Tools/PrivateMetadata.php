@@ -6,6 +6,9 @@ namespace SlackPhp\BlockKit\Tools;
 
 use ArrayAccess;
 
+/**
+ * @implements ArrayAccess<string, string|int|float|bool>
+ */
 class PrivateMetadata implements ArrayAccess
 {
     /**

@@ -13,10 +13,12 @@ use Traversable;
 
 /**
  * @template T of Component
+ * @implements IteratorAggregate<T>
+ * @implements ArrayAccess<int, T>
  */
 abstract class ComponentCollection implements IteratorAggregate, Countable, ArrayAccess
 {
-    /** @var T[] */
+    /** @var array<T> */
     protected array $components = [];
 
     final public static function new(): static

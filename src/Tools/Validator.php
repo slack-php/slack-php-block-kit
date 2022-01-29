@@ -13,9 +13,13 @@ use function str_contains;
 
 final class Validator
 {
-    /** @var string[] */
+    /** @var array<string> */
     public readonly array $context;
 
+    /**
+     * @param Component $component
+     * @param array<string> $context
+     */
     public function __construct(public readonly Component $component, array $context = [])
     {
         if (isset($this->component->blockId)) {
@@ -201,7 +205,7 @@ final class Validator
         return $this;
     }
 
-    public function validateCollection(string $field, int $max = 0, int $min = 1, ?callable $fn = null): self
+    public function validateCollection(string $field, int $max = 0, int $min = 1): self
     {
         $property = $this->camelCase($field);
         $collection = $this->value($property);
@@ -240,6 +244,10 @@ final class Validator
         return $this;
     }
 
+    /**
+     * @param array<string|int> $args
+     * @return $this
+     */
     public function preventCondition(bool $condition, string $message, array $args = []): self
     {
         if ($condition) {
@@ -278,11 +286,19 @@ final class Validator
         return lcfirst(implode('', $words));
     }
 
+    /**
+     * @param array<string> $fields
+     * @return array<string, string>
+     */
     private function prepareFields(array $fields): array
     {
         return array_combine($fields, array_map($this->camelCase(...), $fields));
     }
 
+    /**
+     * @param array<string> $fields
+     * @return string
+     */
     private function fieldList(array $fields): string
     {
         if (!array_is_list($fields)) {

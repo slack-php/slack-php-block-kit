@@ -13,6 +13,10 @@ class OptionGroup extends Component
     public ?PlainText $label;
     public OptionSet $options;
 
+    /**
+     * @param string|null $label
+     * @param OptionSet|array<Option|string|null>|array<string, string>|null $options
+     */
     public function __construct(?string $label = null, OptionSet|array|null $options = null)
     {
         parent::__construct();

@@ -1,8 +1,9 @@
 parameters:
-    level: 5
+    level: 6
     paths:
         - src
-    #checkMissingIterableValueType: false
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         # Some elements (especially Partials) have constructors, but all have only optional params.
         - '#Unsafe usage of new static.*#'

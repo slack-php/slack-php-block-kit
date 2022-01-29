@@ -18,6 +18,9 @@ trait HasIdAndMetadata
         return $this;
     }
 
+    /**
+     * @param PrivateMetadata|array<string, string|int|float|bool>|string|null $privateMetadata
+     */
     public function privateMetadata(PrivateMetadata|array|string|null $privateMetadata): static
     {
         if (is_array($privateMetadata)) {

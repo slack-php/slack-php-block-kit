@@ -58,6 +58,7 @@ abstract class Component implements JsonSerializable
     }
 
     /**
+     * @param array<string> $context list of parent components.
      * @throws Exception if the block kit item is invalid (e.g., missing data).
      */
     final public function validate(array $context = []): void
@@ -65,6 +66,9 @@ abstract class Component implements JsonSerializable
         $this->validateInternalData(new Validator($this, $context));
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     final public function toArray(): array
     {
         return array_filter(
@@ -103,6 +107,10 @@ abstract class Component implements JsonSerializable
         return static::fromArray($data);
     }
 
+    /**
+     * @param array<string, mixed>|array<int, array<string, mixed>>|null $data
+     * @return static|null
+     */
     public static function fromArray(?array $data): ?static
     {
         if ($data === null) {
@@ -149,6 +157,7 @@ abstract class Component implements JsonSerializable
     }
 
     /**
+     * @return array<string, mixed>
      * @internal Used by toArray implementations.
      */
     protected function prepareArrayData(): array
