@@ -144,6 +144,6 @@ enum Type: string
 
     public static function fromValue(self|string|null $value): ?self
     {
-        return $value instanceof self ? $value : ($value ? self::from($value) : null);
+        return is_string($value) ? self::from($value) : $value;
     }
 }

@@ -145,7 +145,7 @@ class MessageTest extends TestCase
         ], $msg);
     }
 
-    public function testCanConvertToArray(): void
+    public function testCanConvertToAnArray(): void
     {
         $msg = new Message(['foo', 'bar'], MessageDirective::EPHEMERAL, 'foo bar');
         $data = $msg->toArray();
@@ -158,15 +158,7 @@ class MessageTest extends TestCase
         $this->assertEquals('foo bar', $data['text']);
     }
 
-    public function testMustAddBlocksOrAttachmentsOrFallbackText(): void
-    {
-        $msg = new Message();
-
-        $this->expectException(Exception::class);
-        $msg->validate();
-    }
-
-    public function testHydration(): void
+    public function testCanCreateFromAnArray(): void
     {
         $data = [
             'response_type' => 'ephemeral',
@@ -178,6 +170,14 @@ class MessageTest extends TestCase
         $msg = Message::fromArray($data);
 
         $this->assertEquals($data, $msg->toArray());
+    }
+
+    public function testMustAddBlocksOrAttachmentsOrFallbackText(): void
+    {
+        $msg = new Message();
+
+        $this->expectException(Exception::class);
+        $msg->validate();
     }
 
     public function testCannotHaveInvalidDirective(): void

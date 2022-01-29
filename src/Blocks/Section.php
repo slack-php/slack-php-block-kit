@@ -50,7 +50,7 @@ class Section extends Block
     protected function validateInternalData(Validator $validator): void
     {
         $validator->requireSomeOf('text', 'fields')
-            ->validateSubComponents('text', 'fields','accessory');
+            ->validateSubComponents('text', 'fields', 'accessory');
         parent::validateInternalData($validator);
     }
 

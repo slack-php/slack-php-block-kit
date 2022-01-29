@@ -8,7 +8,8 @@
     },
     "require": {
         "php": ">=8.1",
-        "ext-json": "*"
+        "ext-json": "*",
+        "friendsofphp/php-cs-fixer": "^3.5"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.4",
@@ -26,8 +27,9 @@
     },
     "scripts": {
         "stan": "phpstan analyse -c phpstan.neon",
-        "style-fix": "phpcbf --standard=PSR12 src tests",
-        "style-lint": "phpcs --standard=PSR12 src tests",
+        "style-fix": "php-cs-fixer fix",
+        "style-help": "php-cs-fixer describe",
+        "style-lint": "php-cs-fixer fix --dry-run --verbose",
         "test": "phpunit --bootstrap=vendor/autoload.php --no-coverage tests",
         "test-all":  [
             "@style-lint",

@@ -12,7 +12,7 @@ class ModifyTest extends TestCase
     /**
      * @dataProvider providesJsonModifications
      */
-    public function testModificationsToComponentsMatchExpectedOutput(string $expectedFile, callable $modify)
+    public function testModificationsToComponentsMatchExpectedOutputJson(string $expectedFile, callable $modify)
     {
         $originalJson = $this->loadAssetJson('modify/restaurants-original');
         $expectedJson = $this->loadAssetJson("modify/restaurants-{$expectedFile}");

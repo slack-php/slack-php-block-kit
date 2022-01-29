@@ -15,6 +15,7 @@ Thumbs.db
 /.env
 *.log
 .phpunit.result.cache
+.php-cs-fixer.cache
 
 ## Build ##
 /build

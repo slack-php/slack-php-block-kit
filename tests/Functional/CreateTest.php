@@ -10,7 +10,7 @@ use function MongoDB\BSON\toJSON;
 
 class CreateTest extends TestCase
 {
-    public function testCreatedComponentsMatchExpectedOutput()
+    public function testCreatedComponentsMatchExpectedOutputJson()
     {
         $modal = Kit::modal(
             title: 'My App',
@@ -53,7 +53,7 @@ class CreateTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expectedJson, $modal2->toJson());
     }
 
-    public function testVirtualComponents()
+    public function testCreatedVirtualComponentsMatchExpectedOutputJson()
     {
         $message = Kit::message(
             blocks: [

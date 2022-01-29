@@ -15,14 +15,22 @@ class PrivateMetadata implements ArrayAccess
     {
     }
 
-    public static function decode(string $base64Encoded): self
+    public static function decode(string $base64Encoded): ?self
     {
-        $urlEncoded = base64_decode($base64Encoded);
+        $urlEncoded = base64_decode($base64Encoded, true);
+        if (!$urlEncoded) {
+            return null;
+        }
+
         parse_str($urlEncoded, $data);
 
         return new self($data);
     }
 
+    /**
+     * @param array<string, string|int|float|bool> $data
+     * @return string
+     */
     public static function encode(array $data): string
     {
         return base64_encode(http_build_query($data));

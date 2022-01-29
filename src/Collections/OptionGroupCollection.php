@@ -60,8 +60,9 @@ class OptionGroupCollection extends ComponentCollection
      */
     public function getInitial(): Traversable
     {
+        /** @var OptionGroup $optionGroup */
         foreach ($this->getIterator() as $optionGroup) {
-            yield from $optionGroup->options?->getInitial();
+            yield from $optionGroup->options->getInitial();
         }
     }
 }
