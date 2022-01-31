@@ -1,0 +1,17 @@
+{
+    "type": "modal",
+    "title": {
+        "type": "plain_text",
+        "text": "My App"
+    },
+    "private_metadata": "Zm9vPWJhcg==",
+    "blocks": [
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "Hello, world!"
+            }
+        }
+    ]
+}

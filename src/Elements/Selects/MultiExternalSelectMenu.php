@@ -32,7 +32,7 @@ class MultiExternalSelectMenu extends MultiSelectMenu
         $this->initialOptions($initialOptions);
     }
 
-    public function minQueryLength(int $minQueryLength): self
+    public function minQueryLength(?int $minQueryLength): self
     {
         $this->minQueryLength = $minQueryLength;
 

@@ -31,7 +31,7 @@ trait HasIdAndMetadata
             $privateMetadata = (string) $privateMetadata;
         }
 
-        $this->privateMetadata = $privateMetadata;
+        $this->privateMetadata = $privateMetadata ?: null;
 
         return $this;
     }

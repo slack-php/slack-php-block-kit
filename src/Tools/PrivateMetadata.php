@@ -36,7 +36,7 @@ class PrivateMetadata implements ArrayAccess
      */
     public static function encode(array $data): string
     {
-        return base64_encode(http_build_query($data));
+        return $data ? base64_encode(http_build_query($data)) : '';
     }
 
     public function offsetExists($offset): bool

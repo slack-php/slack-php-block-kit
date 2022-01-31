@@ -30,7 +30,7 @@ class ExternalSelectMenu extends SelectMenu
         $this->initialOption($initialOption);
     }
 
-    public function minQueryLength(int $minQueryLength): self
+    public function minQueryLength(?int $minQueryLength): self
     {
         $this->minQueryLength = $minQueryLength;
 

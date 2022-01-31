@@ -1,0 +1,16 @@
+{
+    "type": "modal",
+    "title": {
+        "type": "plain_text",
+        "text": "My App"
+    },
+    "blocks": [
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "Hello, world!"
+            }
+        }
+    ]
+}

@@ -6,6 +6,8 @@ namespace SlackPhp\BlockKit\Tests\Functional;
 
 use SlackPhp\BlockKit\Blocks\Section;
 use SlackPhp\BlockKit\Surfaces\Message;
+use SlackPhp\BlockKit\Tools\HydrationData;
+use SlackPhp\BlockKit\Tools\HydrationException;
 
 class ModifyTest extends TestCase
 {
@@ -43,5 +45,11 @@ class ModifyTest extends TestCase
         yield ['with-modified', function (Message $msg) {
             $msg->blocks[6]?->elements[0]?->text?->text('MODIFIED');
         }];
+    }
+
+    public function testFailsValidationOnInvalidData()
+    {
+        $this->expectException(HydrationException::class);
+        Message::fromJson($this->loadAssetJson('modify/restaurants-broken'));
     }
 }

@@ -11,11 +11,12 @@ use SlackPhp\BlockKit\Elements\Selects;
 enum Type: string
 {
     // Surfaces
-    case APP_HOME      = 'home';
-    case ATTACHMENT    = 'attachment';
-    case MESSAGE       = 'message';
-    case MODAL         = 'modal';
-    case WORKFLOW_STEP = 'workflow_step';
+    case APP_HOME       = 'home';
+    case ATTACHMENT     = 'attachment';
+    case MESSAGE        = 'message';
+    case MODAL          = 'modal';
+    case WORKFLOW_STEP  = 'workflow_step';
+    case OPTIONS_RESULT = 'options_result';
 
     // Blocks
     case ACTIONS     = 'actions';
@@ -60,11 +61,12 @@ enum Type: string
     /** @var array<string, self> */
     private const TYPE_MAP = [
         // Surfaces
-        Surfaces\AppHome::class      => self::APP_HOME,
-        Surfaces\Attachment::class   => self::ATTACHMENT,
-        Surfaces\Message::class      => self::MESSAGE,
-        Surfaces\Modal::class        => self::MODAL,
-        Surfaces\WorkflowStep::class => self::WORKFLOW_STEP,
+        Surfaces\AppHome::class       => self::APP_HOME,
+        Surfaces\Attachment::class    => self::ATTACHMENT,
+        Surfaces\Message::class       => self::MESSAGE,
+        Surfaces\Modal::class         => self::MODAL,
+        Surfaces\WorkflowStep::class  => self::WORKFLOW_STEP,
+        Surfaces\OptionsResult::class => self::OPTIONS_RESULT,
 
         // Blocks
         Blocks\Actions::class    => self::ACTIONS,
@@ -135,8 +137,8 @@ enum Type: string
     public function toSlackValue(): ?string
     {
         return match ($this) {
-            self::ATTACHMENT, self::CONFIRM, self::DISPATCH_ACTION_CONFIG, self::FIELDS,
-                self::FILTER, self::MESSAGE, self::OPTION, self::OPTION_GROUP => null,
+            self::ATTACHMENT, self::CONFIRM, self::DISPATCH_ACTION_CONFIG, self::FIELDS, self::FILTER,
+                self::MESSAGE, self::OPTION, self::OPTION_GROUP, self::OPTIONS_RESULT => null,
             self::BLOCK_IMAGE => self::IMAGE->value,
             default => $this->value,
         };
