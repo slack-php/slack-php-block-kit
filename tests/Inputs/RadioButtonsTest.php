@@ -15,7 +15,7 @@ use SlackPhp\BlockKit\Type;
  */
 class RadioButtonsTest extends TestCase
 {
-    public function testRadioButtonsWithConfirm()
+    public function testRadioButtonsWithConfirm(): void
     {
         $input = (new RadioButtons('radio-buttons-identifier'))
             ->option('foo', 'foo')
@@ -77,7 +77,7 @@ class RadioButtonsTest extends TestCase
         ], $input);
     }
 
-    public function testTooManyOptions()
+    public function testTooManyOptions(): void
     {
         $this->expectException(Exception::class);
         $input = (new RadioButtons())
@@ -95,14 +95,14 @@ class RadioButtonsTest extends TestCase
         $input->validate();
     }
 
-    public function testNoOptions()
+    public function testNoOptions(): void
     {
         $this->expectException(Exception::class);
         $input = new RadioButtons();
         $input->validate();
     }
 
-    public function testTooManyInitialOptions()
+    public function testTooManyInitialOptions(): void
     {
         $this->expectException(Exception::class);
         $input = (new RadioButtons())

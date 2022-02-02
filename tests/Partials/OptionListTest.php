@@ -13,7 +13,7 @@ use SlackPhp\BlockKit\Tests\TestCase;
  */
 class OptionListTest extends TestCase
 {
-    public function testCanCreateAnOptionsListWithOptions()
+    public function testCanCreateAnOptionsListWithOptions(): void
     {
         $optionsList = OptionList::new()
             ->option('foobar', '123')
@@ -47,7 +47,7 @@ class OptionListTest extends TestCase
         ], $optionsList);
     }
 
-    public function testCanCreateAnOptionsListWithOptionsFromArray()
+    public function testCanCreateAnOptionsListWithOptionsFromArray(): void
     {
         $optionsList = OptionList::new()->options(['foo', 'bar', 'baz']);
 

@@ -15,7 +15,7 @@ use SlackPhp\BlockKit\Type;
  */
 class OverflowMenuTest extends TestCase
 {
-    public function testOverflowMenuWithConfirm()
+    public function testOverflowMenuWithConfirm(): void
     {
         $input = (new OverflowMenu('overflow-identifier'))
             ->option('foo', 'foo')
@@ -71,7 +71,7 @@ class OverflowMenuTest extends TestCase
         ], $input);
     }
 
-    public function testTooManyOptions()
+    public function testTooManyOptions(): void
     {
         $this->expectException(Exception::class);
         $input = (new OverflowMenu())
@@ -84,7 +84,7 @@ class OverflowMenuTest extends TestCase
         $input->validate();
     }
 
-    public function testTooFewOptions()
+    public function testTooFewOptions(): void
     {
         $this->expectException(Exception::class);
         $input = (new OverflowMenu())

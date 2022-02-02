@@ -12,7 +12,7 @@ use SlackPhp\BlockKit\Tests\TestCase;
  */
 class BlockElementTest extends TestCase
 {
-    public function testCanSetBlockId()
+    public function testCanSetBlockId(): void
     {
         $block = new class () extends BlockElement {
             public function validate(): void
@@ -26,7 +26,7 @@ class BlockElementTest extends TestCase
         $this->assertEquals('foo', $block->getBlockId());
     }
 
-    public function testCanSetBlockIdWhenConstructing()
+    public function testCanSetBlockIdWhenConstructing(): void
     {
         $block = new class ('foo') extends BlockElement {
             public function validate(): void

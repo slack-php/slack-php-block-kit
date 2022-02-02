@@ -16,7 +16,7 @@ use SlackPhp\BlockKit\Surfaces\Modal;
  */
 class ElementTest extends TestCase
 {
-    public function testCanSerializeValidElementToJson()
+    public function testCanSerializeValidElementToJson(): void
     {
         $element = $this->getMockElement();
 
@@ -26,14 +26,14 @@ class ElementTest extends TestCase
         ]);
     }
 
-    public function testThrowsErrorElementIsInvalid()
+    public function testThrowsErrorElementIsInvalid(): void
     {
         $this->expectException(Exception::class);
         $element = $this->getMockElement(false);
         $this->jsonEncode($element);
     }
 
-    public function testCanSetParentWithFluidInterfaceAndGetParentBack()
+    public function testCanSetParentWithFluidInterfaceAndGetParentBack(): void
     {
         $parent = $this->getMockElement();
         $element = $this->getMockElement();
@@ -42,14 +42,14 @@ class ElementTest extends TestCase
         $this->assertSame($parent, $element->getParent());
     }
 
-    public function testCanUseNewAsFactoryForChildClasses()
+    public function testCanUseNewAsFactoryForChildClasses(): void
     {
         $element = Section::new();
         $this->assertEquals(Type::SECTION, $element->getType());
         $this->assertInstanceOf(Section::class, $element);
     }
 
-    public function testCanSetExtraFieldsForArbitraryData()
+    public function testCanSetExtraFieldsForArbitraryData(): void
     {
         $element = $this->getMockElement();
 
@@ -62,7 +62,7 @@ class ElementTest extends TestCase
         ]);
     }
 
-    public function testCanTapIntoElementForChaining()
+    public function testCanTapIntoElementForChaining(): void
     {
         $element = $this->getMockElement()->tap(function (Element $e) {
             $e->setExtra('fizz', 'buzz');
@@ -76,7 +76,7 @@ class ElementTest extends TestCase
         ]);
     }
 
-    public function testCanConditionallyTapIntoElementForChaining()
+    public function testCanConditionallyTapIntoElementForChaining(): void
     {
         $callable = function (Element $e) {
             $e->setExtra('fizz', 'buzz');
@@ -100,8 +100,8 @@ class ElementTest extends TestCase
     private function getMockElement(bool $valid = true): Element
     {
         return new class ($valid) extends Element {
-            private $text;
-            private $valid;
+            private string $text;
+            private bool $valid;
 
             public function __construct(bool $valid)
             {
@@ -128,7 +128,7 @@ class ElementTest extends TestCase
         };
     }
 
-    public function testHydration()
+    public function testHydration(): void
     {
         $beforeJson = <<<JSON
         {
@@ -180,13 +180,13 @@ class ElementTest extends TestCase
         $this->assertJsonStringEqualsJsonString($beforeJson, $afterJson);
     }
 
-    public function testFromJsonThrowsExceptionOnBadJson()
+    public function testFromJsonThrowsExceptionOnBadJson(): void
     {
         $this->expectException(HydrationException::class);
         Modal::fromJson('{"foo":"Bar",}');
     }
 
-    public function testCanExportToJsonWithPrettyPrint()
+    public function testCanExportToJsonWithPrettyPrint(): void
     {
         $element = $this->getMockElement();
         $json = $element->toJson(true);

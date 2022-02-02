@@ -10,23 +10,23 @@ use SlackPhp\BlockKit\{Exception, Kit, Type};
  */
 class TypeTest extends TestCase
 {
-    public function testCanMapDefinedElementClassToADefinedType()
+    public function testCanMapDefinedElementClassToADefinedType(): void
     {
         $this->assertEquals(Type::SECTION, Type::mapClass(Section::class));
     }
 
-    public function testThrowsErrorIfMappingClassesNotRegisteredInTypeMaps()
+    public function testThrowsErrorIfMappingClassesNotRegisteredInTypeMaps(): void
     {
         $this->expectException(Exception::class);
         Type::mapClass(Kit::class);
     }
 
-    public function testCanMapDefinedElementTypeToADefinedClass()
+    public function testCanMapDefinedElementTypeToADefinedClass(): void
     {
         $this->assertEquals(Section::class, Type::mapType(Type::SECTION));
     }
 
-    public function testThrowsErrorIfMappingTypesNotRegisteredInTypeMaps()
+    public function testThrowsErrorIfMappingTypesNotRegisteredInTypeMaps(): void
     {
         $this->expectException(Exception::class);
         Type::mapType('shoe');

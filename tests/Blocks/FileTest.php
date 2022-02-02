@@ -13,7 +13,7 @@ use SlackPhp\BlockKit\Type;
  */
 class FileTest extends TestCase
 {
-    public function testThatFileRendersToJsonCorrectly()
+    public function testThatFileRendersToJsonCorrectly(): void
     {
         $file = new File('id1');
         $file->externalId('foo');

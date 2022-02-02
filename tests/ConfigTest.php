@@ -9,7 +9,7 @@ use SlackPhp\BlockKit\Config;
  */
 class ConfigTest extends TestCase
 {
-    public function testCanSetConfigValuesWithFluentSyntax()
+    public function testCanSetConfigValuesWithFluentSyntax(): void
     {
         $c = Config::new()
             ->setDefaultEmojiSetting(true)
@@ -19,7 +19,7 @@ class ConfigTest extends TestCase
         $this->assertTrue($c->getDefaultVerbatimSetting());
     }
 
-    public function testCanUseDefaultConfigValues()
+    public function testCanUseDefaultConfigValues(): void
     {
         $c = Config::new();
 

@@ -24,14 +24,14 @@ class KitTest extends TestCase
         ]);
     }
 
-    public function testCanCreateSurfaces()
+    public function testCanCreateSurfaces(): void
     {
         $this->assertInstanceOf(Message::class, Kit::newMessage());
         $this->assertInstanceOf(Modal::class, Kit::newModal());
         $this->assertInstanceOf(AppHome::class, Kit::newAppHome());
     }
 
-    public function testStoresConfigAsSingleton()
+    public function testStoresConfigAsSingleton(): void
     {
         $config1 = Kit::config();
         $config2 = Kit::config();
@@ -40,7 +40,7 @@ class KitTest extends TestCase
         $this->assertSame($config1, $config2);
     }
 
-    public function testStoresFormatterAsSingleton()
+    public function testStoresFormatterAsSingleton(): void
     {
         $formatter1 = Kit::formatter();
         $formatter2 = Kit::formatter();
@@ -49,7 +49,7 @@ class KitTest extends TestCase
         $this->assertSame($formatter1, $formatter2);
     }
 
-    public function testCanUsePreviewerToGenerateUrl()
+    public function testCanUsePreviewerToGenerateUrl(): void
     {
         $msg = Kit::newMessage()->text('foo');
         $url = Kit::preview($msg);

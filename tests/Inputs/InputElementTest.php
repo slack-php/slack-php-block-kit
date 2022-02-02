@@ -12,7 +12,7 @@ use SlackPhp\BlockKit\Tests\TestCase;
  */
 class InputElementTest extends TestCase
 {
-    public function testCanSetActionId()
+    public function testCanSetActionId(): void
     {
         $input = new class () extends InputElement {
             public function validate(): void
@@ -34,7 +34,7 @@ class InputElementTest extends TestCase
         ], $input);
     }
 
-    public function testCanSetActionIdWhenConstructing()
+    public function testCanSetActionIdWhenConstructing(): void
     {
         $input = new class ('foo') extends InputElement {
             public function validate(): void
