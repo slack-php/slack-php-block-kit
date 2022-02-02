@@ -51,11 +51,11 @@ abstract class Text extends Element
             throw new Exception('Text element must have a "text" value');
         }
 
-        if (strlen($text) < $min) {
+        if (mb_strlen($text, 'UTF-8') < $min) {
             throw new Exception('Text element must have a "text" value with a length of at least %d', [$min]);
         }
 
-        if (is_int($max) && strlen($text) > $max) {
+        if (is_int($max) && mb_strlen($text, 'UTF-8') > $max) {
             throw new Exception('Text element must have a "text" value with a length of at most %d', [$max]);
         }
     }
