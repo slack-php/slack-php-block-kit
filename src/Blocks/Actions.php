@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Blocks;
 
 use SlackPhp\BlockKit\{Element, Exception, HydrationData, Inputs, Type};
+use SlackPhp\BlockKit\Inputs\InputElement;
 
 class Actions extends BlockElement
 {
@@ -108,8 +109,28 @@ class Actions extends BlockElement
             throw new Exception('Context must contain at least one element');
         }
 
+        $actionIds = [];
         foreach ($this->elements as $element) {
             $element->validate();
+            if ($element instanceof InputElement && ! is_null($element->getActionId())) {
+                $actionIds[] = $element->getActionId();
+            }
+        }
+
+        $actionIdArrayCount = array_count_values($actionIds);
+        if (count($actionIdArrayCount) > 0) {
+            $duplicateActionIds = [];
+            foreach ($actionIdArrayCount as $key => $value) {
+                if ((int)$value > 1) {
+                    $duplicateActionIds[] = $key;
+                }
+            }
+
+            if (count($duplicateActionIds) > 0) {
+                throw new Exception(
+                    'The following action_ids are duplicated : ' . implode(', ', $duplicateActionIds) . ' ]'
+                );
+            }
         }
     }
 

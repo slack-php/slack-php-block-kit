@@ -6,6 +6,8 @@ namespace SlackPhp\BlockKit\Tests\Surfaces;
 
 use SlackPhp\BlockKit\Blocks\Section;
 use SlackPhp\BlockKit\Blocks\Virtual\TwoColumnTable;
+use SlackPhp\BlockKit\Exception;
+use SlackPhp\BlockKit\Kit;
 use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
@@ -13,7 +15,7 @@ use SlackPhp\BlockKit\Tests\TestCase;
  */
 class SurfaceTest extends TestCase
 {
-    public function testCanAddSingleBlocks()
+    public function testCanAddSingleBlocks(): void
     {
         $surface = $this->getMockSurface();
 
@@ -29,7 +31,7 @@ class SurfaceTest extends TestCase
         }
     }
 
-    public function testCanAddVirtualBlocks()
+    public function testCanAddVirtualBlocks(): void
     {
         $surface = $this->getMockSurface();
 
@@ -46,7 +48,7 @@ class SurfaceTest extends TestCase
         }
     }
 
-    public function testCanAddVirtualBlockEarlyOrLateAndBlockCountIsTheSame()
+    public function testCanAddVirtualBlockEarlyOrLateAndBlockCountIsTheSame(): void
     {
         $rows = [
             'a' => '1',
@@ -68,5 +70,41 @@ class SurfaceTest extends TestCase
             ->cols('Foo', 'Bar')
             ->rows($rows);
         $this->assertCount(4, $surface2->getBlocks());
+    }
+
+    public function testCanValidateDupilcateBlockId(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'Slack Block Kit Error: The following block_ids are duplicated : test-block-1, test-block-3 ]'
+        );
+
+        $surface = $this->getMockSurface()
+            ->add(
+                Section::new()
+                    ->blockId('test-block-1')
+                    ->plainText('test plain text.')
+            )
+            ->add(
+                Section::new()
+                    ->blockId('test-block-1')
+                    ->plainText('test plain text.')
+            )
+            ->add(
+                Section::new()
+                    ->blockId('test-block-2')
+                    ->plainText('test plain text.')
+            )
+            ->add(
+                Section::new()
+                    ->blockId('test-block-3')
+                    ->plainText('test plain text.')
+            )
+            ->add(
+                Section::new()
+                    ->blockId('test-block-3')
+                    ->plainText('test plain text.')
+            )
+            ->toArray();
     }
 }

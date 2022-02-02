@@ -34,6 +34,14 @@ abstract class InputElement extends Element
     }
 
     /**
+     * @return string|null
+     */
+    public function getActionId(): ?string
+    {
+        return $this->actionId;
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array

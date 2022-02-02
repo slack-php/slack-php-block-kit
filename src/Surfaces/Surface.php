@@ -198,8 +198,28 @@ abstract class Surface extends Element
             throw new Exception('A surface cannot have more than %d blocks', [self::MAX_BLOCKS]);
         }
 
+        $blolckIds = [];
         foreach ($blocks as $block) {
             $block->validate();
+            if (! is_null($block->getBlockId())) {
+                $blolckIds[] = $block->getBlockId();
+            }
+        }
+
+        $blockIdArrayCount = array_count_values($blolckIds);
+        if (count($blockIdArrayCount) > 0) {
+            $duplicateBlockIds = [];
+            foreach ($blockIdArrayCount as $key => $value) {
+                if ((int)$value > 1) {
+                    $duplicateBlockIds[] = $key;
+                }
+            }
+
+            if (count($duplicateBlockIds) > 0) {
+                throw new Exception(
+                    'The following block_ids are duplicated : ' . implode(', ', $duplicateBlockIds) . ' ]'
+                );
+            }
         }
     }
 
