@@ -46,7 +46,7 @@ abstract class View extends Surface
     protected function validateInternalData(Validator $validator): void
     {
         $validator->requireAllOf('blocks')
-            ->validateCollection('blocks', max: static::MAX_BLOCKS, min: 1)
+            ->validateCollection('blocks', max: static::MAX_BLOCKS, validateIds: true)
             ->validateString('callback_id', 255)
             ->validateString('private_metadata', 3000);
         parent::validateInternalData($validator);

@@ -14,7 +14,7 @@ use SlackPhp\BlockKit\Tools\ValidationException;
 
 class CreateTest extends TestCase
 {
-    public function testCreatedComponentsMatchExpectedOutputJson()
+    public function testCreatedComponentsMatchExpectedOutputJson(): void
     {
         $modal = Kit::modal(
             title: 'My App',
@@ -57,7 +57,7 @@ class CreateTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expectedJson, $modal2->toJson());
     }
 
-    public function testCreatedVirtualComponentsMatchExpectedOutputJson()
+    public function testCreatedVirtualComponentsMatchExpectedOutputJson(): void
     {
         $message = Kit::message(
             blocks: [
@@ -87,7 +87,7 @@ class CreateTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expectedJson, $message->toJson());
     }
 
-    public function testCreateModalWithPrivateMetadata()
+    public function testCreateModalWithPrivateMetadata(): void
     {
         $modal = Kit::modal(
             title: 'My App',
@@ -120,21 +120,33 @@ class CreateTest extends TestCase
         );
     }
 
-    public function testFailsValidationIfMissingData()
+    public function testFailsValidationIfMissingData(): void
     {
         $msg = Kit::message();
         $this->expectException(ValidationException::class);
         $msg->validate();
     }
 
-    public function testFailsValidationIfInvalidData()
+    public function testFailsValidationIfInvalidData(): void
     {
         $msg = Kit::message()->blocks(Kit::section(str_repeat('x', 5000)));
         $this->expectException(ValidationException::class);
         $msg->validate();
     }
 
-    public function testCanCreatePreviewLink()
+    public function testFailsValidationIfDuplicateIds(): void
+    {
+        $msg = Kit::message([
+            Kit::section('foo', blockId: 'abc'),
+            Kit::section('bar'),
+            Kit::section('baz', blockId: 'abc'),
+        ]);
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('must NOT have any items with duplicate "block_id"s');
+        $msg->validate();
+    }
+
+    public function testCanCreatePreviewLink(): void
     {
         $msg = Kit::message([Kit::section('Hello, world!')]);
         $url = Kit::preview($msg);
@@ -142,7 +154,7 @@ class CreateTest extends TestCase
         $this->assertArrayHasKey('x-slack-backend', $headers);
     }
 
-    public function testThatAllKitComponentMethodsReturnComponents()
+    public function testThatAllKitComponentMethodsReturnComponents(): void
     {
         static $skip = [
             'fieldsFromMap',

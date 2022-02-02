@@ -49,7 +49,7 @@ class Attachment extends Surface
     protected function validateInternalData(Validator $validator): void
     {
         $validator->requireAllOf('blocks')
-            ->validateCollection('blocks', max: static::MAX_BLOCKS, min: 1);
+            ->validateCollection('blocks', max: static::MAX_BLOCKS, validateIds: true);
         parent::validateInternalData($validator);
     }
 

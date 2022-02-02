@@ -14,7 +14,7 @@ class ModifyTest extends TestCase
     /**
      * @dataProvider providesJsonModifications
      */
-    public function testModificationsToComponentsMatchExpectedOutputJson(string $expectedFile, callable $modify)
+    public function testModificationsToComponentsMatchExpectedOutputJson(string $expectedFile, callable $modify): void
     {
         $originalJson = $this->loadAssetJson('modify/restaurants-original');
         $expectedJson = $this->loadAssetJson("modify/restaurants-{$expectedFile}");
@@ -47,7 +47,7 @@ class ModifyTest extends TestCase
         }];
     }
 
-    public function testFailsValidationOnInvalidData()
+    public function testFailsValidationOnInvalidData(): void
     {
         $this->expectException(HydrationException::class);
         Message::fromJson($this->loadAssetJson('modify/restaurants-broken'));

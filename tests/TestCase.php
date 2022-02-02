@@ -11,7 +11,7 @@ abstract class TestCase extends PhpUnitTestCase
      * @param object|array $expectedData
      * @param object|array $actualData
      */
-    protected function assertJsonData($expectedData, $actualData)
+    protected function assertJsonData($expectedData, $actualData): void
     {
         $expected = $this->jsonEncode($expectedData);
         $actual = $this->jsonEncode($actualData);

@@ -30,7 +30,7 @@ final class Validator
             $id = null;
         }
 
-        $newContextValue = $this->component->type->value . ($id ? " ({$id})" : '');
+        $newContextValue = $this->component->type->value . ($id ? " <{$id}>" : '');
         $this->context = [...$context, $newContextValue];
     }
 
@@ -138,7 +138,7 @@ final class Validator
         }
 
         $text = (string) $value;
-        if (strlen($text) < $min) {
+        if ($this->strlen($text) < $min) {
             throw new ValidationException(
                 'The "%s" field of a valid "%s" component must be AT LEAST %d character(s) in length',
                 [$field, $this->component->type->value, $min],
@@ -146,7 +146,7 @@ final class Validator
             );
         }
 
-        if ($max > 0 && strlen($text) > $max) {
+        if ($max > 0 && $this->strlen($text) > $max) {
             throw new ValidationException(
                 'The "%s" field of a valid "%s" component must NOT EXCEED %d characters in length',
                 [$field, $this->component->type->value, $max],
@@ -205,7 +205,7 @@ final class Validator
         return $this;
     }
 
-    public function validateCollection(string $field, int $max = 0, int $min = 1): self
+    public function validateCollection(string $field, int $max = 0, int $min = 1, bool $validateIds = false): self
     {
         $property = $this->camelCase($field);
         $collection = $this->value($property);
@@ -233,6 +233,10 @@ final class Validator
                 [$field, $this->component->type->value, $max],
                 $this->context,
             );
+        }
+
+        if ($validateIds) {
+            $collection = $this->useItemIdValidation($field, $collection);
         }
 
         foreach ($collection as $index => $item) {
@@ -306,5 +310,57 @@ final class Validator
         }
 
         return implode(', ', array_map(fn (string $field) => "\"{$field}\"", $fields));
+    }
+
+    private function strlen(string $str): int
+    {
+        static $mbSupported = null;
+        if ($mbSupported === null) {
+            $mbSupported = function_exists('mb_strlen');
+        }
+
+        return $mbSupported ? mb_strlen($str, 'UTF-8') : strlen($str);
+    }
+
+    /**
+     * @param mixed $item
+     * @return array{field: ?string, value: ?string}
+     */
+    private function extractId(mixed $item): array
+    {
+        if (!$item instanceof Component) {
+            return ['field' => null, 'value' => null];
+        }
+
+        if (isset($item->blockId)) {
+            return ['field' => 'block_id' , 'value' => $item->blockId];
+        }
+
+        if (isset($item->actionId)) {
+            return ['field' => 'action_id', 'value' => $item->actionId];
+        }
+
+        return ['field' => null, 'value' => null];
+    }
+
+    private function useItemIdValidation(string $field, iterable $items): iterable
+    {
+        $ids = [];
+        foreach ($items as $index => $item) {
+            yield $index => $item;
+
+            ['field' => $idField, 'value' => $id] = $this->extractId($item);
+            if (!empty($id)) {
+                if (in_array($id, $ids, true)) {
+                    throw new ValidationException(
+                        'The "%s" field of a valid "%s" component must NOT have any items with duplicate "%s"s',
+                        [$field, $this->component->type->value, $idField],
+                        [...$this->context, "{$item->type->value} <{$id}>"],
+                    );
+                } else {
+                    $ids[] = $id;
+                }
+            }
+        }
     }
 }

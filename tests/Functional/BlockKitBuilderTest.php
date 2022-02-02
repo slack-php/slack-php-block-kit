@@ -14,7 +14,7 @@ class BlockKitBuilderTest extends TestCase
      * @param class-string $class
      * @dataProvider providesJsonFiles
      */
-    public function testMatchesBlockKitBuilderJson(string $file, string $class)
+    public function testMatchesBlockKitBuilderJson(string $file, string $class): void
     {
         $json = $this->loadAssetJson($file);
 

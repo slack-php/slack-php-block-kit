@@ -115,7 +115,7 @@ class Message extends Surface
         $validator->requireSomeOf('text', 'blocks', 'attachments')
             ->validateString('text')
             ->validateString('thread_ts')
-            ->validateCollection('blocks', max: static::MAX_BLOCKS, min: 0)
+            ->validateCollection('blocks', max: static::MAX_BLOCKS, min: 0, validateIds: true)
             ->validateCollection('attachments', max: 10, min: 0);
         parent::validateInternalData($validator);
     }

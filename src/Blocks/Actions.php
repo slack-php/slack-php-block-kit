@@ -40,7 +40,7 @@ class Actions extends Block
 
     protected function validateInternalData(Validator $validator): void
     {
-        $validator->validateCollection('elements', max: 5, min: 1);
+        $validator->validateCollection('elements', max: 5, validateIds: true);
         parent::validateInternalData($validator);
     }
 
