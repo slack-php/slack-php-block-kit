@@ -8,8 +8,9 @@ use SlackPhp\BlockKit\Collections\{OptionGroupCollection, OptionSet};
 use SlackPhp\BlockKit\Elements\Traits\{HasInitialOptions, HasOptionGroups, HasOptionsFactory};
 use SlackPhp\BlockKit\Enums\OptionType;
 use SlackPhp\BlockKit\Parts\{Confirm, PlainText};
-use SlackPhp\BlockKit\Tools\{HydrationData, Validator};
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, RequiresOneOf};
 
+#[RequiresAllOf('placeholder'), RequiresOneOf('options', 'option_groups')]
 class MultiStaticSelectMenu extends MultiSelectMenu
 {
     use HasOptionsFactory;
@@ -31,33 +32,6 @@ class MultiStaticSelectMenu extends MultiSelectMenu
         $this->options($options);
         $this->optionGroups($optionGroups);
         $this->initialOptions($initialOptions);
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $this->resolveInitialOptions();
-        $validator->requireOneOf('options', 'option_groups')
-            ->validateCollection('options', 100)
-            ->validateCollection('option_groups', 100)
-            ->validateCollection('initial_options', $this->maxSelectedItems ?? 0);
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'options' => $this->options?->toArray(),
-            'option_groups' => $this->optionGroups?->toArray(),
-            'initial_options' => $this->initialOptions?->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->options(OptionSet::fromArray($data->useComponents('options')));
-        $this->optionGroups(OptionGroupCollection::fromArray($data->useComponents('option_groups')));
-        $this->initialOptions(OptionSet::fromArray($data->useComponents('initial_options')));
-        parent::hydrateFromArrayData($data);
+        $this->validator->addPreValidation($this->resolveInitialOptions(...));
     }
 }

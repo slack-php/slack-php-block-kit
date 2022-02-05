@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Elements\Selects;
 
-use SlackPhp\BlockKit\Tools\HydrationData;
+use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Parts\{Confirm, PlainText};
+use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
 
+#[RequiresAllOf('placeholder')]
 class UserSelectMenu extends SelectMenu
 {
+    #[Property('initial_user')]
     public ?string $initialUser;
 
     public function __construct(
@@ -27,19 +30,5 @@ class UserSelectMenu extends SelectMenu
         $this->initialUser = $initialUser;
 
         return $this;
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'initial_user' => $this->initialUser,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->initialUser($data->useValue('initial_user'));
-        parent::hydrateFromArrayData($data);
     }
 }

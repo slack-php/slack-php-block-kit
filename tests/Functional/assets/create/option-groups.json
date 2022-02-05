@@ -101,7 +101,8 @@
                     "deny": {
                         "type": "plain_text",
                         "text": "Cancel"
-                    }
+                    },
+                    "style": "danger"
                 }
             }
         }

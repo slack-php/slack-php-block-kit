@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Elements;
 
-use SlackPhp\BlockKit\Tools\HydrationData;
-use SlackPhp\BlockKit\Tools\Validator;
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString};
 
+#[RequiresAllOf('image_url', 'alt_text')]
 class Image extends Element
 {
     public function __construct(
-        public ?string $imageUrl = null,
-        public ?string $altText = null,
+        #[Property('image_url'), ValidString(3000)] public ?string $imageUrl = null,
+        #[Property('alt_text'), ValidString(2000)] public ?string $altText = null,
     ) {
         parent::__construct();
         $this->imageUrl($imageUrl);
@@ -30,28 +31,5 @@ class Image extends Element
         $this->altText = $alt;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('image_url', 'alt_text')
-            ->validateString('image_url', 3000);
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'image_url' => $this->imageUrl,
-            'alt_text' => $this->altText,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->imageUrl($data->useValue('image_url'));
-        $this->altText($data->useValue('alt_text'));
-        parent::hydrateFromArrayData($data);
     }
 }

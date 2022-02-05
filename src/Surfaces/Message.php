@@ -7,17 +7,32 @@ namespace SlackPhp\BlockKit\Surfaces;
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\{AttachmentCollection, BlockCollection};
 use SlackPhp\BlockKit\Enums\MessageDirective;
-use SlackPhp\BlockKit\Tools\{HydrationData, Validator};
+use SlackPhp\BlockKit\{FauxProperty, Property};
+use SlackPhp\BlockKit\Tools\Hydration\OmitType;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAnyOf, ValidCollection, ValidString};
 
 /**
  * @see https://api.slack.com/surfaces
  */
+#[OmitType, RequiresAnyOf('blocks', 'text', 'attachments')]
 class Message extends Surface
 {
+    #[Property, ValidCollection(50, 0, uniqueIds: true)]
+    public BlockCollection $blocks;
+
+    #[FauxProperty('response_type', 'replace_original', 'delete_original')]
     public ?MessageDirective $directive;
+
+    #[Property, ValidString]
     public ?string $text;
-    public ?AttachmentCollection $attachments;
+
+    #[Property, ValidCollection(10, 0)]
+    public AttachmentCollection $attachments;
+
+    #[Property]
     public ?bool $mrkdwn;
+
+    #[Property, ValidString]
     public ?string $threadTs;
 
     /**
@@ -108,37 +123,5 @@ class Message extends Surface
         $this->attachments->append(...$attachments);
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireSomeOf('text', 'blocks', 'attachments')
-            ->validateString('text')
-            ->validateString('thread_ts')
-            ->validateCollection('blocks', max: static::MAX_BLOCKS, min: 0, validateIds: true)
-            ->validateCollection('attachments', max: 10, min: 0);
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...($this->directive?->toArray() ?? []),
-            'text' => $this->text,
-            'mrkdwn' => $this->mrkdwn,
-            'thread_ts' => $this->threadTs,
-            ...parent::prepareArrayData(),
-            'attachments' => $this->attachments?->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->directive(array_filter($data->useValues('response_type', 'replace_original', 'delete_original')));
-        $this->text($data->useValue('text'));
-        $this->mrkdwn($data->useValue('mrkdwn'));
-        $this->threadTs($data->useValue('thread_ts'));
-        $this->attachments(...array_map(Attachment::fromArray(...), $data->useComponents('attachments')));
-        parent::hydrateFromArrayData($data);
     }
 }

@@ -6,19 +6,26 @@ namespace SlackPhp\BlockKit\Elements;
 
 use SlackPhp\BlockKit\Elements\Traits\{HasActionId, HasConfirm};
 use SlackPhp\BlockKit\Enums\ButtonStyle;
-use SlackPhp\BlockKit\Tools\HydrationData;
-use SlackPhp\BlockKit\Parts\Confirm;
-use SlackPhp\BlockKit\Parts\PlainText;
-use SlackPhp\BlockKit\Tools\Validator;
+use SlackPhp\BlockKit\Parts\{Confirm, PlainText};
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString};
 
+#[RequiresAllOf('text')]
 class Button extends Element
 {
     use HasActionId;
     use HasConfirm;
 
+    #[Property, ValidString(75)]
     public ?PlainText $text;
+
+    #[Property, ValidString(2000)]
     public ?string $value;
+
+    #[Property, ValidString(3000)]
     public ?string $url;
+
+    #[Property]
     public ?ButtonStyle $style;
 
     public function __construct(
@@ -40,7 +47,7 @@ class Button extends Element
 
     public function text(PlainText|string|null $text): self
     {
-        $this->text = PlainText::wrap($text)?->limitLength(75);
+        $this->text = PlainText::wrap($text);
 
         return $this;
     }
@@ -64,39 +71,5 @@ class Button extends Element
         $this->style = ButtonStyle::fromValue($style);
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('text')
-            ->validateString('action_id', 255)
-            ->validateString('url', 3000)
-            ->validateString('value', 2000)
-            ->validateSubComponents('text', 'confirm');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'action_id' => $this->actionId,
-            'text' => $this->text?->toArray(),
-            'value' => $this->value,
-            'url' => $this->url,
-            'style' => $this->style?->value,
-            'confirm' => $this->confirm?->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->actionId($data->useValue('actionId'));
-        $this->text(PlainText::fromArray($data->useComponent('text')));
-        $this->value($data->useValue('value'));
-        $this->url($data->useValue('url'));
-        $this->style($data->useValue('style'));
-        $this->confirm(Confirm::fromArray($data->useComponent('confirm')));
-        parent::hydrateFromArrayData($data);
     }
 }

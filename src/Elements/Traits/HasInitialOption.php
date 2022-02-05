@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Elements\Traits;
 
 use SlackPhp\BlockKit\Parts\Option;
+use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Tools\OptionFactory;
 
 trait HasInitialOption
 {
     protected OptionFactory $optionFactory;
+
+    #[Property('initial_option')]
     public ?Option $initialOption = null;
 
     public function initialOption(Option|string|null $option): static

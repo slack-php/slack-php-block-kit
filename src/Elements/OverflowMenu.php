@@ -8,14 +8,19 @@ use SlackPhp\BlockKit\Collections\OptionSet;
 use SlackPhp\BlockKit\Elements\Traits\{HasActionId, HasConfirm, HasOptions, HasOptionsFactory};
 use SlackPhp\BlockKit\Enums\OptionType;
 use SlackPhp\BlockKit\Parts\Confirm;
-use SlackPhp\BlockKit\Tools\{HydrationData, Validator};
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection};
 
+#[RequiresAllOf('options')]
 class OverflowMenu extends Element
 {
     use HasActionId;
     use HasConfirm;
     use HasOptionsFactory;
     use HasOptions;
+
+    #[Property, ValidCollection(5, 2)]
+    public ?OptionSet $options;
 
     public function __construct(
         ?string $actionId = null,
@@ -27,30 +32,5 @@ class OverflowMenu extends Element
         $this->optionType(OptionType::OVERFLOW_MENU);
         $this->options($options);
         $this->confirm($confirm);
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('options')
-            ->validateCollection('options', 5, 2)
-            ->validateString('action_id', 255)
-            ->validateSubComponents('confirm');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'options' => $this->options?->toArray(),
-            'confirm' => $this->confirm?->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->options(OptionSet::fromArray($data->useComponents('options')));
-        $this->confirm(Confirm::fromArray($data->useComponent('confirm')));
-        parent::hydrateFromArrayData($data);
     }
 }

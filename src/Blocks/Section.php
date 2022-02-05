@@ -4,14 +4,21 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks;
 
-use SlackPhp\BlockKit\{Tools\HydrationData, Tools\Validator};
-use SlackPhp\BlockKit\Parts\{Text, Fields};
 use SlackPhp\BlockKit\Elements\Element;
+use SlackPhp\BlockKit\Parts\{Text, Fields};
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAnyOf, ValidString};
 
+#[RequiresAnyOf('text', 'fields')]
 class Section extends Block
 {
+    #[Property, ValidString(3000)]
     public ?Text $text;
+
+    #[Property]
     public ?Fields $fields;
+
+    #[Property]
     public ?Element $accessory;
 
     public function __construct(
@@ -28,7 +35,7 @@ class Section extends Block
 
     public function text(Text|string|null $text): self
     {
-        $this->text = Text::wrap($text)?->limitLength(3000);
+        $this->text = Text::wrap($text);
 
         return $this;
     }
@@ -45,30 +52,5 @@ class Section extends Block
         $this->accessory = $accessory;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireSomeOf('text', 'fields')
-            ->validateSubComponents('text', 'fields', 'accessory');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'text' => $this->text?->toArray(),
-            'fields' => $this->fields?->toArray(),
-            'accessory' => $this->accessory?->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->text(Text::fromArray($data->useComponent('text')));
-        $this->fields(Fields::fromArray($data->useComponents('fields') ?: null));
-        $this->accessory(Element::fromArray($data->useComponent('accessory')));
-        parent::hydrateFromArrayData($data);
     }
 }

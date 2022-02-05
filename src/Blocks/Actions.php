@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Blocks;
 
 use SlackPhp\BlockKit\Collections\ActionsCollection;
-use SlackPhp\BlockKit\Tools\{HydrationData, Validator};
 use SlackPhp\BlockKit\Elements\{
     Button,
     Checkboxes,
@@ -15,15 +14,19 @@ use SlackPhp\BlockKit\Elements\{
     TimePicker,
 };
 use SlackPhp\BlockKit\Elements\Selects\SelectMenu;
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection};
 
+#[RequiresAllOf('elements')]
 class Actions extends Block
 {
+    #[Property, ValidCollection(5, uniqueIds: true)]
     public ActionsCollection $elements;
 
     /**
-     * @param array<Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker|null> $elements
+     * @param ActionsCollection|array<Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker|null> $elements
      */
-    public function __construct(array $elements = [], ?string $blockId = null)
+    public function __construct(ActionsCollection|array $elements = [], ?string $blockId = null)
     {
         parent::__construct($blockId);
         $this->elements = new ActionsCollection();
@@ -31,30 +34,10 @@ class Actions extends Block
     }
 
     public function elements(
-        Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker|null ...$elements
+        ActionsCollection|Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker|null ...$elements
     ): self {
         $this->elements->append(...$elements);
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->validateCollection('elements', max: 5, validateIds: true);
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'elements' => $this->elements->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->elements = ActionsCollection::fromArray($data->useComponents('elements'));
-        parent::hydrateFromArrayData($data);
     }
 }

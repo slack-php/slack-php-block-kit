@@ -6,16 +6,15 @@ namespace SlackPhp\BlockKit\Surfaces;
 
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\BlockCollection;
-use SlackPhp\BlockKit\{Component, Kit};
-use SlackPhp\BlockKit\Tools\HydrationData;
+use SlackPhp\BlockKit\{Component, Kit, Property};
+use SlackPhp\BlockKit\Tools\Validation\ValidCollection;
 
 /**
  * A Slack app surface is something within a Slack app that renders blocks from the block kit (e.g., a Message).
  */
 abstract class Surface extends Component
 {
-    protected const MAX_BLOCKS = 50;
-
+    #[Property, ValidCollection(100, uniqueIds: true)]
     public BlockCollection $blocks;
 
     /**
@@ -45,19 +44,5 @@ abstract class Surface extends Component
     public function getPreviewLink(): string
     {
         return Kit::preview($this);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'blocks' => $this->blocks->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->blocks = BlockCollection::fromArray($data->useComponents('blocks'));
-        parent::hydrateFromArrayData($data);
     }
 }

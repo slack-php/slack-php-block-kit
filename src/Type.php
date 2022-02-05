@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Enums;
+namespace SlackPhp\BlockKit;
 
-use SlackPhp\BlockKit\{Blocks, Elements, Exception, Parts, Surfaces};
+use SlackPhp\BlockKit\{Blocks, Elements, Parts, Surfaces};
 use SlackPhp\BlockKit\Blocks\Virtual;
 use SlackPhp\BlockKit\Elements\Selects;
 
@@ -45,7 +45,7 @@ enum Type: string
     case SELECT_EXTERNAL            = 'external_select';
     case SELECT_STATIC              = 'static_select';
     case SELECT_USERS               = 'users_select';
-    case TEXT_INPUT                 = 'plain_text_input';
+    case PLAIN_TEXT_INPUT           = 'plain_text_input';
     case TIMEPICKER                 = 'timepicker';
 
     // Parts (aka Composition Objects)
@@ -88,7 +88,7 @@ enum Type: string
         Elements\DatePicker::class   => self::DATEPICKER,
         Elements\Image::class        => self::IMAGE,
         Elements\RadioButtons::class => self::RADIO_BUTTONS,
-        Elements\PlainTextInput::class    => self::TEXT_INPUT,
+        Elements\PlainTextInput::class    => self::PLAIN_TEXT_INPUT,
         Elements\TimePicker::class   => self::TIMEPICKER,
 
         // Menus
@@ -132,16 +132,6 @@ enum Type: string
         }
 
         return $class;
-    }
-
-    public function toSlackValue(): ?string
-    {
-        return match ($this) {
-            self::ATTACHMENT, self::CONFIRM, self::DISPATCH_ACTION_CONFIG, self::FIELDS, self::FILTER,
-                self::MESSAGE, self::OPTION, self::OPTION_GROUP, self::OPTIONS_RESULT => null,
-            self::BLOCK_IMAGE => self::IMAGE->value,
-            default => $this->value,
-        };
     }
 
     public static function fromValue(self|string|null $value): ?self

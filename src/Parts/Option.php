@@ -5,18 +5,35 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Parts;
 
 use SlackPhp\BlockKit\Component;
-use SlackPhp\BlockKit\Enums\{OptionType, Type};
-use SlackPhp\BlockKit\Tools\{HydrationData, Validator};
+use SlackPhp\BlockKit\Enums\OptionType;
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Hydration\OmitType;
+use SlackPhp\BlockKit\Tools\Validation\{
+    PreventAllOf,
+    RequiresAllOf,
+    ValidString,
+    ValidationException,
+};
+use SlackPhp\BlockKit\Type;
 
 /**
  * @see https://api.slack.com/reference/block-kit/composition-objects#option
  */
+#[OmitType, RequiresAllOf('text', 'value')]
 class Option extends Component
 {
+    #[Property, ValidString(75)]
     public ?Text $text;
+
+    #[Property, ValidString(75)]
     public ?string $value;
+
+    #[Property, ValidString(75)]
     public ?Text $description;
+
+    #[Property, ValidString(3000)]
     public ?string $url;
+
     public ?bool $initial;
     private OptionType $optionType;
 
@@ -40,6 +57,7 @@ class Option extends Component
         $this->description($description);
         $this->url($url);
         $this->initial($initial);
+        $this->validator->addPreValidation($this->preventInvalidOptionSituations(...));
     }
 
     public function text(Text|string|null $text): self
@@ -51,8 +69,6 @@ class Option extends Component
         } else {
             $this->text = PlainText::wrap($text);
         }
-
-        $this->text?->limitLength(75);
 
         return $this;
     }
@@ -73,8 +89,6 @@ class Option extends Component
         } else {
             $this->description = PlainText::wrap($description);
         }
-
-        $this->description?->limitLength(75);
 
         return $this;
     }
@@ -109,44 +123,23 @@ class Option extends Component
         return hash('sha256', "{$this->text?->text}|{$this->value}");
     }
 
-    protected function validateInternalData(Validator $validator): void
+    private function preventInvalidOptionSituations(): void
     {
-        $validator
-            ->preventAllOf(...$this->optionType->fieldsToPrevent())
-            ->preventCondition(
-                $this->text?->type === Type::MRKDWNTEXT && !$this->optionType->allowsMarkdown(),
+        $preventFieldsRule = new PreventAllOf(...$this->optionType->fieldsToPrevent());
+        $preventFieldsRule->check($this);
+
+        if ($this->text?->type === Type::MRKDWNTEXT && !$this->optionType->allowsMarkdown()) {
+            throw new ValidationException(
                 'The "text" property of a %s option may only be plain_text',
-                [$this->optionType->componentName()]
-            )
-            ->preventCondition(
-                $this->description?->type === Type::MRKDWNTEXT && !$this->optionType->allowsMarkdown(),
+                [$this->optionType->componentName()],
+            );
+        }
+
+        if ($this->description?->type === Type::MRKDWNTEXT && !$this->optionType->allowsMarkdown()) {
+            throw new ValidationException(
                 'The "description" property of a %s option may only be plain_text',
-                [$this->optionType->componentName()]
-            )
-            ->requireAllOf('text', 'value')
-            ->validateString('value', 75)
-            ->validateString('url', 3000)
-            ->validateSubComponents('text', 'description');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'text' => $this->text?->toArray(),
-            'value' => $this->value,
-            'description' => $this->description?->toArray(),
-            'url' => $this->url,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->text(Text::fromArray($data->useComponent('text')));
-        $this->value($data->useValue('value'));
-        $this->description(Text::fromArray($data->useComponent('description')));
-        $this->url($data->useValue('url'));
-        parent::hydrateFromArrayData($data);
+                [$this->optionType->componentName()],
+            );
+        }
     }
 }

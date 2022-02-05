@@ -4,26 +4,40 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks;
 
-use SlackPhp\BlockKit\{Tools\HydrationData, Tools\Validator};
 use SlackPhp\BlockKit\Elements\Input as InputElement;
 use SlackPhp\BlockKit\Parts\PlainText;
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString};
 
 /**
  * A block that collects information from users.
  *
  * @see https://api.slack.com/reference/block-kit/blocks#input
  */
+#[RequiresAllOf('label', 'element')]
 class Input extends Block
 {
+    #[Property, ValidString(2000)]
     public ?PlainText $label;
+
+    #[Property]
+    public ?InputElement $element;
+
+    #[Property]
+    public ?bool $optional;
+
+    #[Property, ValidString(2000)]
     public ?PlainText $hint;
+
+    #[Property('dispatch_action')]
+    public ?bool $dispatchAction;
 
     public function __construct(
         PlainText|string|null $label = null,
-        public ?InputElement $element = null,
-        public ?bool $optional = null,
+        ?InputElement $element = null,
+        ?bool $optional = null,
         PlainText|string|null $hint = null,
-        public ?bool $dispatchAction = null,
+        ?bool $dispatchAction = null,
         ?string $blockId = null,
     ) {
         parent::__construct($blockId);
@@ -36,7 +50,7 @@ class Input extends Block
 
     public function label(PlainText|string|null $label): self
     {
-        $this->label = PlainText::wrap($label)?->limitLength(2000);
+        $this->label = PlainText::wrap($label);
 
         return $this;
     }
@@ -50,7 +64,7 @@ class Input extends Block
 
     public function hint(PlainText|string|null $hint): self
     {
-        $this->hint = PlainText::wrap($hint)?->limitLength(2000);
+        $this->hint = PlainText::wrap($hint);
 
         return $this;
     }
@@ -67,34 +81,5 @@ class Input extends Block
         $this->dispatchAction = $dispatchAction;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('label', 'element')
-            ->validateSubComponents('label', 'element', 'hint');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'label' => $this->label?->toArray(),
-            'element' => $this->element?->toArray(),
-            'hint' => $this->hint?->toArray(),
-            'optional' => $this->optional,
-            'dispatch_action' => $this->dispatchAction,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->label(PlainText::fromArray($data->useComponent('label')));
-        $this->element(InputElement::fromArray($data->useComponent('element')));
-        $this->hint(PlainText::fromArray($data->useComponent('hint')));
-        $this->optional($data->useValue('optional'));
-        $this->dispatchAction($data->useValue('dispatch_action'));
-        parent::hydrateFromArrayData($data);
     }
 }

@@ -7,13 +7,16 @@ namespace SlackPhp\BlockKit\Elements\Selects;
 use SlackPhp\BlockKit\Elements\Traits\{HasInitialOption, HasOptionsFactory};
 use SlackPhp\BlockKit\Enums\OptionType;
 use SlackPhp\BlockKit\Parts\{Confirm, Option, PlainText};
-use SlackPhp\BlockKit\Tools\{HydrationData, Validator};
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
 
+#[RequiresAllOf('placeholder')]
 class ExternalSelectMenu extends SelectMenu
 {
     use HasOptionsFactory;
     use HasInitialOption;
 
+    #[Property('min_query_length')]
     public ?int $minQueryLength;
 
     public function __construct(
@@ -28,6 +31,7 @@ class ExternalSelectMenu extends SelectMenu
         $this->optionType(OptionType::SELECT_MENU);
         $this->minQueryLength($minQueryLength);
         $this->initialOption($initialOption);
+        $this->validator->addPreValidation($this->resolveInitialOption(...));
     }
 
     public function minQueryLength(?int $minQueryLength): self
@@ -35,28 +39,5 @@ class ExternalSelectMenu extends SelectMenu
         $this->minQueryLength = $minQueryLength;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $this->resolveInitialOption();
-        $validator->validateSubComponents('initial_option');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'min_query_length' => $this->minQueryLength,
-            'initial_option' => $this->initialOption?->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->minQueryLength($data->useValue('min_query_length'));
-        $this->initialOption(Option::fromArray($data->useComponent('initial_option')));
-        parent::hydrateFromArrayData($data);
     }
 }

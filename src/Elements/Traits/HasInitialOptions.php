@@ -6,11 +6,15 @@ namespace SlackPhp\BlockKit\Elements\Traits;
 
 use SlackPhp\BlockKit\Collections\OptionSet;
 use SlackPhp\BlockKit\Parts\Option;
+use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Tools\OptionFactory;
+use SlackPhp\BlockKit\Tools\Validation\ValidCollection;
 
 trait HasInitialOptions
 {
     protected OptionFactory $optionFactory;
+
+    #[Property('initial_options'), ValidCollection]
     public ?OptionSet $initialOptions = null;
 
     /**

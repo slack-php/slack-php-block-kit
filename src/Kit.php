@@ -7,7 +7,7 @@ namespace SlackPhp\BlockKit;
 use SlackPhp\BlockKit\Collections;
 use SlackPhp\BlockKit\Elements;
 use SlackPhp\BlockKit\Enums;
-use SlackPhp\BlockKit\Enums\Type;
+use SlackPhp\BlockKit\Type;
 use SlackPhp\BlockKit\Parts;
 use SlackPhp\BlockKit\Surfaces;
 use SlackPhp\BlockKit\Tools;
@@ -98,9 +98,9 @@ abstract class Kit
 
     #region Blocks
     /**
-     * @param array<Elements\Button|Elements\Checkboxes|Elements\DatePicker|Elements\OverflowMenu|Elements\RadioButtons|Elements\Selects\SelectMenu|Elements\TimePicker|null> $elements
+     * @param Collections\ActionsCollection|array<Elements\Button|Elements\Checkboxes|Elements\DatePicker|Elements\OverflowMenu|Elements\RadioButtons|Elements\Selects\SelectMenu|Elements\TimePicker|null> $elements
      */
-    public static function actions(array $elements = [], ?string $blockId = null): Blocks\Actions
+    public static function actions(Collections\ActionsCollection|array $elements = [], ?string $blockId = null): Blocks\Actions
     {
         return new Blocks\Actions($elements, $blockId);
     }
@@ -115,9 +115,9 @@ abstract class Kit
     }
 
     /**
-     * @param array<Elements\Image|Parts\MrkdwnText|Parts\PlainText|string|null> $elements
+     * @param Collections\ContextCollection|array<Elements\Image|Parts\MrkdwnText|Parts\PlainText|string|null> $elements
      */
-    public static function context(array $elements = [], ?string $blockId = null): Blocks\Context
+    public static function context(Collections\ContextCollection|array $elements = [], ?string $blockId = null): Blocks\Context
     {
         return new Blocks\Context($elements, $blockId);
     }

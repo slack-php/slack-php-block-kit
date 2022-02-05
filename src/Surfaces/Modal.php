@@ -6,9 +6,11 @@ namespace SlackPhp\BlockKit\Surfaces;
 
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\BlockCollection;
-use SlackPhp\BlockKit\Enums\Type;
 use SlackPhp\BlockKit\Parts\PlainText;
-use SlackPhp\BlockKit\Tools\{HydrationData, PrivateMetadata, Validator};
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\PrivateMetadata;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidationException, ValidString};
+use SlackPhp\BlockKit\Type;
 
 /**
  * Modals provide focused spaces ideal for requesting and collecting data from users, or temporarily displaying dynamic
@@ -16,12 +18,22 @@ use SlackPhp\BlockKit\Tools\{HydrationData, PrivateMetadata, Validator};
  *
  * @see https://api.slack.com/surfaces
  */
+#[RequiresAllOf('blocks', 'title')]
 class Modal extends View
 {
+    #[Property, ValidString(24)]
     public ?PlainText $title;
+
+    #[Property, ValidString(24)]
     public ?PlainText $submit;
+
+    #[Property, ValidString(24)]
     public ?PlainText $close;
+
+    #[Property('clear_on_close')]
     public ?bool $clearOnClose;
+
+    #[Property('notify_on_close')]
     public ?bool $notifyOnClose;
 
     /**
@@ -44,25 +56,32 @@ class Modal extends View
         $this->close($close);
         $this->clearOnClose($clearOnClose);
         $this->notifyOnClose($notifyOnClose);
+        $this->validator->addPreValidation(function () {
+            $inputs = $this->blocks->filter(fn (Block $b) => $b->type === Type::INPUT);
+            if (!empty($inputs) && empty($this->submit)) {
+                throw new ValidationException(
+                    'Modals must have a "submit" button defined if they contain any "input" blocks',
+                );
+            }
+        });
     }
 
     public function title(PlainText|string|null $title): self
     {
-        $this->title = PlainText::wrap($title)?->limitLength(24);
+        $this->title = PlainText::wrap($title);
 
         return $this;
     }
 
     public function submit(PlainText|string|null $submit): self
     {
-        $this->submit = PlainText::wrap($submit)?->limitLength(24);
-
+        $this->submit = PlainText::wrap($submit);
         return $this;
     }
 
     public function close(PlainText|string|null $close): self
     {
-        $this->close = PlainText::wrap($close)?->limitLength(24);
+        $this->close = PlainText::wrap($close);
 
         return $this;
     }
@@ -79,38 +98,5 @@ class Modal extends View
         $this->notifyOnClose = $notifyOnClose;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('title')
-            ->preventCondition(
-                !empty($this->blocks->filter(fn (Block $b) => $b->type === Type::INPUT)) && empty($this->submit),
-                'Modals must have a "submit" button defined if they contain any "input" blocks'
-            )
-            ->validateSubComponents('submit', 'close');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'title' => $this->title?->toArray(),
-            'submit' => $this->submit?->toArray(),
-            'close' => $this->close?->toArray(),
-            'clear_on_close' => $this->clearOnClose,
-            'notify_on_close' => $this->notifyOnClose,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->title(PlainText::fromArray($data->useComponent('title')));
-        $this->submit(PlainText::fromArray($data->useComponent('submit')));
-        $this->close(PlainText::fromArray($data->useComponent('close')));
-        $this->clearOnClose($data->useValue('clear_on_close'));
-        $this->notifyOnClose($data->useValue('notify_on_close'));
-        parent::hydrateFromArrayData($data);
     }
 }

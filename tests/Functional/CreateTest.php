@@ -7,10 +7,10 @@ namespace SlackPhp\BlockKit\Tests\Functional;
 use SlackPhp\BlockKit\Blocks\Virtual\VirtualBlock;
 use SlackPhp\BlockKit\Collections\ComponentCollection;
 use SlackPhp\BlockKit\Component;
-use SlackPhp\BlockKit\Enums\Type;
+use SlackPhp\BlockKit\Type;
 use SlackPhp\BlockKit\Kit;
 use SlackPhp\BlockKit\Tools\PrivateMetadata;
-use SlackPhp\BlockKit\Tools\ValidationException;
+use SlackPhp\BlockKit\Tools\Validation\ValidationException;
 
 class CreateTest extends TestCase
 {
@@ -40,6 +40,7 @@ class CreateTest extends TestCase
                         confirm: Kit::confirm(
                             title: 'Are you sure?',
                             text: 'Think about it.',
+                            style: 'danger',
                         ),
                     ),
                 )

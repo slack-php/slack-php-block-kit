@@ -7,8 +7,9 @@ namespace SlackPhp\BlockKit\Surfaces;
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\BlockCollection;
 use SlackPhp\BlockKit\Component;
-use SlackPhp\BlockKit\Tools\HydrationData;
-use SlackPhp\BlockKit\Tools\Validator;
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Hydration\OmitType;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection};
 
 /**
  * Attachments are a surface that represent secondary content within a message, and can only exist within a message.
@@ -21,8 +22,13 @@ use SlackPhp\BlockKit\Tools\Validator;
  * @see Component::extra()
  * @see https://api.slack.com/messaging/composing/layouts#attachments
  */
+#[OmitType, RequiresAllOf('blocks')]
 class Attachment extends Surface
 {
+    #[Property, ValidCollection(50, uniqueIds: true)]
+    public BlockCollection $blocks;
+
+    #[Property]
     public ?string $color;
 
     /**
@@ -44,26 +50,5 @@ class Attachment extends Surface
         $this->color = $color ? '#' . ltrim($color, '#') : null;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('blocks')
-            ->validateCollection('blocks', max: static::MAX_BLOCKS, validateIds: true);
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'color' => $this->color,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->color($data->useValue('color'));
-        parent::hydrateFromArrayData($data);
     }
 }

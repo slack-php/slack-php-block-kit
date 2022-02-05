@@ -37,6 +37,7 @@ enum MessageDirective
         }
 
         if (is_array($data)) {
+            $data = array_filter($data);
             return match ($data) {
                 ['response_type' => 'ephemeral'] => self::EPHEMERAL,
                 ['response_type' => 'in_channel'] => self::IN_CHANNEL,

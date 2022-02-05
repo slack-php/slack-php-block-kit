@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Elements\Selects;
 
-use SlackPhp\BlockKit\Tools\HydrationData;
-use SlackPhp\BlockKit\Parts\Confirm;
-use SlackPhp\BlockKit\Parts\PlainText;
-use SlackPhp\BlockKit\Tools\Validator;
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Parts\{Confirm, PlainText};
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection};
 
+#[RequiresAllOf('placeholder')]
 class MultiUserSelectMenu extends MultiSelectMenu
 {
     /** @var string[]|null */
+    #[Property('initial_user'), ValidCollection]
     public ?array $initialUsers;
 
     /**
@@ -37,25 +38,5 @@ class MultiUserSelectMenu extends MultiSelectMenu
         $this->initialUsers = $initialUsers;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->validateCollection('initial_users', $this->maxSelectedItems ?? 0);
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'initial_users' => $this->initialUsers,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->initialUsers($data->useArray('initial_users'));
-        parent::hydrateFromArrayData($data);
     }
 }

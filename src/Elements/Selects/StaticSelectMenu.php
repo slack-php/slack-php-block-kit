@@ -8,8 +8,9 @@ use SlackPhp\BlockKit\Collections\{OptionGroupCollection, OptionSet};
 use SlackPhp\BlockKit\Elements\Traits\{HasInitialOption, HasOptionsFactory, HasOptionGroups};
 use SlackPhp\BlockKit\Enums\OptionType;
 use SlackPhp\BlockKit\Parts\{Confirm, Option, PlainText};
-use SlackPhp\BlockKit\Tools\{HydrationData, Validator};
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, RequiresOneOf};
 
+#[RequiresAllOf('placeholder'), RequiresOneOf('options', 'option_groups')]
 class StaticSelectMenu extends SelectMenu
 {
     use HasOptionsFactory;
@@ -30,33 +31,6 @@ class StaticSelectMenu extends SelectMenu
         $this->options($options);
         $this->optionGroups($optionGroups);
         $this->initialOption($initialOption);
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $this->resolveInitialOption();
-        $validator->requireOneOf('options', 'option_groups')
-            ->validateCollection('options', 100)
-            ->validateCollection('option_groups', 100)
-            ->validateSubComponents('initial_option');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'options' => $this->options?->toArray(),
-            'option_groups' => $this->optionGroups?->toArray(),
-            'initial_option' => $this->initialOption?->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->options(OptionSet::fromArray($data->useComponents('options')));
-        $this->optionGroups(OptionGroupCollection::fromArray($data->useComponents('option_groups')));
-        $this->initialOption(Option::fromArray($data->useComponent('initial_option')));
-        parent::hydrateFromArrayData($data);
+        $this->validator->addPreValidation($this->resolveInitialOption(...));
     }
 }

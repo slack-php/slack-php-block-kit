@@ -4,16 +4,27 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks;
 
-use SlackPhp\BlockKit\{Tools\HydrationData, Tools\Validator};
 use SlackPhp\BlockKit\Parts\PlainText;
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString,};
+use SlackPhp\BlockKit\Tools\Hydration\AliasType;
+use SlackPhp\BlockKit\Type;
 
+#[AliasType(Type::IMAGE), RequiresAllOf('image_url', 'alt_text')]
 class BlockImage extends Block
 {
+    #[Property('image_url'), ValidString(3000)]
+    public ?string $imageUrl;
+
+    #[Property('alt_text'), ValidString(2000)]
+    public ?string $altText;
+
+    #[Property, ValidString(2000)]
     public ?PlainText $title;
 
     public function __construct(
-        public ?string $imageUrl = null,
-        public ?string $altText = null,
+        ?string $imageUrl = null,
+        ?string $altText = null,
         PlainText|string|null $title = null,
         ?string $blockId = null
     ) {
@@ -25,7 +36,7 @@ class BlockImage extends Block
 
     public function title(PlainText|string|null $text): self
     {
-        $this->title = PlainText::wrap($text)?->limitLength(2000);
+        $this->title = PlainText::wrap($text);
 
         return $this;
     }
@@ -42,31 +53,5 @@ class BlockImage extends Block
         $this->altText = $alt;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('image_url', 'alt_text')
-            ->validateString('image_url', 3000)
-            ->validateString('alt_text', 2000);
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'image_url' => $this->imageUrl,
-            'alt_text' => $this->altText,
-            'title' => $this->title?->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->title(PlainText::fromArray($data->useComponent('title')));
-        $this->imageUrl($data->useValue('image_url'));
-        $this->altText($data->useValue('alt_text'));
-        parent::hydrateFromArrayData($data);
     }
 }

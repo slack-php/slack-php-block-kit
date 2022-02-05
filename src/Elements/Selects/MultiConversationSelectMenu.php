@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Elements\Selects;
 
-use SlackPhp\BlockKit\Tools\HydrationData;
-use SlackPhp\BlockKit\Parts\Confirm;
-use SlackPhp\BlockKit\Parts\Filter;
-use SlackPhp\BlockKit\Parts\PlainText;
-use SlackPhp\BlockKit\Tools\Validator;
+use SlackPhp\BlockKit\Parts\{Confirm, Filter, PlainText};
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection};
 
+#[RequiresAllOf('placeholder')]
 class MultiConversationSelectMenu extends MultiSelectMenu
 {
     /** @var string[]|null */
+    #[Property('initial_conversations'), ValidCollection]
     public ?array $initialConversations;
+
+    #[Property('default_to_current_conversation')]
     public ?bool $defaultToCurrentConversation;
+
+    #[Property]
     public ?Filter $filter;
 
     /**
@@ -58,30 +62,5 @@ class MultiConversationSelectMenu extends MultiSelectMenu
         $this->filter = $filter;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->validateCollection('initial_channels', $this->maxSelectedItems ?? 0)
-            ->validateSubComponents('filter');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'initial_conversations' => $this->initialConversations,
-            'default_to_current_conversation' => $this->defaultToCurrentConversation,
-            'filter' => $this->filter?->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->initialConversations($data->useValue('initial_conversations'));
-        $this->defaultToCurrentConversation($data->useValue('default_to_current_conversation'));
-        $this->filter(Filter::fromArray($data->useComponent('filter')));
-        parent::hydrateFromArrayData($data);
     }
 }

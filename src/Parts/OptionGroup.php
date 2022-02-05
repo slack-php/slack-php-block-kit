@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Parts;
 
-use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Collections\OptionSet;
-use SlackPhp\BlockKit\Tools\{HydrationData, Validator};
+use SlackPhp\BlockKit\Component;
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Hydration\OmitType;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection, ValidString};
 
+#[OmitType, RequiresAllOf('label', 'options')]
 class OptionGroup extends Component
 {
+    #[Property, ValidString(75)]
     public ?PlainText $label;
+
+    #[Property, ValidCollection(100)]
     public OptionSet $options;
 
     /**
@@ -26,7 +32,7 @@ class OptionGroup extends Component
 
     public function label(PlainText|string|null $label): self
     {
-        $this->label = PlainText::wrap($label)?->limitLength(75);
+        $this->label = PlainText::wrap($label);
 
         return $this;
     }
@@ -39,29 +45,5 @@ class OptionGroup extends Component
         $this->options = OptionSet::wrap($options);
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('label', 'options')
-            ->validateCollection('options', 100)
-            ->validateSubComponents('label');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'label' => $this->label?->toArray(),
-            'options' => $this->options->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->label(PlainText::fromArray($data->useComponent('label')));
-        $this->options(OptionSet::fromArray($data->useComponents('options')));
-        parent::hydrateFromArrayData($data);
     }
 }

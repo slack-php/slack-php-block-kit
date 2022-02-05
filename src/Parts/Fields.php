@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Parts;
 
-use SlackPhp\BlockKit\{Component, Tools\HydrationData, Tools\Validator};
+use SlackPhp\BlockKit\Component;
+use SlackPhp\BlockKit\FauxProperty;
+use SlackPhp\BlockKit\Tools\Hydration\OmitType;
+use SlackPhp\BlockKit\Tools\Validation\ValidCollection;
 
+#[OmitType]
 class Fields extends Component
 {
     /** @var Text[] */
+    #[FauxProperty('*'), ValidCollection(10)]
     public array $fields = [];
 
     /**
@@ -81,27 +86,7 @@ class Fields extends Component
 
     private function add(Text $field): void
     {
-        $this->fields[] = $field->limitLength(2000);
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->validateCollection('fields', 10);
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return array_map(fn (Text $field) => $field->toArray(), $this->fields);
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        foreach ($data->useComponents(null) as $field) {
-            $this->add(Text::fromArray($field));
-        }
-
-        parent::hydrateFromArrayData($data);
+        $this->fields[] = $field;
     }
 
     /**

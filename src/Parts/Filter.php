@@ -4,13 +4,22 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Parts;
 
-use SlackPhp\BlockKit\{Component, Tools\HydrationData, Tools\Validator};
+use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Enums\ConversationType;
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Hydration\OmitType;
+use SlackPhp\BlockKit\Tools\Validation\RequiresAnyOf;
 
+#[OmitType, RequiresAnyOf('include', 'exclude_external_shared_channels', 'exclude_bot_users')]
 class Filter extends Component
 {
+    #[Property('include', spread: true)]
     public array $include = [];
+
+    #[Property('exclude_external_shared_channels')]
     public ?bool $excludeExternalSharedChannels = null;
+
+    #[Property('exclude_bot_users')]
     public ?bool $excludeBotUsers = null;
 
     /**
@@ -66,29 +75,5 @@ class Filter extends Component
         $this->excludeExternalSharedChannels = $excludeExternalSharedChannels;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireOneOf('include', 'exclude_external_shared_channels', 'exclude_bot_users');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'include' => array_map(fn (ConversationType $ct) => $ct->value, $this->include),
-            'exclude_external_shared_channels' => $this->excludeExternalSharedChannels,
-            'exclude_bot_users' => $this->excludeBotUsers,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->include(...$data->useArray('include'));
-        $this->excludeExternalSharedChannels($data->useValue('exclude_external_shared_channels'));
-        $this->excludeBotUsers($data->useValue('exclude_bot_users'));
-        parent::hydrateFromArrayData($data);
     }
 }

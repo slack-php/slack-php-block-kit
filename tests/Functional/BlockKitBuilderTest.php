@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Tests\Functional;
 
+use SlackPhp\BlockKit\Parts\DispatchActionConfig;
 use SlackPhp\BlockKit\Surfaces\AppHome;
 use SlackPhp\BlockKit\Surfaces\Message;
 use SlackPhp\BlockKit\Surfaces\Modal;

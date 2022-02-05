@@ -4,15 +4,28 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Parts;
 
-use SlackPhp\BlockKit\{Component, Tools\HydrationData, Tools\Validator};
+use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Enums\ButtonStyle;
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Hydration\OmitType;
+use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString};
 
+#[OmitType, RequiresAllOf('title', 'text', 'confirm', 'deny')]
 class Confirm extends Component
 {
+    #[Property, ValidString(100)]
     public ?PlainText $title;
+
+    #[Property, ValidString(300)]
     public ?Text $text;
+
+    #[Property, ValidString(30)]
     public ?PlainText $confirm;
+
+    #[Property, ValidString(30)]
     public ?PlainText $deny;
+
+    #[Property]
     public ?ButtonStyle $style;
 
     public function __construct(
@@ -32,28 +45,28 @@ class Confirm extends Component
 
     public function title(PlainText|string|null $title): static
     {
-        $this->title = PlainText::wrap($title)?->limitLength(100);
+        $this->title = PlainText::wrap($title);
 
         return $this;
     }
 
     public function text(Text|string|null $text): static
     {
-        $this->text = Text::wrap($text)?->limitLength(300);
+        $this->text = Text::wrap($text);
 
         return $this;
     }
 
     public function confirm(PlainText|string|null $confirm): static
     {
-        $this->confirm = PlainText::wrap($confirm)?->limitLength(30);
+        $this->confirm = PlainText::wrap($confirm);
 
         return $this;
     }
 
     public function deny(PlainText|string|null $deny): static
     {
-        $this->deny = PlainText::wrap($deny)?->limitLength(30);
+        $this->deny = PlainText::wrap($deny);
 
         return $this;
     }
@@ -63,34 +76,5 @@ class Confirm extends Component
         $this->style = ButtonStyle::fromValue($style);
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('title', 'text', 'confirm', 'deny')
-            ->validateSubComponents('title', 'text', 'confirm', 'deny');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'title' => $this->title?->toArray(),
-            'text' => $this->text?->toArray(),
-            'confirm' => $this->confirm?->toArray(),
-            'deny' => $this->deny?->toArray(),
-            'style' => $this->style?->value,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->title(PlainText::fromArray($data->useComponent('title')));
-        $this->text(Text::fromArray($data->useComponent('text')));
-        $this->confirm(PlainText::fromArray($data->useComponent('confirm')));
-        $this->deny(PlainText::fromArray($data->useComponent('deny')));
-        $this->style($data->useValue('style'));
-        parent::hydrateFromArrayData($data);
     }
 }

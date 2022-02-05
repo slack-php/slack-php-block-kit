@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Tools;
+namespace SlackPhp\BlockKit\Tools\Hydration;
 
 use SlackPhp\BlockKit\Exception;
 use Throwable;

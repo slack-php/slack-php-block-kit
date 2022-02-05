@@ -4,19 +4,28 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Elements;
 
-use SlackPhp\BlockKit\Tools\HydrationData;
-use SlackPhp\BlockKit\Parts\{DispatchActionConfig, PlainText};
 use SlackPhp\BlockKit\Elements\Traits\HasPlaceholder;
-use SlackPhp\BlockKit\Tools\Validator;
+use SlackPhp\BlockKit\Parts\{DispatchActionConfig, PlainText};
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\ValidInt;
 
 class PlainTextInput extends Input
 {
     use HasPlaceholder;
 
+    #[Property('initial_value')]
     public ?string $initialValue;
-    public ?bool $multiline;
+
+    #[Property('min_length'), ValidInt(3000)]
     public ?int $minLength;
+
+    #[Property('max_length')]
     public ?int $maxLength;
+
+    #[Property]
+    public ?bool $multiline;
+
+    #[Property('dispatch_action_config')]
     public ?DispatchActionConfig $dispatchActionConfig;
 
     public function __construct(
@@ -71,37 +80,5 @@ class PlainTextInput extends Input
         $this->dispatchActionConfig = $config;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->validateInt('min_length', 3000)
-            ->validateInt('max_length', 0, $this->minLength ?? 0)
-            ->validateSubComponents('placeholder', 'dispatch_action_config');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'placeholder' => $this->placeholder?->toArray(),
-            'initial_value' => $this->initialValue,
-            'multiline' => $this->multiline,
-            'min_length' => $this->minLength,
-            'max_length' => $this->maxLength,
-            'dispatch_action_config' => $this->dispatchActionConfig,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->initialValue($data->useValue('initial_value'));
-        $this->multiline($data->useValue('multiline'));
-        $this->minLength($data->useValue('min_length'));
-        $this->maxLength($data->useValue('max_length'));
-        $this->placeholder(PlainText::fromArray($data->useComponent('placeholder')));
-        $this->dispatchActionConfig(DispatchActionConfig::fromArray($data->useComponent('dispatch_action_config')));
-        parent::hydrateFromArrayData($data);
     }
 }

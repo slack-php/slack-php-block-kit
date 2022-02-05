@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Elements\Selects;
 
-use SlackPhp\BlockKit\Tools\HydrationData;
-use SlackPhp\BlockKit\Parts\Confirm;
-use SlackPhp\BlockKit\Parts\Filter;
-use SlackPhp\BlockKit\Parts\PlainText;
-use SlackPhp\BlockKit\Tools\Validator;
+use SlackPhp\BlockKit\Parts\{Confirm, Filter, PlainText};
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
 
+#[RequiresAllOf('placeholder')]
 class ConversationSelectMenu extends SelectMenu
 {
+    #[Property('initial_conversation')]
     public ?string $initialConversation;
+
+    #[Property('response_url_enabled')]
     public ?bool $responseUrlEnabled;
+
+    #[Property('default_to_current_conversation')]
     public ?bool $defaultToCurrentConversation;
+
+    #[Property]
     public ?Filter $filter;
 
     public function __construct(
@@ -60,31 +66,5 @@ class ConversationSelectMenu extends SelectMenu
         $this->filter = $filter;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->validateSubComponents('filter');
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'initial_conversation' => $this->initialConversation,
-            'response_url_enabled' => $this->responseUrlEnabled,
-            'default_to_current_conversation' => $this->defaultToCurrentConversation,
-            'filter' => $this->filter?->toArray(),
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->initialConversation($data->useValue('initial_conversation'));
-        $this->responseUrlEnabled($data->useValue('response_url_enabled'));
-        $this->defaultToCurrentConversation($data->useValue('default_to_current_conversation'));
-        $this->filter(Filter::fromArray($data->useComponent('filter')));
-        parent::hydrateFromArrayData($data);
     }
 }

@@ -6,7 +6,8 @@ namespace SlackPhp\BlockKit\Surfaces;
 
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\BlockCollection;
-use SlackPhp\BlockKit\Tools\{HydrationData, PrivateMetadata, Validator};
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\PrivateMetadata;
 
 /**
  * View represents the commonalities between the Modal and App Home surfaces.
@@ -17,8 +18,7 @@ abstract class View extends Surface
 {
     use HasIdAndMetadata;
 
-    protected const MAX_BLOCKS = 100;
-
+    #[Property('external_id')]
     public ?string $externalId;
 
     /**
@@ -41,32 +41,5 @@ abstract class View extends Surface
         $this->externalId = $externalId;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('blocks')
-            ->validateCollection('blocks', max: static::MAX_BLOCKS, validateIds: true)
-            ->validateString('callback_id', 255)
-            ->validateString('private_metadata', 3000);
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'callback_id' => $this->callbackId,
-            'external_id' => $this->externalId,
-            'private_metadata' => $this->privateMetadata,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->callbackId($data->useValue('callback_id'));
-        $this->externalId($data->useValue('external_id'));
-        $this->privateMetadata($data->useValue('private_metadata'));
-        parent::hydrateFromArrayData($data);
     }
 }

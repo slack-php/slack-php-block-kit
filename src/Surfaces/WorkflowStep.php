@@ -6,7 +6,9 @@ namespace SlackPhp\BlockKit\Surfaces;
 
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\BlockCollection;
-use SlackPhp\BlockKit\Tools\{HydrationData, PrivateMetadata, Validator};
+use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\PrivateMetadata;
+use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
 
 /**
  * A Workflow Step surface are a special case of a Modal, with limited properties, and are used to configure an app's
@@ -14,10 +16,12 @@ use SlackPhp\BlockKit\Tools\{HydrationData, PrivateMetadata, Validator};
  *
  * @see https://api.slack.com/workflows/steps#handle_config_view
  */
+#[RequiresAllOf('blocks')]
 class WorkflowStep extends Surface
 {
     use HasIdAndMetadata;
 
+    #[Property('submit_disabled')]
     public ?bool $submitDisabled;
 
     /**
@@ -40,31 +44,5 @@ class WorkflowStep extends Surface
         $this->submitDisabled = $submitDisabled;
 
         return $this;
-    }
-
-    protected function validateInternalData(Validator $validator): void
-    {
-        $validator->requireAllOf('blocks')
-            ->validateCollection('blocks', max: static::MAX_BLOCKS, validateIds: true)
-            ->validateString('callback_id', 255)
-            ->validateString('private_metadata', 3000);
-        parent::validateInternalData($validator);
-    }
-
-    protected function prepareArrayData(): array
-    {
-        return [
-            ...parent::prepareArrayData(),
-            'callback_id' => $this->callbackId,
-            'private_metadata' => $this->privateMetadata,
-            'submit_disabled' => $this->submitDisabled,
-        ];
-    }
-
-    protected function hydrateFromArrayData(HydrationData $data): void
-    {
-        $this->callbackId($data->useValue('callback_id'));
-        $this->privateMetadata($data->useValue('private_metadata'));
-        parent::hydrateFromArrayData($data);
     }
 }
