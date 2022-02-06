@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit;
 
 use JsonSerializable;
-use SlackPhp\BlockKit\Tools\Hydration\Dehydrator;
-use SlackPhp\BlockKit\Tools\Hydration\Hydrator;
-use SlackPhp\BlockKit\Tools\Hydration\HydrationException;
-use SlackPhp\BlockKit\Tools\Validation\{Context, ValidationException, Validator};
-use Throwable;
+use SlackPhp\BlockKit\Tools\Hydration\{Dehydrator, Hydrator};
+use SlackPhp\BlockKit\Tools\Validation\{Context, Validator};
 
 abstract class Component implements JsonSerializable
 {
@@ -58,9 +55,6 @@ abstract class Component implements JsonSerializable
         return $this;
     }
 
-    /**
-     * @throws ValidationException if the block kit item is invalid (e.g., missing data).
-     */
     final public function validate(?Context $context = null): void
     {
         $this->validator->validate($context);
@@ -76,6 +70,28 @@ abstract class Component implements JsonSerializable
         return $dehydrator->getArrayData();
     }
 
+    /**
+     * @param array<string, mixed>|array<int, array<string, mixed>>|null $data
+     */
+    final public static function fromArray(?array $data): ?static
+    {
+        if ($data === null) {
+            return null;
+        }
+
+        $hydrator = new Hydrator($data);
+
+        /** @var static $component */
+        $component = $hydrator->getComponent(static::class);
+
+        return $component;
+    }
+
+    final public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
     final public function toJson(bool $prettyPrint = false): string
     {
         $opts = JSON_THROW_ON_ERROR;
@@ -83,38 +99,15 @@ abstract class Component implements JsonSerializable
             $opts |= JSON_PRETTY_PRINT;
         }
 
-        return (string) json_encode($this, $opts);
-    }
-
-    public function jsonSerialize(): array
-    {
-        return $this->toArray();
+        return json_encode($this, $opts);
     }
 
     final public static function fromJson(string $json): static
     {
-        try {
-            $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-        } catch (Throwable $err) {
-            throw new HydrationException('JSON error (%s) hydrating %s', [$err->getMessage(), static::class], $err);
-        }
+        $hydrator = Hydrator::forJson($json);
 
-        return static::fromArray($data);
-    }
-
-    /**
-     * @param array<string, mixed>|array<int, array<string, mixed>>|null $data
-     * @return static|null
-     */
-    public static function fromArray(?array $data): ?static
-    {
-        $component = null;
-
-        if (!empty($data)) {
-            $hydrator = new Hydrator($data, static::class);
-            /** @var static $component */
-            $component = $hydrator->getComponent();
-        }
+        /** @var static $component */
+        $component = $hydrator->getComponent(static::class);
 
         return $component;
     }
