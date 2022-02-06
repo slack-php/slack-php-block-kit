@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Enums;
+namespace SlackPhp\BlockKit\Parts;
 
-enum ConversationType: string
+enum TriggerActionsOn: string
 {
-    case IM = 'im';
-    case MPIM = 'mpim';
-    case PRIVATE = 'private';
-    case PUBLIC = 'public';
+    case CHARACTER_ENTERED = 'on_character_entered';
+    case ENTER_PRESSED = 'on_enter_pressed';
 
     public static function fromValue(self|string|null $value): ?self
     {

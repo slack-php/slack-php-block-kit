@@ -6,8 +6,7 @@ namespace SlackPhp\BlockKit\Elements\Selects;
 
 use SlackPhp\BlockKit\Collections\{OptionGroupCollection, OptionSet};
 use SlackPhp\BlockKit\Elements\Traits\{HasInitialOption, HasOptionsFactory, HasOptionGroups};
-use SlackPhp\BlockKit\Enums\OptionType;
-use SlackPhp\BlockKit\Parts\{Confirm, Option, PlainText};
+use SlackPhp\BlockKit\Parts\{Confirm, Option, OptionType, PlainText};
 use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, RequiresOneOf};
 
 #[RequiresAllOf('placeholder'), RequiresOneOf('options', 'option_groups')]

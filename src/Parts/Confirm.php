@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Parts;
 
 use SlackPhp\BlockKit\Component;
-use SlackPhp\BlockKit\Enums\ButtonStyle;
+use SlackPhp\BlockKit\Elements\ButtonStyle;
 use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Tools\Hydration\OmitType;
 use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString};

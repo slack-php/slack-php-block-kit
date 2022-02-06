@@ -6,8 +6,7 @@ namespace SlackPhp\BlockKit\Elements;
 
 use SlackPhp\BlockKit\Collections\OptionSet;
 use SlackPhp\BlockKit\Elements\Traits\{HasConfirm, HasInitialOption, HasOptions, HasOptionsFactory};
-use SlackPhp\BlockKit\Enums\OptionType;
-use SlackPhp\BlockKit\Parts\{Confirm, Option};
+use SlackPhp\BlockKit\Parts\{Confirm, Option, OptionType};
 use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection};
 

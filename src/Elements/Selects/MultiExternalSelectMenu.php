@@ -6,10 +6,9 @@ namespace SlackPhp\BlockKit\Elements\Selects;
 
 use SlackPhp\BlockKit\Collections\OptionSet;
 use SlackPhp\BlockKit\Elements\Traits\{HasInitialOptions, HasOptionsFactory};
-use SlackPhp\BlockKit\Enums\OptionType;
-use SlackPhp\BlockKit\Parts\{Confirm, PlainText};
-use SlackPhp\BlockKit\Tools\{Hydration\HydrationData, Validation\RequiresAllOf, Validator};
+use SlackPhp\BlockKit\Parts\{Confirm, OptionType, PlainText};
 use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
 
 #[RequiresAllOf('placeholder')]
 class MultiExternalSelectMenu extends MultiSelectMenu

@@ -6,7 +6,6 @@ namespace SlackPhp\BlockKit\Surfaces;
 
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\{AttachmentCollection, BlockCollection};
-use SlackPhp\BlockKit\Enums\MessageDirective;
 use SlackPhp\BlockKit\{FauxProperty, Property};
 use SlackPhp\BlockKit\Tools\Hydration\OmitType;
 use SlackPhp\BlockKit\Tools\Validation\{RequiresAnyOf, ValidCollection, ValidString};

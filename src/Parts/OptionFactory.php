@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Tools;
+namespace SlackPhp\BlockKit\Parts;
 
 use SlackPhp\BlockKit\Collections\OptionGroupCollection;
 use SlackPhp\BlockKit\Collections\OptionSet;
-use SlackPhp\BlockKit\Enums\OptionType;
-use SlackPhp\BlockKit\Parts\Option;
-use SlackPhp\BlockKit\Parts\OptionGroup;
 
 class OptionFactory
 {

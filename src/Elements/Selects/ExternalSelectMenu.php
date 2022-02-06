@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Elements\Selects;
 
 use SlackPhp\BlockKit\Elements\Traits\{HasInitialOption, HasOptionsFactory};
-use SlackPhp\BlockKit\Enums\OptionType;
-use SlackPhp\BlockKit\Parts\{Confirm, Option, PlainText};
+use SlackPhp\BlockKit\Parts\{Confirm, Option, OptionType, PlainText};
 use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
 

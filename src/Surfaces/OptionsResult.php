@@ -7,8 +7,7 @@ namespace SlackPhp\BlockKit\Surfaces;
 use SlackPhp\BlockKit\Collections\{OptionGroupCollection, OptionSet};
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Elements\Traits\{HasOptionsFactory, HasOptionGroups};
-use SlackPhp\BlockKit\Enums\OptionType;
-use SlackPhp\BlockKit\Parts\{Option, OptionGroup};
+use SlackPhp\BlockKit\Parts\{Option, OptionGroup, OptionType};
 use SlackPhp\BlockKit\Tools\Hydration\OmitType;
 use SlackPhp\BlockKit\Tools\Validation\RequiresOneOf;
 

@@ -6,8 +6,6 @@ namespace SlackPhp\BlockKit;
 
 use SlackPhp\BlockKit\Collections;
 use SlackPhp\BlockKit\Elements;
-use SlackPhp\BlockKit\Enums;
-use SlackPhp\BlockKit\Type;
 use SlackPhp\BlockKit\Parts;
 use SlackPhp\BlockKit\Surfaces;
 use SlackPhp\BlockKit\Tools;
@@ -46,7 +44,7 @@ abstract class Kit
      */
     public static function message(
         Collections\BlockCollection|array|null $blocks = null,
-        ?Enums\MessageDirective $directive = null,
+        ?Surfaces\MessageDirective $directive = null,
         ?string $text = null,
         Collections\AttachmentCollection|array|null $attachments = null,
         ?bool $mrkdwn = null,
@@ -166,7 +164,7 @@ abstract class Kit
         ?string $actionId = null,
         Parts\PlainText|string|null $text = null,
         ?string $value = null,
-        Enums\ButtonStyle|string|null $style = null,
+        Elements\ButtonStyle|string|null $style = null,
         ?string $url = null,
         ?Parts\Confirm $confirm = null,
     ): Elements\Button {
@@ -394,13 +392,13 @@ abstract class Kit
         Parts\Text|string|null $text = null,
         Parts\PlainText|string|null $confirm = 'OK',
         Parts\PlainText|string|null $deny = 'Cancel',
-        Enums\ButtonStyle|string|null $style = null,
+        Elements\ButtonStyle|string|null $style = null,
     ): Parts\Confirm {
         return new Parts\Confirm($title, $text, $confirm, $deny, $style);
     }
 
     /**
-     * @param array<Enums\TriggerActionsOn|string|null> $triggerActionsOn
+     * @param array<Parts\TriggerActionsOn|string|null> $triggerActionsOn
      */
     public static function dispatchActionConfig(array $triggerActionsOn = []): Parts\DispatchActionConfig
     {
@@ -432,7 +430,7 @@ abstract class Kit
     }
 
     /**
-     * @param array<Enums\ConversationType|string|null> $include
+     * @param array<Parts\ConversationType|string|null> $include
      */
     public static function filter(
         array $include = [],

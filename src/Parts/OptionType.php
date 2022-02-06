@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Enums;
+namespace SlackPhp\BlockKit\Parts;
 
 enum OptionType
 {

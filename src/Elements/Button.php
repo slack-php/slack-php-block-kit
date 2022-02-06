@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Elements;
 
 use SlackPhp\BlockKit\Elements\Traits\{HasActionId, HasConfirm};
-use SlackPhp\BlockKit\Enums\ButtonStyle;
 use SlackPhp\BlockKit\Parts\{Confirm, PlainText};
 use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString};

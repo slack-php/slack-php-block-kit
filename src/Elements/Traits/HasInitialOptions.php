@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Elements\Traits;
 
 use SlackPhp\BlockKit\Collections\OptionSet;
-use SlackPhp\BlockKit\Parts\Option;
+use SlackPhp\BlockKit\Parts\{Option, OptionFactory};
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\OptionFactory;
 use SlackPhp\BlockKit\Tools\Validation\ValidCollection;
 
 trait HasInitialOptions

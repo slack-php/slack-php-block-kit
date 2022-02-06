@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Tests\Surfaces;
 
-use SlackPhp\BlockKit\Enums\MessageDirective;
+use SlackPhp\BlockKit\Surfaces\MessageDirective;
 use SlackPhp\BlockKit\Exception;
 use SlackPhp\BlockKit\Surfaces\Attachment;
 use SlackPhp\BlockKit\Surfaces\Message;

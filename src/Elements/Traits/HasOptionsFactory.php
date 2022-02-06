@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Elements\Traits;
 
-use SlackPhp\BlockKit\Enums\OptionType;
+use SlackPhp\BlockKit\Parts\{OptionFactory, OptionType};
 use SlackPhp\BlockKit\Exception;
-use SlackPhp\BlockKit\Tools\OptionFactory;
 
 trait HasOptionsFactory
 {
