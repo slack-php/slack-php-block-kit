@@ -8,8 +8,8 @@ use SlackPhp\BlockKit\Collections\{OptionGroupCollection, OptionSet};
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Elements\Traits\{HasOptionsFactory, HasOptionGroups};
 use SlackPhp\BlockKit\Parts\{Option, OptionGroup, OptionType};
-use SlackPhp\BlockKit\Tools\Hydration\OmitType;
-use SlackPhp\BlockKit\Tools\Validation\RequiresOneOf;
+use SlackPhp\BlockKit\Hydration\OmitType;
+use SlackPhp\BlockKit\Validation\RequiresOneOf;
 
 /**
  * A standalone element to use for building a list of options or options group.

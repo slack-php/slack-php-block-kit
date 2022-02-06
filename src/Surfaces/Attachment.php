@@ -8,8 +8,8 @@ use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\BlockCollection;
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Hydration\OmitType;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection};
+use SlackPhp\BlockKit\Hydration\OmitType;
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidCollection};
 
 /**
  * Attachments are a surface that represent secondary content within a message, and can only exist within a message.

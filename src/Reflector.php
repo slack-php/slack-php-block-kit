@@ -2,15 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Tools;
+namespace SlackPhp\BlockKit;
 
 use ReflectionClass;
 use ReflectionProperty;
-use SlackPhp\BlockKit\Component;
-use SlackPhp\BlockKit\Tools\Validation\PropertyRule;
-use SlackPhp\BlockKit\Tools\Validation\RequirementRule;
-use SlackPhp\BlockKit\FauxProperty;
-use SlackPhp\BlockKit\Property;
+use SlackPhp\BlockKit\Validation\{PropertyRule, RequirementRule};
 
 final class Reflector
 {

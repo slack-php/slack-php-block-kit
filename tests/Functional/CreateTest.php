@@ -9,8 +9,8 @@ use SlackPhp\BlockKit\Collections\ComponentCollection;
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Type;
 use SlackPhp\BlockKit\Kit;
-use SlackPhp\BlockKit\Tools\PrivateMetadata;
-use SlackPhp\BlockKit\Tools\Validation\ValidationException;
+use SlackPhp\BlockKit\PrivateMetadata;
+use SlackPhp\BlockKit\Validation\ValidationException;
 
 class CreateTest extends TestCase
 {

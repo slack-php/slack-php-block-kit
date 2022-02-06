@@ -6,8 +6,8 @@ namespace SlackPhp\BlockKit\Parts;
 
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Hydration\OmitType;
-use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
+use SlackPhp\BlockKit\Hydration\OmitType;
+use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
 #[OmitType, RequiresAllOf('trigger_actions_on')]
 class DispatchActionConfig extends Component

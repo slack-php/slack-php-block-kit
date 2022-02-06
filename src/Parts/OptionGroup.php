@@ -7,8 +7,8 @@ namespace SlackPhp\BlockKit\Parts;
 use SlackPhp\BlockKit\Collections\OptionSet;
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Hydration\OmitType;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection, ValidString};
+use SlackPhp\BlockKit\Hydration\OmitType;
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidCollection, ValidString};
 
 #[OmitType, RequiresAllOf('label', 'options')]
 class OptionGroup extends Component

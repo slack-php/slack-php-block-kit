@@ -7,7 +7,7 @@ namespace SlackPhp\BlockKit\Elements\Selects;
 use SlackPhp\BlockKit\Elements\Traits\{HasInitialOption, HasOptionsFactory};
 use SlackPhp\BlockKit\Parts\{Confirm, Option, OptionType, PlainText};
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
+use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
 #[RequiresAllOf('placeholder')]
 class ExternalSelectMenu extends SelectMenu

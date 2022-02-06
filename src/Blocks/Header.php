@@ -6,7 +6,7 @@ namespace SlackPhp\BlockKit\Blocks;
 
 use SlackPhp\BlockKit\Parts\PlainText;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString};
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidString};
 
 #[RequiresAllOf('text')]
 class Header extends Block

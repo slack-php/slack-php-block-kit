@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Tools\Hydration;
+namespace SlackPhp\BlockKit\Hydration;
 
 use Closure;
 use ReflectionProperty;
@@ -11,7 +11,7 @@ use SlackPhp\BlockKit\Collections\ComponentCollection;
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\FauxProperty;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Reflector;
+use SlackPhp\BlockKit\Reflector;
 use SlackPhp\BlockKit\Type;
 use Throwable;
 

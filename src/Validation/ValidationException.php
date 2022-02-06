@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Tools\Validation;
+namespace SlackPhp\BlockKit\Validation;
 
 use SlackPhp\BlockKit\Exception;
 

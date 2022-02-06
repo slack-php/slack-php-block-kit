@@ -8,7 +8,7 @@ use SlackPhp\BlockKit\Collections\OptionSet;
 use SlackPhp\BlockKit\Elements\Traits\{HasConfirm, HasInitialOptions, HasOptions, HasOptionsFactory};
 use SlackPhp\BlockKit\Parts\{Confirm, OptionType};
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection};
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidCollection};
 
 #[RequiresAllOf('options')]
 class Checkboxes extends Input

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Tools\Validation;
+namespace SlackPhp\BlockKit\Validation;
 
 use Closure;
 use Exception;
 use SlackPhp\BlockKit\Component;
-use SlackPhp\BlockKit\Tools\Reflector;
+use SlackPhp\BlockKit\Reflector;
 
 class Validator
 {

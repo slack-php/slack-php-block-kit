@@ -8,7 +8,7 @@ use DateTime;
 use SlackPhp\BlockKit\Elements\Traits\{HasConfirm, HasPlaceholder};
 use SlackPhp\BlockKit\Parts\Confirm;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\ValidDatetime;
+use SlackPhp\BlockKit\Validation\ValidDatetime;
 
 class DatePicker extends Input
 {

@@ -6,7 +6,7 @@ namespace SlackPhp\BlockKit\Elements\Traits;
 
 use SlackPhp\BlockKit\Parts\PlainText;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\ValidString;
+use SlackPhp\BlockKit\Validation\ValidString;
 
 trait HasPlaceholder
 {

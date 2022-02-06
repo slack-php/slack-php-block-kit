@@ -6,7 +6,7 @@ namespace SlackPhp\BlockKit\Parts;
 
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
+use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
 #[RequiresAllOf('text')]
 abstract class Text extends Component

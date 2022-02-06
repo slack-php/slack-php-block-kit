@@ -7,7 +7,7 @@ namespace SlackPhp\BlockKit\Surfaces;
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\BlockCollection;
 use SlackPhp\BlockKit\{Component, Kit, Property};
-use SlackPhp\BlockKit\Tools\Validation\ValidCollection;
+use SlackPhp\BlockKit\Validation\ValidCollection;
 
 /**
  * A Slack app surface is something within a Slack app that renders blocks from the block kit (e.g., a Message).

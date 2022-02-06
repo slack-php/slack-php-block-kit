@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Surfaces;
 
-use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
+use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
 /**
  * The App Home tab is a persistent, yet dynamic interface for apps that lives within the App Home for a user.

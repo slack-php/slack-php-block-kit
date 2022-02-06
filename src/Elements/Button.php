@@ -7,7 +7,7 @@ namespace SlackPhp\BlockKit\Elements;
 use SlackPhp\BlockKit\Elements\Traits\{HasActionId, HasConfirm};
 use SlackPhp\BlockKit\Parts\{Confirm, PlainText};
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString};
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidString};
 
 #[RequiresAllOf('text')]
 class Button extends Element

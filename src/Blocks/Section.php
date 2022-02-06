@@ -7,7 +7,7 @@ namespace SlackPhp\BlockKit\Blocks;
 use SlackPhp\BlockKit\Elements\Element;
 use SlackPhp\BlockKit\Parts\{Text, Fields};
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAnyOf, ValidString};
+use SlackPhp\BlockKit\Validation\{RequiresAnyOf, ValidString};
 
 #[RequiresAnyOf('text', 'fields')]
 class Section extends Block

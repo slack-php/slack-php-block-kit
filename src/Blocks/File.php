@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Blocks;
 
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
+use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
 #[RequiresAllOf('external_id', 'source')]
 class File extends Block

@@ -8,8 +8,8 @@ use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\BlockCollection;
 use SlackPhp\BlockKit\Parts\PlainText;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\PrivateMetadata;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidationException, ValidString};
+use SlackPhp\BlockKit\PrivateMetadata;
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidationException, ValidString};
 use SlackPhp\BlockKit\Type;
 
 /**

@@ -7,7 +7,7 @@ namespace SlackPhp\BlockKit\Blocks;
 use SlackPhp\BlockKit\Elements\Input as InputElement;
 use SlackPhp\BlockKit\Parts\PlainText;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString};
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidString};
 
 /**
  * A block that collects information from users.

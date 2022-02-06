@@ -6,7 +6,7 @@ namespace SlackPhp\BlockKit\Elements\Selects;
 
 use SlackPhp\BlockKit\Parts\{Confirm, PlainText};
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\ValidInt;
+use SlackPhp\BlockKit\Validation\ValidInt;
 
 abstract class MultiSelectMenu extends Menu
 {

@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Tools;
-
-use SlackPhp\BlockKit\Exception;
+namespace SlackPhp\BlockKit;
 
 use function array_filter;
 use function array_map;

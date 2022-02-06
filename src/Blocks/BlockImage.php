@@ -6,8 +6,8 @@ namespace SlackPhp\BlockKit\Blocks;
 
 use SlackPhp\BlockKit\Parts\PlainText;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString,};
-use SlackPhp\BlockKit\Tools\Hydration\AliasType;
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidString,};
+use SlackPhp\BlockKit\Hydration\AliasType;
 use SlackPhp\BlockKit\Type;
 
 #[AliasType(Type::IMAGE), RequiresAllOf('image_url', 'alt_text')]

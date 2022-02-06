@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Tools;
+namespace SlackPhp\BlockKit;
 
-use SlackPhp\BlockKit\Exception;
 use SlackPhp\BlockKit\Surfaces;
 
 use function rawurlencode;

@@ -6,8 +6,7 @@ namespace SlackPhp\BlockKit\Tests\Functional;
 
 use SlackPhp\BlockKit\Blocks\Section;
 use SlackPhp\BlockKit\Surfaces\Message;
-use SlackPhp\BlockKit\Tools\Hydration\HydrationData;
-use SlackPhp\BlockKit\Tools\Hydration\HydrationException;
+use SlackPhp\BlockKit\Hydration\HydrationException;
 
 class ModifyTest extends TestCase
 {

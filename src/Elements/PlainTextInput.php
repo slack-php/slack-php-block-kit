@@ -7,7 +7,7 @@ namespace SlackPhp\BlockKit\Elements;
 use SlackPhp\BlockKit\Elements\Traits\HasPlaceholder;
 use SlackPhp\BlockKit\Parts\{DispatchActionConfig, PlainText};
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\ValidInt;
+use SlackPhp\BlockKit\Validation\ValidInt;
 
 class PlainTextInput extends Input
 {

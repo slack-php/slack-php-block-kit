@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit;
 
 use JsonSerializable;
-use SlackPhp\BlockKit\Tools\Hydration\{Dehydrator, Hydrator};
-use SlackPhp\BlockKit\Tools\Validation\{Context, Validator};
+use SlackPhp\BlockKit\Hydration\{Dehydrator, Hydrator};
+use SlackPhp\BlockKit\Validation\{Context, Validator};
 
 abstract class Component implements JsonSerializable
 {

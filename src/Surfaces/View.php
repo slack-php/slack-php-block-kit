@@ -7,7 +7,7 @@ namespace SlackPhp\BlockKit\Surfaces;
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\BlockCollection;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\PrivateMetadata;
+use SlackPhp\BlockKit\PrivateMetadata;
 
 /**
  * View represents the commonalities between the Modal and App Home surfaces.

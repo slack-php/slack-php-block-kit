@@ -6,8 +6,8 @@ namespace SlackPhp\BlockKit\Parts;
 
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Hydration\OmitType;
-use SlackPhp\BlockKit\Tools\Validation\RequiresAnyOf;
+use SlackPhp\BlockKit\Hydration\OmitType;
+use SlackPhp\BlockKit\Validation\RequiresAnyOf;
 
 #[OmitType, RequiresAnyOf('include', 'exclude_external_shared_channels', 'exclude_bot_users')]
 class Filter extends Component

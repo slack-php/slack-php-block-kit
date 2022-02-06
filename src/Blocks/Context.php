@@ -8,7 +8,7 @@ use SlackPhp\BlockKit\Collections\ContextCollection;
 use SlackPhp\BlockKit\Elements\Image;
 use SlackPhp\BlockKit\Parts\Text;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection};
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidCollection};
 
 #[RequiresAllOf('elements')]
 class Context extends Block

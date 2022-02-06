@@ -8,7 +8,6 @@ use SlackPhp\BlockKit\Collections;
 use SlackPhp\BlockKit\Elements;
 use SlackPhp\BlockKit\Parts;
 use SlackPhp\BlockKit\Surfaces;
-use SlackPhp\BlockKit\Tools;
 
 /**
  * Kit acts as a static façade to the whole block kit library.
@@ -23,7 +22,7 @@ abstract class Kit
         Collections\BlockCollection|array|null $blocks = null,
         ?string $callbackId = null,
         ?string $externalId = null,
-        Tools\PrivateMetadata|array|string|null $privateMetadata = null,
+        PrivateMetadata|array|string|null $privateMetadata = null,
     ): Surfaces\AppHome {
         return new Surfaces\AppHome($blocks, $callbackId, $externalId, $privateMetadata);
     }
@@ -61,7 +60,7 @@ abstract class Kit
         Parts\PlainText|string|null $title = null,
         ?string $callbackId = null,
         ?string $externalId = null,
-        Tools\PrivateMetadata|array|string|null $privateMetadata = null,
+        PrivateMetadata|array|string|null $privateMetadata = null,
         Parts\PlainText|string|null $submit = null,
         Parts\PlainText|string|null $close = null,
         ?bool $clearOnClose = null,
@@ -87,7 +86,7 @@ abstract class Kit
     public static function workflowStep(
         Collections\BlockCollection|array|null $blocks = null,
         ?string $callbackId = null,
-        Tools\PrivateMetadata|array|string|null $privateMetadata = null,
+        PrivateMetadata|array|string|null $privateMetadata = null,
         ?bool $submitDisabled = null,
     ): Surfaces\WorkflowStep {
         return new Surfaces\WorkflowStep($blocks, $callbackId, $privateMetadata, $submitDisabled);
@@ -545,19 +544,19 @@ abstract class Kit
     /**
      * @param array<string, mixed> $data
      */
-    public static function privateMetadata(array $data = []): Tools\PrivateMetadata
+    public static function privateMetadata(array $data = []): PrivateMetadata
     {
-        return new Tools\PrivateMetadata($data);
+        return new PrivateMetadata($data);
     }
 
-    public static function formatter(): Tools\Formatter
+    public static function formatter(): Formatter
     {
-        return new Tools\Formatter();
+        return new Formatter();
     }
 
     public static function preview(Surfaces\Surface $surface): string
     {
-        return (new Tools\Previewer())->preview($surface);
+        return Previewer::new()->preview($surface);
     }
 
     /**

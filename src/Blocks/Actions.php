@@ -15,7 +15,7 @@ use SlackPhp\BlockKit\Elements\{
 };
 use SlackPhp\BlockKit\Elements\Selects\SelectMenu;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidCollection};
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidCollection};
 
 #[RequiresAllOf('elements')]
 class Actions extends Block

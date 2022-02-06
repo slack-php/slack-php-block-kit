@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Tools;
+namespace SlackPhp\BlockKit;
 
 use ArrayAccess;
 

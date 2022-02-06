@@ -6,8 +6,8 @@ namespace SlackPhp\BlockKit\Parts;
 
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\FauxProperty;
-use SlackPhp\BlockKit\Tools\Hydration\OmitType;
-use SlackPhp\BlockKit\Tools\Validation\ValidCollection;
+use SlackPhp\BlockKit\Hydration\OmitType;
+use SlackPhp\BlockKit\Validation\ValidCollection;
 
 #[OmitType]
 class Fields extends Component

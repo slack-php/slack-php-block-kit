@@ -7,8 +7,8 @@ namespace SlackPhp\BlockKit\Surfaces;
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\BlockCollection;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\PrivateMetadata;
-use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
+use SlackPhp\BlockKit\PrivateMetadata;
+use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
 /**
  * A Workflow Step surface are a special case of a Modal, with limited properties, and are used to configure an app's

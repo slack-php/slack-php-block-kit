@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Surfaces;
 
+use SlackPhp\BlockKit\PrivateMetadata;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\PrivateMetadata;
-use SlackPhp\BlockKit\Tools\Validation\ValidString;
+use SlackPhp\BlockKit\Validation\ValidString;
 
 trait HasIdAndMetadata
 {

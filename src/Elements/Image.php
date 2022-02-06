@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Elements;
 
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\{RequiresAllOf, ValidString};
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidString};
 
 #[RequiresAllOf('image_url', 'alt_text')]
 class Image extends Element

@@ -6,7 +6,7 @@ namespace SlackPhp\BlockKit\Blocks;
 
 use SlackPhp\BlockKit\Component;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\ValidString;
+use SlackPhp\BlockKit\Validation\ValidString;
 
 abstract class Block extends Component
 {

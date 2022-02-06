@@ -6,7 +6,7 @@ namespace SlackPhp\BlockKit\Elements\Selects;
 
 use SlackPhp\BlockKit\Parts\{Confirm, PlainText};
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
+use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
 #[RequiresAllOf('placeholder')]
 class ChannelSelectMenu extends SelectMenu

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SlackPhp\BlockKit\Tools\Hydration;
+namespace SlackPhp\BlockKit\Hydration;
 
 use BackedEnum;
 use ReflectionClass;
 use SlackPhp\BlockKit\Collections\ComponentCollection;
 use SlackPhp\BlockKit\Component;
-use SlackPhp\BlockKit\Tools\Reflector;
+use SlackPhp\BlockKit\Reflector;
 
 class Dehydrator
 {

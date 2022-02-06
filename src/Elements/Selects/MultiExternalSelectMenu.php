@@ -8,7 +8,7 @@ use SlackPhp\BlockKit\Collections\OptionSet;
 use SlackPhp\BlockKit\Elements\Traits\{HasInitialOptions, HasOptionsFactory};
 use SlackPhp\BlockKit\Parts\{Confirm, OptionType, PlainText};
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Tools\Validation\RequiresAllOf;
+use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
 #[RequiresAllOf('placeholder')]
 class MultiExternalSelectMenu extends MultiSelectMenu
