@@ -60,7 +60,9 @@ composer require slack-php/slack-block-kit
 
 Then include the Composer-generated autoloader in your project's initialization code.
 
-_Note: This library is built for PHP 8.1+._
+**Note**: This library is built for PHP 8.1+.
+
+_[Version 1](https://github.com/slack-php/slack-php-block-kit/tree/v1) of this library supports version 7.3/7.4._
 
 ## Basic Usage
 
