@@ -95,9 +95,9 @@ abstract class Kit
 
     #region Blocks
     /**
-     * @param Collections\ActionsCollection|array<Elements\Button|Elements\Checkboxes|Elements\DatePicker|Elements\OverflowMenu|Elements\RadioButtons|Elements\Selects\SelectMenu|Elements\TimePicker|null> $elements
+     * @param Collections\ActionCollection|array<Elements\Button|Elements\Checkboxes|Elements\DatePicker|Elements\OverflowMenu|Elements\RadioButtons|Elements\Selects\SelectMenu|Elements\TimePicker|null> $elements
      */
-    public static function actions(Collections\ActionsCollection|array $elements = [], ?string $blockId = null): Blocks\Actions
+    public static function actions(Collections\ActionCollection|array $elements = [], ?string $blockId = null): Blocks\Actions
     {
         return new Blocks\Actions($elements, $blockId);
     }
@@ -166,8 +166,9 @@ abstract class Kit
         Elements\ButtonStyle|string|null $style = null,
         ?string $url = null,
         ?Parts\Confirm $confirm = null,
+        ?string $accessibilityLabel = null,
     ): Elements\Button {
-        return new Elements\Button($actionId, $text, $value, $style, $url, $confirm);
+        return new Elements\Button($actionId, $text, $value, $style, $url, $confirm, $accessibilityLabel);
     }
 
     public static function channelSelectMenu(
@@ -471,9 +472,9 @@ abstract class Kit
     /**
      * @param array<Elements\Button|Elements\Checkboxes|Elements\DatePicker|Elements\OverflowMenu|Elements\RadioButtons|Elements\Selects\SelectMenu|Elements\TimePicker|null> $actions
      */
-    public static function actionsCollection(array $actions = []): Collections\ActionsCollection
+    public static function actionCollection(array $actions = []): Collections\ActionCollection
     {
-        return new Collections\ActionsCollection($actions);
+        return new Collections\ActionCollection($actions);
     }
 
     /**

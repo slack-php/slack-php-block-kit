@@ -16,7 +16,6 @@ class ValidCollection implements PropertyRule
     public function __construct(
         private int $maxCount = 0,
         private int $minCount = 1,
-        private bool $uniqueIds = false,
     ) {}
 
     public function check(Component $component, string $field, mixed $value): void
@@ -50,44 +49,5 @@ class ValidCollection implements PropertyRule
                 [$field, $component->type->value, $this->maxCount],
             );
         }
-
-        if (!$this->uniqueIds) {
-            return;
-        }
-
-        $uniqueIds = [];
-        foreach ($collection as $item) {
-            ['field' => $idField, 'value' => $idValue] = $this->extractId($item);
-            if (!empty($idValue)) {
-                if (in_array($idValue, $uniqueIds, true)) {
-                    throw new ValidationException(
-                        'The "%s" field of a valid "%s" component must NOT have any items with duplicate "%s"s',
-                        [$field, $component->type->value, $idField],
-                    );
-                } else {
-                    $uniqueIds[] = $idValue;
-                }
-            }
-        }
-    }
-
-    /**
-     * @return array{field: ?string, value: ?string}
-     */
-    private function extractId(mixed $item): array
-    {
-        if (!$item instanceof Component) {
-            return ['field' => null, 'value' => null];
-        }
-
-        if (isset($item->blockId)) {
-            return ['field' => 'block_id' , 'value' => $item->blockId];
-        }
-
-        if (isset($item->actionId)) {
-            return ['field' => 'action_id', 'value' => $item->actionId];
-        }
-
-        return ['field' => null, 'value' => null];
     }
 }

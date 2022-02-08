@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Blocks;
 
-use SlackPhp\BlockKit\Collections\ActionsCollection;
+use SlackPhp\BlockKit\Collections\ActionCollection;
 use SlackPhp\BlockKit\Elements\{
     Button,
     Checkboxes,
@@ -15,26 +15,26 @@ use SlackPhp\BlockKit\Elements\{
 };
 use SlackPhp\BlockKit\Elements\Selects\SelectMenu;
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidCollection};
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, UniqueIds, ValidCollection};
 
 #[RequiresAllOf('elements')]
 class Actions extends Block
 {
-    #[Property, ValidCollection(5, uniqueIds: true)]
-    public ActionsCollection $elements;
+    #[Property, ValidCollection(5), UniqueIds]
+    public ActionCollection $elements;
 
     /**
-     * @param ActionsCollection|array<Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker|null> $elements
+     * @param ActionCollection|array<Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker|null> $elements
      */
-    public function __construct(ActionsCollection|array $elements = [], ?string $blockId = null)
+    public function __construct(ActionCollection|array $elements = [], ?string $blockId = null)
     {
         parent::__construct($blockId);
-        $this->elements = new ActionsCollection();
+        $this->elements = new ActionCollection();
         $this->elements(...$elements);
     }
 
     public function elements(
-        ActionsCollection|Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker|null ...$elements
+        ActionCollection|Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker|null ...$elements
     ): self {
         $this->elements->append(...$elements);
 

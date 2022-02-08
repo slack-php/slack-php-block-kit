@@ -8,7 +8,7 @@ use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\{AttachmentCollection, BlockCollection};
 use SlackPhp\BlockKit\{FauxProperty, Property};
 use SlackPhp\BlockKit\Hydration\OmitType;
-use SlackPhp\BlockKit\Validation\{RequiresAnyOf, ValidCollection, ValidString};
+use SlackPhp\BlockKit\Validation\{RequiresAnyOf, UniqueIds, ValidCollection, ValidString};
 
 /**
  * @see https://api.slack.com/surfaces
@@ -16,7 +16,7 @@ use SlackPhp\BlockKit\Validation\{RequiresAnyOf, ValidCollection, ValidString};
 #[OmitType, RequiresAnyOf('blocks', 'text', 'attachments')]
 class Message extends Surface
 {
-    #[Property, ValidCollection(50, 0, uniqueIds: true)]
+    #[Property, ValidCollection(50, 0), UniqueIds]
     public BlockCollection $blocks;
 
     #[FauxProperty('response_type', 'replace_original', 'delete_original')]

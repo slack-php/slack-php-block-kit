@@ -27,6 +27,9 @@ class Button extends Element
     #[Property]
     public ?ButtonStyle $style;
 
+    #[Property('accessibility_label'), ValidString(75)]
+    public ?string $accessibilityLabel;
+
     public function __construct(
         ?string $actionId = null,
         PlainText|string|null $text = null,
@@ -34,6 +37,7 @@ class Button extends Element
         ButtonStyle|string|null $style = null,
         ?string $url = null,
         ?Confirm $confirm = null,
+        ?string $accessibilityLabel = null,
     ) {
         parent::__construct();
         $this->actionId($actionId);
@@ -42,6 +46,7 @@ class Button extends Element
         $this->style($style);
         $this->url($url);
         $this->confirm($confirm);
+        $this->accessibilityLabel($accessibilityLabel);
     }
 
     public function text(PlainText|string|null $text): self
@@ -68,6 +73,13 @@ class Button extends Element
     public function style(ButtonStyle|string|null $style): self
     {
         $this->style = ButtonStyle::fromValue($style);
+
+        return $this;
+    }
+
+    public function accessibilityLabel(?string $accessibilityLabel): self
+    {
+        $this->accessibilityLabel = $accessibilityLabel;
 
         return $this;
     }

@@ -19,7 +19,7 @@ use SlackPhp\BlockKit\Exception;
 /**
  * @extends ComponentCollection<Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker>
  */
-class ActionsCollection extends ComponentCollection
+class ActionCollection extends ComponentCollection
 {
     protected static function createComponent(array $data): Button|Checkboxes|DatePicker|OverflowMenu|RadioButtons|SelectMenu|TimePicker
     {
