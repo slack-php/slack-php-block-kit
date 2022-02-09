@@ -11,7 +11,8 @@ class Context
     public function __construct(
         /** @var array<string> */
         private array $segments = [],
-    ) {}
+    ) {
+    }
 
     public function add(Component $component): void
     {

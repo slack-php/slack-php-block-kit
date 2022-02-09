@@ -16,7 +16,8 @@ class ValidCollection implements PropertyRule
     public function __construct(
         private int $maxCount = 0,
         private int $minCount = 1,
-    ) {}
+    ) {
+    }
 
     public function check(Component $component, string $field, mixed $value): void
     {

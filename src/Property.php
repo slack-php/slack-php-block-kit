@@ -12,5 +12,6 @@ class Property
     public function __construct(
         public readonly ?string $field = null,
         public readonly bool $spread = false,
-    ) {}
+    ) {
+    }
 }

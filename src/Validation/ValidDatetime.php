@@ -14,7 +14,8 @@ class ValidDatetime implements PropertyRule
     public function __construct(
         private string $phpFormat,
         private string $humanFormat,
-    ) {}
+    ) {
+    }
 
     public function check(Component $component, string $field, mixed $value): void
     {

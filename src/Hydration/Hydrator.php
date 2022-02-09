@@ -33,7 +33,8 @@ class Hydrator
      * @param array<string, mixed> $data
      */
     public function __construct(private array $data)
-    {}
+    {
+    }
 
     /**
      * @param class-string $targetClass
@@ -111,6 +112,7 @@ class Hydrator
     private function setProperty(ReflectionProperty $reflection, Property $property, Closure $setValue): void
     {
         $field = $property->field ?? $reflection->getName();
+        /** @phpstan-ignore-next-line The getName() method seems to work fine, but is not documented. */
         $propType = $reflection->getType()->getName();
 
         if (is_a($propType, Component::class, true)) {
@@ -129,7 +131,7 @@ class Hydrator
     private function setFauxProperty(FauxProperty $property, Closure $setValue): void
     {
         if ($property->fields === ['*']) {
-            $setValue(array_map(fn(array $value) => Component::fromArray($value), $this->useAllAsArray()));
+            $setValue(array_map(fn (array $value) => Component::fromArray($value), $this->useAllAsArray()));
         } else {
             $setValue($this->useValues(...$property->fields));
         }

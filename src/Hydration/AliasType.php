@@ -10,7 +10,7 @@ use SlackPhp\BlockKit\Type;
 #[Attribute(Attribute::TARGET_CLASS)]
 class AliasType
 {
-    public function __construct(
-        public readonly ?Type $type = null,
-    ) {}
+    public function __construct(public readonly ?Type $type = null)
+    {
+    }
 }

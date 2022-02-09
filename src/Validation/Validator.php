@@ -13,9 +13,9 @@ class Validator
 {
     private ?Closure $preValidation = null;
 
-    public function __construct(
-        private Component $component,
-    ) {}
+    public function __construct(private Component $component)
+    {
+    }
 
     public function addPreValidation(callable $preValidation): void
     {
