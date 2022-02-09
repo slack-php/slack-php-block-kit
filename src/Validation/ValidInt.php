@@ -13,7 +13,8 @@ class ValidInt implements PropertyRule
     public function __construct(
         private int $max = 0,
         private int $min = 1,
-    ) {}
+    ) {
+    }
 
     public function check(Component $component, string $field, mixed $value): void
     {

@@ -12,9 +12,9 @@ use SlackPhp\BlockKit\Reflector;
 
 class Dehydrator
 {
-    public function __construct(
-        private Component $component
-    ) {}
+    public function __construct(private Component $component)
+    {
+    }
 
     public function getArrayData(): array
     {
