@@ -10,13 +10,13 @@
 
 <p align="center">
   <a href="http://php.net/">
-    <img src="https://img.shields.io/badge/code-php7-8892bf.svg" alt="Coded in PHP 7">
+    <img src="https://img.shields.io/badge/code-php%208.1-8892bf.svg" alt="Coded in PHP 8.1">
   </a>
   <a href="https://packagist.org/packages/slack-php/slack-block-kit">
     <img src="https://img.shields.io/packagist/v/slack-php/slack-block-kit.svg" alt="Packagist Version">
   </a>
-  <a href="https://github.com/slack-php/slack-php-block-kit/actions">
-    <img src="https://img.shields.io/github/workflow/status/slack-php/slack-php-block-kit/PHP%20Composer.svg" alt="Build Status">
+  <a href="https://actions-badge.atrox.dev/slack-php/slack-php-block-kit/goto?ref=main">
+    <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fslack-php%2Fslack-php-block-kit%2Fbadge%3Fref%3Dmain&style=flat" />
   </a>
 </p>
 
