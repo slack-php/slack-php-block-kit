@@ -40,6 +40,9 @@ class Section extends Block
         return $this;
     }
 
+    /**
+     * @param Fields|iterable<Text|string>|null $fields
+     */
     public function fields(Fields|iterable|null $fields): self
     {
         $this->fields = Fields::wrap($fields);

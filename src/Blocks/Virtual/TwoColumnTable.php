@@ -47,10 +47,6 @@ class TwoColumnTable extends VirtualBlock
      * Sets the left and right column headers.
      *
      * Automatically applies a bold to the header text elements.
-     *
-     * @param string $left
-     * @param string $right
-     * @return self
      */
     public function cols(string $left, string $right): self
     {
@@ -61,10 +57,6 @@ class TwoColumnTable extends VirtualBlock
 
     /**
      * Adds a row (with a left and right value) to the table.
-     *
-     * @param string $left
-     * @param string $right
-     * @return TwoColumnTable
      */
     public function row(string $left, string $right): self
     {
@@ -79,7 +71,6 @@ class TwoColumnTable extends VirtualBlock
      * Supports list-format (e.g., [[$left, $right], ...]) or map-format (e.g., [$left => $right, ...]) as input.
      *
      * @param array<string[]>|array<string, string> $rows
-     * @return TwoColumnTable
      */
     public function rows(array $rows): self
     {

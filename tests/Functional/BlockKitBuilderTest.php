@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Tests\Functional;
 
-use SlackPhp\BlockKit\Parts\DispatchActionConfig;
 use SlackPhp\BlockKit\Surfaces\AppHome;
 use SlackPhp\BlockKit\Surfaces\Message;
 use SlackPhp\BlockKit\Surfaces\Modal;
+use SlackPhp\BlockKit\Surfaces\Surface;
 
 class BlockKitBuilderTest extends TestCase
 {
     /**
-     * @param class-string $class
+     * @param class-string<Surface> $class
      * @dataProvider providesJsonFiles
      */
     public function testMatchesBlockKitBuilderJson(string $file, string $class): void

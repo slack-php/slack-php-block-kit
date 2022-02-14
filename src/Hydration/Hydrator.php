@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Hydration;
 
 use Closure;
+use ReflectionNamedType;
 use ReflectionProperty;
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\ComponentCollection;
@@ -112,18 +113,22 @@ class Hydrator
     private function setProperty(ReflectionProperty $reflection, Property $property, Closure $setValue): void
     {
         $field = $property->field ?? $reflection->getName();
-        /** @phpstan-ignore-next-line The getName() method seems to work fine, but is not documented. */
-        $propType = $reflection->getType()->getName();
+        $typeReflection = $reflection->getType();
+        $propType = ($typeReflection instanceof ReflectionNamedType) ? $typeReflection->getName() : null;
 
         if (is_a($propType, Component::class, true)) {
+            // Property must be set as a component (Section.accessory).
             $factory = [$propType, 'fromArray'](...);
             $setValue($factory($this->useComponent($field)));
         } elseif (is_a($propType, ComponentCollection::class, true)) {
+            // Property must be set as a collection (Context.elements).
             $factory = [$propType, 'fromArray'](...);
             $setValue($factory($this->useArray($field)));
         } elseif ($property->spread) {
+            // Property must be set as a variadic array (Filter.include).
             $setValue(...$this->useArray($field));
         } else {
+            // Property can be set as-is (Image.image_url).
             $setValue($this->useValue($field));
         }
     }
@@ -131,8 +136,10 @@ class Hydrator
     private function setFauxProperty(FauxProperty $property, Closure $setValue): void
     {
         if ($property->fields === ['*']) {
+            // Property must be set as an array of components (e.g., Fields.fields).
             $setValue(array_map(fn (array $value) => Component::fromArray($value), $this->useAllAsArray()));
         } else {
+            // Property must be set using multiple values (e.g., Message.directive).
             $setValue($this->useValues(...$property->fields));
         }
     }
