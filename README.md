@@ -266,25 +266,25 @@ $message = Message::fromJson($messageJson);
 
 ### Message Formatting
 
-The `Formatter` class exists to provide helpers for formatting "mrkdwn" text. These helpers can be used so that you
+The `Md` class exists to provide helpers for formatting "mrkdwn" text. These helpers can be used so that you
 don't have to have the Slack mrkdwn syntax memorized. Also, these functions will properly escape `<`, `>`, and `&`
 characters automatically, if it's needed.
 
 Example:
 ```php
 // Note: $event is meant to represent some kind of DTO from your own application.
-$fmt = Kit::formatter();
+$md = Kit::md();
 $msg = Kit::message(
     blocks: [
         Kit::section(
-            text: $fmt->sub(
+            text: $md->sub(
                 'Hello, {audience}! On {date}, {host} will be hosting an AMA in the {channel} channel at {time}.',
                 [
-                    'audience' => $fmt->atHere(),
-                    'date'     => $fmt->date($event->timestamp),
-                    'host'     => $fmt->user($event->hostId),
-                    'channel'  => $fmt->channel($event->channelId),
-                    'time'     => $fmt->time($event->timestamp),
+                    'audience' => $md->atHere(),
+                    'date'     => $md->date($event->timestamp),
+                    'host'     => $md->user($event->hostId),
+                    'channel'  => $md->channel($event->channelId),
+                    'time'     => $md->time($event->timestamp),
                 ]
             )
         )
