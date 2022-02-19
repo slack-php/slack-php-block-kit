@@ -161,7 +161,7 @@ class CreateTest extends TestCase
             'fieldsFromMap',
             'fieldsFromPairs',
             'privateMetadata',
-            'formatter',
+            'md',
             'preview',
             'hydrate',
         ];

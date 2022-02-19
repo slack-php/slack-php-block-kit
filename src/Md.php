@@ -17,14 +17,16 @@ use function strtr;
 use function time;
 
 /**
- * Formatter consists of text formatting helpers to support the use of Slack's Mrkdwn format in messages, modals, etc.
+ * Md consists of text formatting helpers to support the use of Slack's Mrkdwn format in messages, modals, etc.
  *
  * Some characters ("<", ">", "&") should be escaped when they are not a part of formatting that requires those
  * characters. The formatting helpers in this class automatically escape input in situations where the text is place
  * within angle brackets, such as with dates and links.
  */
-final class Formatter
+final class Md
 {
+    private static ?self $instance = null;
+
     public const DATE = '{date}';
     public const DATE_LONG = '{date_long}';
     public const DATE_LONG_PRETTY = '{date_long_pretty}';
@@ -37,7 +39,7 @@ final class Formatter
 
     public static function new(): self
     {
-        return new self();
+        return (self::$instance ??= new self());
     }
 
     /**
@@ -72,7 +74,7 @@ final class Formatter
         return strtr($text, $replacements);
     }
 
-    //region Helpers for @here, @channel, and @everyone mentions.
+    #region Helpers for @here, @channel, and @everyone mentions.
     public function atChannel(): string
     {
         return '<!channel>';
@@ -87,9 +89,9 @@ final class Formatter
     {
         return '<!here>';
     }
-    //endregion
+    #endregion
 
-    //region Helpers for mentioning/linking specific channels, users, or user groups.
+    #region Helpers for mentioning/linking specific channels, users, or user groups.
     public function channel(string $id): string
     {
         return "<#{$id}>";
@@ -104,9 +106,9 @@ final class Formatter
     {
         return "<!subteam^{$id}>";
     }
-    //endregion
+    #endregion
 
-    //region Helpers for basic text formatting (B/I/S) and links.
+    #region Helpers for basic text formatting (B/I/S) and links.
     public function bold(string $text): string
     {
         return "*{$text}*";
@@ -129,33 +131,22 @@ final class Formatter
 
     public function link(string $url, ?string $text = null): string
     {
-        return isset($text) ? "<{$this->escape($url)}|{$this->escape($text)}>" : "<{$this->escape($url)}>";
+        return isset($text) ? "<{$url}|{$this->escape($text)}>" : "<{$url}>";
     }
 
     public function emailLink(string $email, ?string $text = null): string
     {
         return $this->link("mailto:{$email}", $text);
     }
-    //endregion
+    #endregion
 
-    //region Helpers for multi-line content blocks like lists and quotes.
+    #region Helpers for multi-line content blocks like lists and quotes.
     /**
      * @param array<string>|string $lines
-     * @return string
      */
     public function blockQuote(array|string $lines): string
     {
         return $this->lines($this->explode($lines), '> ', false);
-    }
-
-    /**
-     * @param array<string>|string $items
-     * @param string $bullet
-     * @return string
-     */
-    public function bulletedList(array|string $items, string $bullet = '•'): string
-    {
-        return $this->lines($this->explode($items), "{$bullet} ");
     }
 
     public function codeBlock(string $text): string
@@ -165,7 +156,14 @@ final class Formatter
 
     /**
      * @param array<string>|string $items
-     * @return string
+     */
+    public function bulletedList(array|string $items, string $bullet = '•'): string
+    {
+        return $this->lines($this->explode($items), "{$bullet} ");
+    }
+
+    /**
+     * @param array<string>|string $items
      */
     public function numberedList(array|string $items): string
     {
@@ -182,9 +180,6 @@ final class Formatter
      * Optionally applies a prefix to each line. You can use a closure if the prefix varies per line.
      *
      * @param array<string> $lines
-     * @param string|callable|null $prefix
-     * @param bool $filter
-     * @return string
      */
     public function lines(array $lines, string|callable|null $prefix = null, bool $filter = true): string
     {
@@ -194,10 +189,8 @@ final class Formatter
             };
         }
 
-        if (is_callable($prefix)) {
+        if (!is_null($prefix)) {
             $lines = array_map($prefix, $lines);
-        } elseif (!is_null($prefix)) {
-            throw new Exception('Formatter::lines given invalid prefix argument');
         }
 
         if ($filter) {
@@ -208,9 +201,9 @@ final class Formatter
 
         return implode("\n", $lines) . "\n";
     }
-    //endregion
+    #endregion
 
-    //region Helpers for formatting dates and times.
+    #region Helpers for formatting dates and times.
     /**
      * Formats a timestamp as a date in mrkdwn.
      *
@@ -218,7 +211,6 @@ final class Formatter
      * @param string $format Format name supported by Slack. Defaults to "{date}".
      * @param string|null $fallback Fallback text for old Slack clients. Defaults to an ISO-formatted timestamp.
      * @param string|null $link URL, if the date is to act as a link.
-     * @return string
      * @see https://api.slack.com/reference/surfaces/formatting#date-formatting
      */
     public function date(
@@ -243,7 +235,6 @@ final class Formatter
      * @param string $format Format name supported by Slack. Defaults to "{time}".
      * @param string|null $fallback Fallback text for old Slack clients. Defaults to an ISO-formatted timestamp.
      * @param string|null $link URL, if the time is to act as a link.
-     * @return string
      */
     public function time(
         ?int $timestamp = null,
@@ -253,7 +244,7 @@ final class Formatter
     ): string {
         return $this->date($timestamp, $format, $fallback, $link);
     }
-    //endregion
+    #endregion
 
     /**
      * Ensures the provided items are an array.
@@ -265,12 +256,10 @@ final class Formatter
      */
     private function explode(array|string $items): array
     {
-        if (is_string($items)) {
-            return explode("\n", $items);
-        } elseif (is_array($items)) {
+        if (is_array($items)) {
             return $items;
         }
 
-        throw new Exception('Formatter::explode given invalid items argument');
+        return explode("\n", $items);
     }
 }

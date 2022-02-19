@@ -542,17 +542,17 @@ abstract class Kit
     #endregion
 
     #region Other tools and helpers
+    public static function md(): Md
+    {
+        return new Md();
+    }
+
     /**
      * @param array<string, mixed> $data
      */
     public static function privateMetadata(array $data = []): PrivateMetadata
     {
         return new PrivateMetadata($data);
-    }
-
-    public static function formatter(): Formatter
-    {
-        return new Formatter();
     }
 
     public static function preview(Surfaces\Surface $surface): string

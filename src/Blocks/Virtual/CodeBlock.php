@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SlackPhp\BlockKit\Blocks\Virtual;
 
 use SlackPhp\BlockKit\Blocks\{Context, Section};
-use SlackPhp\BlockKit\Kit;
+use SlackPhp\BlockKit\Md;
 
 class CodeBlock extends VirtualBlock
 {
@@ -36,7 +36,7 @@ class CodeBlock extends VirtualBlock
 
     public function code(string $code): self
     {
-        $code = Kit::formatter()->codeBlock($code);
+        $code = Md::new()->codeBlock($code);
         $this->append(new Section($code));
 
         return $this;
