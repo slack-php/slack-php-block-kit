@@ -43,13 +43,13 @@ abstract class Kit
      */
     public static function message(
         Collections\BlockCollection|array|null $blocks = null,
-        ?Surfaces\MessageDirective $directive = null,
+        ?Surfaces\MessageDirective\ResponseType $responseType = null,
         ?string $text = null,
         Collections\AttachmentCollection|array|null $attachments = null,
         ?bool $mrkdwn = null,
         ?string $threadTs = null,
     ): Surfaces\Message {
-        return new Surfaces\Message($blocks, $directive, $text, $attachments, $mrkdwn, $threadTs);
+        return new Surfaces\Message($blocks, $responseType, $text, $attachments, $mrkdwn, $threadTs);
     }
 
     /**
