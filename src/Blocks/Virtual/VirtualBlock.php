@@ -26,7 +26,8 @@ abstract class VirtualBlock extends BlockCollection
     {
         $blocks = parent::getIterator();
         if ($this->blockId === null) {
-            return $blocks;
+            yield from $blocks;
+            return;
         }
 
         $index = 1;
