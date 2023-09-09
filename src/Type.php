@@ -47,6 +47,7 @@ enum Type: string
     case SELECT_USERS               = 'users_select';
     case PLAIN_TEXT_INPUT           = 'plain_text_input';
     case TIMEPICKER                 = 'timepicker';
+    case NUMBER_INPUT               = 'number_input';
 
     // Parts (aka Composition Objects)
     case CONFIRM                = 'confirm';
@@ -90,6 +91,7 @@ enum Type: string
         Elements\RadioButtons::class => self::RADIO_BUTTONS,
         Elements\PlainTextInput::class    => self::PLAIN_TEXT_INPUT,
         Elements\TimePicker::class   => self::TIMEPICKER,
+        Elements\NumberInput::class  => self::NUMBER_INPUT,
 
         // Menus
         Elements\OverflowMenu::class                 => self::OVERFLOW_MENU,

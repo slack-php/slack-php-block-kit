@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Tests\Functional;
 
+use SlackPhp\BlockKit\Blocks\Input;
 use SlackPhp\BlockKit\Blocks\Virtual\VirtualBlock;
 use SlackPhp\BlockKit\Collections\ComponentCollection;
 use SlackPhp\BlockKit\Component;
+use SlackPhp\BlockKit\Elements\NumberInput;
+use SlackPhp\BlockKit\Surfaces\Modal;
 use SlackPhp\BlockKit\Type;
 use SlackPhp\BlockKit\Kit;
 use SlackPhp\BlockKit\PrivateMetadata;
@@ -186,5 +189,23 @@ class CreateTest extends TestCase
                 $this->assertInstanceOf(Component::class, $result);
             }
         }
+    }
+
+    public function testNumberInput(): void
+    {
+        $modal = Modal::new()
+            ->title('Modal test')
+            ->submit('Click me')
+            ->blocks(
+                Input::new()->label('Input')->element(
+                    NumberInput::new()->minValue(1)->maxValue(50)->decimalAllowed(true)
+                )
+            );
+        $modal->validate();
+        $numberInput = $modal->toArray()['blocks'][0]['element'];
+        self::assertSame('number_input', $numberInput['type']);
+        self::assertTrue($numberInput['is_decimal_allowed']);
+        self::assertSame(1, $numberInput['min_value']);
+        self::assertSame(50, $numberInput['max_value']);
     }
 }
