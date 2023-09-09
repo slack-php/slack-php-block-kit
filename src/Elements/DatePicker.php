@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Elements;
 
-use DateTime;
+use DateTimeInterface;
 use SlackPhp\BlockKit\Elements\Traits\{HasConfirm, HasPlaceholder};
 use SlackPhp\BlockKit\Parts\Confirm;
 use SlackPhp\BlockKit\Property;
@@ -20,7 +20,7 @@ class DatePicker extends Input
 
     public function __construct(
         ?string $actionId = null,
-        DateTime|string|null $initialDate = null,
+        DateTimeInterface|string|null $initialDate = null,
         ?string $placeholder = null,
         ?Confirm $confirm = null,
         ?bool $focusOnLoad = null,
@@ -31,9 +31,9 @@ class DatePicker extends Input
         $this->initialDate($initialDate);
     }
 
-    public function initialDate(DateTime|string|null $initialDate): self
+    public function initialDate(DateTimeInterface|string|null $initialDate): self
     {
-        $this->initialDate = ($initialDate instanceof DateTime) ? $initialDate->format('Y-m-d') : $initialDate;
+        $this->initialDate = ($initialDate instanceof DateTimeInterface) ? $initialDate->format('Y-m-d') : $initialDate;
 
         return $this;
     }
