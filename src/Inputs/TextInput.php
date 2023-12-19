@@ -150,7 +150,7 @@ class TextInput extends InputElement
         }
 
         if ($data->has('multiline')) {
-            $this->initialValue($data->useValue('multiline'));
+            $this->multiline($data->useValue('multiline'));
         }
 
         if ($data->has('min_length')) {
