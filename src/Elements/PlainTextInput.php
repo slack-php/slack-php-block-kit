@@ -70,7 +70,7 @@ class PlainTextInput extends Input
 
     public function maxLength(?int $maxLength): self
     {
-        $this->maxLength = $maxLength === null ? null : (int) min(1, $maxLength);
+        $this->maxLength = $maxLength === null ? null : (int) max(1, $maxLength);
 
         return $this;
     }
