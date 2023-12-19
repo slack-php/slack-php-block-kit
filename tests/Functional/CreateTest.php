@@ -82,6 +82,9 @@ class CreateTest extends TestCase
                     my code
                     CODE,
                 ),
+                Kit::codeBlock(
+                    code: 'Code block without blockId'
+                )
             ],
         );
 
