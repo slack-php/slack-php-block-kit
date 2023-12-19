@@ -365,6 +365,19 @@ abstract class Kit
         return new Elements\PlainTextInput($actionId, $placeholder, $maxLength, $minLength, $multiline, $dispatchActionConfig, $initialValue, $focusOnLoad);
     }
 
+    public static function numberInput(
+        ?string $actionId = null,
+        ?bool $allowDecimal = null,
+        int|float|string|null $maxValue = null,
+        int|float|string|null $minValue = null,
+        int|float|string|null $initialValue = null,
+        PlainText|string|null $placeholder = null,
+        ?bool $focusOnLoad = null,
+        ?DispatchActionConfig $dispatchActionConfig = null,
+    ): Elements\NumberInput {
+        return new Elements\NumberInput($actionId, $allowDecimal, $maxLength, $maxValue, $minValue, $initialValue, $placeholder, $focusOnLoad, $dispatchActionConfig);
+    }
+
     public static function timePicker(
         ?string $actionId = null,
         \DateTime|string|null $initialTime = null,
