@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Elements;
 
-use DateTime;
+use DateTimeInterface;
 use SlackPhp\BlockKit\Elements\Traits\{HasConfirm, HasPlaceholder};
 use SlackPhp\BlockKit\Parts\Confirm;
 use SlackPhp\BlockKit\Property;
@@ -20,7 +20,7 @@ class TimePicker extends Input
 
     public function __construct(
         ?string $actionId = null,
-        DateTime|string|null $initialTime = null,
+        DateTimeInterface|string|null $initialTime = null,
         ?string $placeholder = null,
         ?Confirm $confirm = null,
         ?bool $focusOnLoad = null,
@@ -31,9 +31,9 @@ class TimePicker extends Input
         $this->initialTime($initialTime);
     }
 
-    public function initialTime(DateTime|string|null $initialTime): self
+    public function initialTime(DateTimeInterface|string|null $initialTime): self
     {
-        $this->initialTime = ($initialTime instanceof DateTime) ? $initialTime->format('H:i') : $initialTime;
+        $this->initialTime = ($initialTime instanceof DateTimeInterface) ? $initialTime->format('H:i') : $initialTime;
 
         return $this;
     }
