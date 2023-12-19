@@ -7,63 +7,64 @@ namespace SlackPhp\BlockKit\Elements;
 use SlackPhp\BlockKit\Elements\Traits\HasPlaceholder;
 use SlackPhp\BlockKit\Parts\{DispatchActionConfig, PlainText};
 use SlackPhp\BlockKit\Property;
-use SlackPhp\BlockKit\Validation\ValidInt;
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidString};
 
+#[RequiresAllOf('is_decimal_allowed')]
 class NumberInput extends Input
 {
     use HasPlaceholder;
 
     #[Property('is_decimal_allowed')]
-    public bool $decimalAllowed = false;
+    public bool $allowDecimal;
 
-    #[Property('initial_value')]
+    #[Property('initial_value'), ValidString]
     public ?string $initialValue;
 
-    #[Property('min_value')]
-    public ?int $minValue;
+    #[Property('min_value'), ValidString]
+    public ?string $minValue;
 
-    #[Property('max_value')]
-    public ?int $maxValue;
+    #[Property('max_value'), ValidString]
+    public ?string $maxValue;
 
     #[Property('dispatch_action_config')]
     public ?DispatchActionConfig $dispatchActionConfig;
 
     public function __construct(
         ?string $actionId = null,
+        ?bool $allowDecimal = null,
+        int|float|string|null $maxValue = null,
+        int|float|string|null $minValue = null,
+        int|float|string|null $initialValue = null,
         PlainText|string|null $placeholder = null,
-        ?int $maxValue = null,
-        ?int $minValue = null,
-        ?DispatchActionConfig $dispatchActionConfig = null,
-        ?string $initialValue = null,
-        bool $decimalAllowed = null,
         ?bool $focusOnLoad = null,
+        ?DispatchActionConfig $dispatchActionConfig = null,
     ) {
         parent::__construct($actionId, $focusOnLoad);
-        $this->placeholder($placeholder);
+        $this->allowDecimal($allowDecimal);
         $this->maxValue($maxValue);
         $this->minValue($minValue);
-        $this->dispatchActionConfig($dispatchActionConfig);
         $this->initialValue($initialValue);
-        $this->decimalAllowed($decimalAllowed);
+        $this->placeholder($placeholder);
+        $this->dispatchActionConfig($dispatchActionConfig);
     }
 
-    public function initialValue(?string $text): self
+    public function initialValue(int|float|string|null $initialValue): self
     {
-        $this->initialValue = $text;
+        $this->initialValue = $initialValue === null ? null : (string) $initialValue;
 
         return $this;
     }
 
-    public function minValue(?int $value): self
+    public function minValue(int|float|string|null $minValue): self
     {
-        $this->minValue = $value;
+        $this->minValue = $minValue === null ? null : (string) $minValue;
 
         return $this;
     }
 
-    public function maxValue(?int $value): self
+    public function maxValue(int|float|string|null $maxValue): self
     {
-        $this->maxValue = $value;
+        $this->maxValue = $maxValue === null ? null : (string) $maxValue;
 
         return $this;
     }
@@ -75,9 +76,9 @@ class NumberInput extends Input
         return $this;
     }
 
-    public function decimalAllowed(?bool $allowedDecimal): self
+    public function allowDecimal(?bool $allowDecimal): self
     {
-        $this->decimalAllowed = (bool) $allowedDecimal;
+        $this->allowDecimal = (bool) $allowDecimal;
 
         return $this;
     }
