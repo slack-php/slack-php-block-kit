@@ -40,7 +40,7 @@ class NumberInput extends Input
         ?DispatchActionConfig $dispatchActionConfig = null,
     ) {
         parent::__construct($actionId, $focusOnLoad);
-        $this->allowDecimal($decimalAllowed);
+        $this->allowDecimal($allowDecimal);
         $this->maxValue($maxValue);
         $this->minValue($minValue);
         $this->initialValue($initialValue);
