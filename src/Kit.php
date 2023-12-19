@@ -371,11 +371,11 @@ abstract class Kit
         int|float|string|null $maxValue = null,
         int|float|string|null $minValue = null,
         int|float|string|null $initialValue = null,
-        PlainText|string|null $placeholder = null,
+        Parts\PlainText|string|null $placeholder = null,
         ?bool $focusOnLoad = null,
-        ?DispatchActionConfig $dispatchActionConfig = null,
+        ?Parts\DispatchActionConfig $dispatchActionConfig = null,
     ): Elements\NumberInput {
-        return new Elements\NumberInput($actionId, $allowDecimal, $maxLength, $maxValue, $minValue, $initialValue, $placeholder, $focusOnLoad, $dispatchActionConfig);
+        return new Elements\NumberInput($actionId, $allowDecimal, $maxValue, $minValue, $initialValue, $placeholder, $focusOnLoad, $dispatchActionConfig);
     }
 
     public static function timePicker(
