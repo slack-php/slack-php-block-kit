@@ -12,7 +12,7 @@ use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidCollection};
 class MultiUserSelectMenu extends MultiSelectMenu
 {
     /** @var string[]|null */
-    #[Property('initial_user'), ValidCollection]
+    #[Property('initial_users'), ValidCollection]
     public ?array $initialUsers;
 
     /**
