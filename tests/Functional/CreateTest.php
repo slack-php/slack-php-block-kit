@@ -191,6 +191,7 @@ class CreateTest extends TestCase
         }
     }
 
+    // @TODO This should be moved to a unit test eventually.
     public function testNumberInput(): void
     {
         $modal = Modal::new()
@@ -198,14 +199,14 @@ class CreateTest extends TestCase
             ->submit('Click me')
             ->blocks(
                 Input::new()->label('Input')->element(
-                    NumberInput::new()->minValue(1)->maxValue(50)->decimalAllowed(true)
+                    NumberInput::new()->minValue(1)->maxValue(50)->allowDecimal(true)
                 )
             );
         $modal->validate();
         $numberInput = $modal->toArray()['blocks'][0]['element'];
         self::assertSame('number_input', $numberInput['type']);
         self::assertTrue($numberInput['is_decimal_allowed']);
-        self::assertSame(1, $numberInput['min_value']);
-        self::assertSame(50, $numberInput['max_value']);
+        self::assertSame('1', $numberInput['min_value']);
+        self::assertSame('50', $numberInput['max_value']);
     }
 }

@@ -8,7 +8,9 @@ use SlackPhp\BlockKit\Elements\Traits\HasPlaceholder;
 use SlackPhp\BlockKit\Parts\{DispatchActionConfig, PlainText};
 use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Validation\ValidInt;
+use SlackPhp\BlockKit\Validation\{RequiresAllOf, ValidString};
 
+#[RequiresAllOf('is_decimal_allowed')]
 class NumberInput extends Input
 {
     use HasPlaceholder;
@@ -54,16 +56,16 @@ class NumberInput extends Input
         return $this;
     }
 
-    public function minValue(?int $value): self
+    public function minValue(int|float|string|null $minValue): self
     {
-        $this->minValue = $value;
+        $this->minValue = $minValue === null ? null : (string) $minValue;
 
         return $this;
     }
 
-    public function maxValue(?int $value): self
+    public function maxValue(int|float|string|null $maxValue): self
     {
-        $this->maxValue = $value;
+        $this->maxValue = $maxValue === null ? null : (string) $maxValue;
 
         return $this;
     }
@@ -75,9 +77,9 @@ class NumberInput extends Input
         return $this;
     }
 
-    public function decimalAllowed(?bool $allowedDecimal): self
+    public function allowDecimal(?bool $allowDecimal): self
     {
-        $this->decimalAllowed = (bool) $allowedDecimal;
+        $this->allowDecimal = (bool) $allowDecimal;
 
         return $this;
     }
