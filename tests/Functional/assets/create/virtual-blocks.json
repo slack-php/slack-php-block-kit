@@ -71,6 +71,13 @@
                 "type": "mrkdwn",
                 "text": "```\nThis is\nmy code\n```"
             }
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "```\nCode block without blockId\n```"
+            }
         }
     ]
 }
