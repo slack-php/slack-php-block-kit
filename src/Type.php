@@ -15,8 +15,8 @@ enum Type: string
     case ATTACHMENT     = 'attachment';
     case MESSAGE        = 'message';
     case MODAL          = 'modal';
-    case WORKFLOW_STEP  = 'workflow_step';
     case OPTIONS_RESULT = 'options_result';
+    case WORKFLOW_STEP  = 'workflow_step';
 
     // Blocks
     case ACTIONS     = 'actions';
@@ -38,16 +38,16 @@ enum Type: string
     case MULTI_SELECT_EXTERNAL      = 'multi_external_select';
     case MULTI_SELECT_STATIC        = 'multi_static_select';
     case MULTI_SELECT_USERS         = 'multi_users_select';
+    case NUMBER_INPUT               = 'number_input';
     case OVERFLOW_MENU              = 'overflow';
+    case PLAIN_TEXT_INPUT           = 'plain_text_input';
     case RADIO_BUTTONS              = 'radio_buttons';
     case SELECT_CHANNELS            = 'channels_select';
     case SELECT_CONVERSATIONS       = 'conversations_select';
     case SELECT_EXTERNAL            = 'external_select';
     case SELECT_STATIC              = 'static_select';
     case SELECT_USERS               = 'users_select';
-    case PLAIN_TEXT_INPUT           = 'plain_text_input';
     case TIMEPICKER                 = 'timepicker';
-    case NUMBER_INPUT               = 'number_input';
 
     // Parts (aka Composition Objects)
     case CONFIRM                = 'confirm';
@@ -66,8 +66,8 @@ enum Type: string
         Surfaces\Attachment::class    => self::ATTACHMENT,
         Surfaces\Message::class       => self::MESSAGE,
         Surfaces\Modal::class         => self::MODAL,
-        Surfaces\WorkflowStep::class  => self::WORKFLOW_STEP,
         Surfaces\OptionsResult::class => self::OPTIONS_RESULT,
+        Surfaces\WorkflowStep::class  => self::WORKFLOW_STEP,
 
         // Blocks
         Blocks\Actions::class    => self::ACTIONS,
@@ -84,27 +84,27 @@ enum Type: string
         Virtual\TwoColumnTable::class => self::SECTION,
 
         // Elements
-        Elements\Button::class       => self::BUTTON,
-        Elements\Checkboxes::class   => self::CHECKBOXES,
-        Elements\DatePicker::class   => self::DATEPICKER,
-        Elements\Image::class        => self::IMAGE,
-        Elements\RadioButtons::class => self::RADIO_BUTTONS,
-        Elements\PlainTextInput::class    => self::PLAIN_TEXT_INPUT,
-        Elements\TimePicker::class   => self::TIMEPICKER,
-        Elements\NumberInput::class  => self::NUMBER_INPUT,
+        Elements\Button::class         => self::BUTTON,
+        Elements\Checkboxes::class     => self::CHECKBOXES,
+        Elements\DatePicker::class     => self::DATEPICKER,
+        Elements\Image::class          => self::IMAGE,
+        Elements\NumberInput::class    => self::NUMBER_INPUT,
+        Elements\OverflowMenu::class   => self::OVERFLOW_MENU,
+        Elements\PlainTextInput::class => self::PLAIN_TEXT_INPUT,
+        Elements\RadioButtons::class   => self::RADIO_BUTTONS,
+        Elements\TimePicker::class     => self::TIMEPICKER,
 
         // Menus
-        Elements\OverflowMenu::class                 => self::OVERFLOW_MENU,
-        Selects\MultiChannelSelectMenu::class       => self::MULTI_SELECT_CHANNELS,
-        Selects\MultiConversationSelectMenu::class  => self::MULTI_SELECT_CONVERSATIONS,
-        Selects\MultiExternalSelectMenu::class      => self::MULTI_SELECT_EXTERNAL,
-        Selects\MultiStaticSelectMenu::class        => self::MULTI_SELECT_STATIC,
-        Selects\MultiUserSelectMenu::class          => self::MULTI_SELECT_USERS,
-        Selects\ChannelSelectMenu::class            => self::SELECT_CHANNELS,
-        Selects\ConversationSelectMenu::class       => self::SELECT_CONVERSATIONS,
-        Selects\ExternalSelectMenu::class           => self::SELECT_EXTERNAL,
-        Selects\StaticSelectMenu::class             => self::SELECT_STATIC,
-        Selects\UserSelectMenu::class               => self::SELECT_USERS,
+        Selects\ChannelSelectMenu::class           => self::SELECT_CHANNELS,
+        Selects\ConversationSelectMenu::class      => self::SELECT_CONVERSATIONS,
+        Selects\ExternalSelectMenu::class          => self::SELECT_EXTERNAL,
+        Selects\MultiChannelSelectMenu::class      => self::MULTI_SELECT_CHANNELS,
+        Selects\MultiConversationSelectMenu::class => self::MULTI_SELECT_CONVERSATIONS,
+        Selects\MultiExternalSelectMenu::class     => self::MULTI_SELECT_EXTERNAL,
+        Selects\MultiStaticSelectMenu::class       => self::MULTI_SELECT_STATIC,
+        Selects\MultiUserSelectMenu::class         => self::MULTI_SELECT_USERS,
+        Selects\StaticSelectMenu::class            => self::SELECT_STATIC,
+        Selects\UserSelectMenu::class              => self::SELECT_USERS,
 
         // Parts (aka Composition Objects)
         Parts\Confirm::class              => self::CONFIRM,
