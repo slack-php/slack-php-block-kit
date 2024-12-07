@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit;
 
-use SlackPhp\BlockKit\Collections;
-use SlackPhp\BlockKit\Elements;
-use SlackPhp\BlockKit\Parts;
-use SlackPhp\BlockKit\Surfaces;
-
 /**
  * Kit acts as a static façade to the whole block kit library.
  */
