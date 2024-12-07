@@ -156,6 +156,21 @@ abstract class Kit
     ): Blocks\Section {
         return new Blocks\Section($text, $fields, $accessory, $blockId);
     }
+
+    public static function video(
+        Parts\PlainText|string|null $title = null,
+        ?string $videoUrl = null,
+        ?string $thumbnailUrl = null,
+        ?string $altText = null,
+        Parts\PlainText|string|null $description = null,
+        ?string $authorName = null,
+        ?string $titleUrl = null,
+        ?string $providerName = null,
+        ?string $providerIconUrl = null,
+        ?string $blockId = null,
+    ): Blocks\Video {
+        return new Blocks\Video($title, $videoUrl, $thumbnailUrl, $altText, $description, $authorName, $titleUrl, $providerName, $providerIconUrl, $blockId);
+    }
     #endregion
 
     #region Elements
