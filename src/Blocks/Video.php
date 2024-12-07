@@ -8,6 +8,7 @@ use SlackPhp\BlockKit\Parts\PlainText;
 use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Validation\RequiresAllOf;
 use SlackPhp\BlockKit\Validation\ValidString;
+use SlackPhp\BlockKit\Validation\ValidUrl;
 
 #[RequiresAllOf('alt_text', 'title', 'thumbnail_url', 'video_url')]
 class Video extends Block
@@ -15,10 +16,10 @@ class Video extends Block
     #[Property, ValidString(200)]
     public ?PlainText $title;
 
-    #[Property('video_url'), ValidString]
+    #[Property('video_url'), ValidUrl]
     public ?string $videoUrl;
 
-    #[Property('thumbnail_url'), ValidString]
+    #[Property('thumbnail_url'), ValidUrl]
     public ?string $thumbnailUrl;
 
     #[Property('alt_text'), ValidString]
@@ -30,13 +31,13 @@ class Video extends Block
     #[Property('author_name'), ValidString(50)]
     public ?string $authorName;
 
-    #[Property('title_url'), ValidString]
+    #[Property('title_url'), ValidUrl]
     public ?string $titleUrl;
 
     #[Property('provider_name'), ValidString]
     public ?string $providerName;
 
-    #[Property('provider_icon_url'), ValidString]
+    #[Property('provider_icon_url'), ValidUrl]
     public ?string $providerIconUrl;
 
     public function __construct(
