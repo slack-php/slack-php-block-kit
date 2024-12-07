@@ -27,6 +27,7 @@ enum Type: string
     case HEADER      = 'header';
     case INPUT       = 'input';
     case SECTION     = 'section';
+    case VIDEO       = 'video';
 
     // Elements
     case BUTTON                     = 'button';
@@ -78,6 +79,7 @@ enum Type: string
         Blocks\Header::class     => self::HEADER,
         Blocks\Input::class      => self::INPUT,
         Blocks\Section::class    => self::SECTION,
+        Blocks\Video::class      => self::VIDEO,
 
         // Virtual Blocks
         Virtual\CodeBlock::class      => self::SECTION,
