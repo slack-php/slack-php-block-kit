@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Surfaces;
 
+use SlackPhp\BlockKit\{FauxProperty,
+    Property,
+    Surfaces\MessageDirective\DeleteOriginal,
+    Surfaces\MessageDirective\ReplaceOriginal,
+    Surfaces\MessageDirective\ResponseType};
 use SlackPhp\BlockKit\Blocks\Block;
 use SlackPhp\BlockKit\Collections\{AttachmentCollection, BlockCollection};
-use SlackPhp\BlockKit\{FauxProperty, Property};
 use SlackPhp\BlockKit\Hydration\OmitType;
 use SlackPhp\BlockKit\Validation\{RequiresAnyOf, UniqueIds, ValidCollection, ValidString};
 
@@ -19,8 +23,14 @@ class Message extends Surface
     #[Property, ValidCollection(50, 0), UniqueIds]
     public BlockCollection $blocks;
 
-    #[FauxProperty('response_type', 'replace_original', 'delete_original')]
-    public ?MessageDirective $directive;
+    #[FauxProperty('response_type')]
+    public ?ResponseType $responseType;
+
+    #[FauxProperty('replace_original')]
+    public ?ReplaceOriginal $replaceOriginal;
+
+    #[FauxProperty('delete_original')]
+    public ?DeleteOriginal $deleteOriginal;
 
     #[Property, ValidString]
     public ?string $text;
@@ -40,19 +50,23 @@ class Message extends Surface
      */
     public function __construct(
         BlockCollection|array|null $blocks = null,
-        ?MessageDirective $directive = null,
+        ?ResponseType $directive = null,
         ?string $text = null,
         AttachmentCollection|array|null $attachments = null,
         ?bool $mrkdwn = null,
         ?string $threadTs = null,
         ?bool $ephemeral = null,
+        ?bool $replaceOriginal = null,
+        ?bool $deleteOriginal = null,
     ) {
         parent::__construct($blocks);
         $this->attachments = AttachmentCollection::wrap($attachments);
-        $this->directive($directive ?? ($ephemeral ? MessageDirective::EPHEMERAL : null));
+        $this->responseType($directive ?? ($ephemeral ? ResponseType::EPHEMERAL : null));
         $this->text($text);
         $this->mrkdwn($mrkdwn);
         $this->threadTs($threadTs);
+        $this->replaceOriginal($replaceOriginal);
+        $this->deleteOriginal($deleteOriginal);
     }
 
     /**
@@ -62,7 +76,7 @@ class Message extends Surface
      */
     public function ephemeral(): static
     {
-        return $this->directive(MessageDirective::EPHEMERAL);
+        return $this->responseType(ResponseType::EPHEMERAL);
     }
 
     /**
@@ -70,28 +84,32 @@ class Message extends Surface
      */
     public function inChannel(): static
     {
-        return $this->directive(MessageDirective::IN_CHANNEL);
+        return $this->responseType(ResponseType::IN_CHANNEL);
     }
 
     /**
      * Configures message to "replace_original" mode.
      */
-    public function replaceOriginal(): static
+    public function replaceOriginal(ReplaceOriginal|array|bool|null $replaceOriginal = true): static
     {
-        return $this->directive(MessageDirective::REPLACE_ORIGINAL);
+        $this->replaceOriginal = ReplaceOriginal::fromValue($replaceOriginal);
+
+        return $this;
     }
 
     /**
      * Configures message to "delete_original" mode.
      */
-    public function deleteOriginal(): static
+    public function deleteOriginal(DeleteOriginal|array|bool|null $deleteOriginal = true): static
     {
-        return $this->directive(MessageDirective::DELETE_ORIGINAL);
+        $this->deleteOriginal = DeleteOriginal::fromValue($deleteOriginal);
+
+        return $this;
     }
 
-    public function directive(MessageDirective|array|null $directive): static
+    public function responseType(ResponseType|array|null $responseType): static
     {
-        $this->directive = MessageDirective::fromValue($directive);
+        $this->responseType = ResponseType::fromValue($responseType);
 
         return $this;
     }
