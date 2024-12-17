@@ -20,9 +20,6 @@ class CreateTest extends TestCase
     public function testCreatedComponentsMatchExpectedOutputJson(): void
     {
         $modal = Kit::modal(
-            title: 'My App',
-            submit: 'Submit',
-            close: 'Cancel',
             blocks: [
                 Kit::input(
                     label: 'Choose a letter',
@@ -48,6 +45,9 @@ class CreateTest extends TestCase
                     ),
                 )
             ],
+            title: 'My App',
+            submit: 'Submit',
+            close: 'Cancel',
         );
 
         $modal->validate();
@@ -66,21 +66,21 @@ class CreateTest extends TestCase
         $message = Kit::message(
             blocks: [
                 Kit::twoColumnTable(
-                    blockId: 'foo',
-                    cols: ['left', 'right'],
                     rows: [
                         ['a', 'b'],
                         ['c', 'd'],
                     ],
+                    cols: ['left', 'right'],
                     borders: true,
+                    blockId: 'foo',
                 ),
                 Kit::codeBlock(
-                    blockId: 'bar',
-                    caption: 'my-code.txt',
                     code: <<<CODE
                     This is
                     my code
                     CODE,
+                    caption: 'my-code.txt',
+                    blockId: 'bar',
                 ),
                 Kit::codeBlock(
                     code: 'Code block without blockId'
@@ -97,12 +97,12 @@ class CreateTest extends TestCase
     public function testCreateModalWithPrivateMetadata(): void
     {
         $modal = Kit::modal(
+            blocks: [
+                Kit::section('Hello, world!'),
+            ],
             title: 'My App',
             privateMetadata: [
                 'foo' => 'bar',
-            ],
-            blocks: [
-                Kit::section('Hello, world!'),
             ],
         );
 
