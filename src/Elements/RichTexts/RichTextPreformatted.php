@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SlackPhp\BlockKit\Elements\RichTexts;
+
+use SlackPhp\BlockKit\Collections\TextCollection;
+use SlackPhp\BlockKit\Elements\RichTexts\Traits\HasBorder;
+use SlackPhp\BlockKit\Property;
+
+class RichTextPreformatted extends RichTextSubElement
+{
+    use HasBorder;
+
+    #[Property]
+    public ?TextCollection $elements;
+
+    /**
+     * @param TextCollection|array<TextCollection|Text|string|null> $elements
+     */
+    public function __construct(TextCollection|array $elements = [], ?int $border = null)
+    {
+        parent::__construct();
+        $this->elements = new TextCollection();
+        $this->elements(...$elements);
+        $this->border($border);
+    }
+
+    public function elements(TextCollection|Text|string|null ...$elements): self
+    {
+        $elements = array_map(fn (mixed $el) => is_string($el) ? Text::wrap($el) : $el, $elements);
+        $this->elements->append(...$elements);
+
+        return $this;
+    }
+}
