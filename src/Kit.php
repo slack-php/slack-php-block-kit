@@ -143,6 +143,13 @@ abstract class Kit
         return new Blocks\Input($label, $element, $optional, $hint, $dispatchAction, $blockId);
     }
 
+    public static function richText(
+        Collections\RichTextSubCollection|array $elements = [],
+        ?string $blockId = null,
+    ): Blocks\RichText {
+        return new Blocks\RichText($elements, $blockId);
+    }
+
     public static function section(
         Parts\Text|string|null $text = null,
         Parts\Fields|array|null $fields = null,
@@ -169,6 +176,12 @@ abstract class Kit
     #endregion
 
     #region Elements
+    public static function broadcast(
+        Elements\RichTexts\Range|string|null $range = null,
+    ): Elements\RichTexts\Broadcast {
+        return new Elements\RichTexts\Broadcast($range);
+    }
+
     public static function button(
         ?string $actionId = null,
         Parts\PlainText|string|null $text = null,
@@ -179,6 +192,13 @@ abstract class Kit
         ?string $accessibilityLabel = null,
     ): Elements\Button {
         return new Elements\Button($actionId, $text, $value, $style, $url, $confirm, $accessibilityLabel);
+    }
+
+    public static function channel(
+        ?string $channelId = null,
+        ?Parts\MentionStyle $style = null,
+    ): Elements\RichTexts\Channel {
+        return new Elements\RichTexts\Channel($channelId, $style);
     }
 
     public static function channelSelectMenu(
@@ -206,6 +226,11 @@ abstract class Kit
         return new Elements\Checkboxes($actionId, $options, $initialOptions, $confirm, $focusOnLoad);
     }
 
+    public static function color(?string $value = null): Elements\RichTexts\Color
+    {
+        return new Elements\RichTexts\Color($value);
+    }
+
     public static function conversationSelectMenu(
         ?string $actionId = null,
         Parts\PlainText|string|null $placeholder = null,
@@ -219,6 +244,15 @@ abstract class Kit
         return new Elements\Selects\ConversationSelectMenu($actionId, $placeholder, $initialConversation, $responseUrlEnabled, $defaultToCurrentConversation, $filter, $confirm, $focusOnLoad);
     }
 
+    public static function date(
+        ?int $timestamp = null,
+        ?string $format = null,
+        ?string $url = null,
+        ?string $fallback = null,
+    ): Elements\RichTexts\Date {
+        return new Elements\RichTexts\Date($timestamp, $format, $url, $fallback);
+    }
+
     public static function datePicker(
         ?string $actionId = null,
         \DateTime|string|null $initialDate = null,
@@ -227,6 +261,11 @@ abstract class Kit
         ?bool $focusOnLoad = null,
     ): Elements\DatePicker {
         return new Elements\DatePicker($actionId, $initialDate, $placeholder, $confirm, $focusOnLoad);
+    }
+
+    public static function emoji(?string $name = null, ?string $unicode = null): Elements\RichTexts\Emoji
+    {
+        return new Elements\RichTexts\Emoji($name, $unicode);
     }
 
     public static function externalSelectMenu(
@@ -243,6 +282,15 @@ abstract class Kit
     public static function image(?string $imageUrl = null, ?string $altText = null): Elements\Image
     {
         return new Elements\Image($imageUrl, $altText);
+    }
+
+    public static function link(
+        ?string $url = null,
+        ?string $text = null,
+        ?bool $unsafe = null,
+        ?Parts\Style $style = null,
+    ): Elements\RichTexts\Link {
+        return new Elements\RichTexts\Link($url, $text, $unsafe, $style);
     }
 
     /**
@@ -322,6 +370,19 @@ abstract class Kit
         return new Elements\Selects\MultiUserSelectMenu($actionId, $placeholder, $initialUsers, $maxSelectedItems, $confirm, $focusOnLoad);
     }
 
+    public static function numberInput(
+        ?string $actionId = null,
+        ?bool $allowDecimal = null,
+        int|float|string|null $maxValue = null,
+        int|float|string|null $minValue = null,
+        int|float|string|null $initialValue = null,
+        Parts\PlainText|string|null $placeholder = null,
+        ?bool $focusOnLoad = null,
+        ?Parts\DispatchActionConfig $dispatchActionConfig = null,
+    ): Elements\NumberInput {
+        return new Elements\NumberInput($actionId, $allowDecimal, $maxValue, $minValue, $initialValue, $placeholder, $focusOnLoad, $dispatchActionConfig);
+    }
+
     /**
      * @param Collections\OptionSet|array<Parts\Option|string>|array<string, string>|null $options
      */
@@ -331,6 +392,19 @@ abstract class Kit
         ?Parts\Confirm $confirm = null,
     ): Elements\OverflowMenu {
         return new Elements\OverflowMenu($actionId, $options, $confirm);
+    }
+
+    public static function plainTextInput(
+        ?string $actionId = null,
+        Parts\PlainText|string|null $placeholder = null,
+        ?int $maxLength = null,
+        ?int $minLength = null,
+        ?bool $multiline = null,
+        ?Parts\DispatchActionConfig $dispatchActionConfig = null,
+        ?string $initialValue = null,
+        ?bool $focusOnLoad = null,
+    ): Elements\PlainTextInput {
+        return new Elements\PlainTextInput($actionId, $placeholder, $maxLength, $minLength, $multiline, $dispatchActionConfig, $initialValue, $focusOnLoad);
     }
 
     /**
@@ -344,6 +418,48 @@ abstract class Kit
         ?bool $focusOnLoad = null,
     ): Elements\RadioButtons {
         return new Elements\RadioButtons($actionId, $options, $initialOption, $confirm, $focusOnLoad);
+    }
+
+    /**
+     * @param Collections\RichTextSectionCollection|array<Collections\RichTextSectionCollection|Elements\RichTexts\RichTextSection|string|null> $elements
+     */
+    public static function richTextList(
+        Collections\RichTextSectionCollection|array $elements = [],
+        Elements\RichTexts\ListStyle|string|null $style = null,
+        ?int $indent = null,
+        ?int $offset = null,
+        ?int $border = null,
+    ): Elements\RichTexts\RichTextList {
+        return new Elements\RichTexts\RichTextList($elements, $style, $indent, $offset, $border);
+    }
+
+    /**
+     * @param Collections\TextCollection|array<Collections\TextCollection|Elements\RichTexts\Text|string|null> $elements
+     */
+    public static function richTextPreformatted(
+        Collections\TextCollection|array $elements = [],
+        ?int $border = null,
+    ): Elements\RichTexts\RichTextPreformatted {
+        return new Elements\RichTexts\RichTextPreformatted($elements, $border);
+    }
+
+    /**
+     * @param Collections\RichTextCollection|array<Collections\RichTextCollection|Elements\RichTexts\RichTextElement|string|null> $elements
+     */
+    public static function richTextQuote(
+        Collections\RichTextCollection|array $elements = [],
+        ?int $border = null,
+    ): Elements\RichTexts\RichTextQuote {
+        return new Elements\RichTexts\RichTextQuote($elements, $border);
+    }
+
+    /**
+     * @param Collections\RichTextCollection|array<Collections\RichTextCollection|Elements\RichTexts\RichTextElement|string|null> $elements
+     */
+    public static function richTextSection(
+        Collections\RichTextCollection|array $elements = [],
+    ): Elements\RichTexts\RichTextSection {
+        return new Elements\RichTexts\RichTextSection($elements);
     }
 
     /**
@@ -362,30 +478,9 @@ abstract class Kit
         return new Elements\Selects\StaticSelectMenu($actionId, $placeholder, $options, $optionGroups, $initialOption, $confirm, $focusOnLoad);
     }
 
-    public static function plainTextInput(
-        ?string $actionId = null,
-        Parts\PlainText|string|null $placeholder = null,
-        ?int $maxLength = null,
-        ?int $minLength = null,
-        ?bool $multiline = null,
-        ?Parts\DispatchActionConfig $dispatchActionConfig = null,
-        ?string $initialValue = null,
-        ?bool $focusOnLoad = null,
-    ): Elements\PlainTextInput {
-        return new Elements\PlainTextInput($actionId, $placeholder, $maxLength, $minLength, $multiline, $dispatchActionConfig, $initialValue, $focusOnLoad);
-    }
-
-    public static function numberInput(
-        ?string $actionId = null,
-        ?bool $allowDecimal = null,
-        int|float|string|null $maxValue = null,
-        int|float|string|null $minValue = null,
-        int|float|string|null $initialValue = null,
-        Parts\PlainText|string|null $placeholder = null,
-        ?bool $focusOnLoad = null,
-        ?Parts\DispatchActionConfig $dispatchActionConfig = null,
-    ): Elements\NumberInput {
-        return new Elements\NumberInput($actionId, $allowDecimal, $maxValue, $minValue, $initialValue, $placeholder, $focusOnLoad, $dispatchActionConfig);
+    public static function text(?string $text = null, ?Parts\Style $style = null): Elements\RichTexts\Text
+    {
+        return new Elements\RichTexts\Text($text, $style);
     }
 
     public static function timePicker(
@@ -396,6 +491,18 @@ abstract class Kit
         ?bool $focusOnLoad = null,
     ): Elements\TimePicker {
         return new Elements\TimePicker($actionId, $initialTime, $placeholder, $confirm, $focusOnLoad);
+    }
+
+    public static function user(?string $userId = null, ?Parts\MentionStyle $style = null): Elements\RichTexts\User
+    {
+        return new Elements\RichTexts\User($userId, $style);
+    }
+
+    public static function usergroup(
+        ?string $usergroupId = null,
+        ?Parts\MentionStyle $style = null,
+    ): Elements\RichTexts\Usergroup {
+        return new Elements\RichTexts\Usergroup($usergroupId, $style);
     }
 
     public static function userSelectMenu(
@@ -463,6 +570,17 @@ abstract class Kit
         return new Parts\Filter($include, $excludeExternalSharedChannels, $excludeBotUsers);
     }
 
+    public static function mentionStyle(
+        ?bool $bold = null,
+        ?bool $italic = null,
+        ?bool $strike = null,
+        ?bool $highlight = null,
+        ?bool $clientHighlight = null,
+        ?bool $unlink = null,
+    ): Parts\MentionStyle {
+        return new Parts\MentionStyle($bold, $italic, $strike, $highlight, $clientHighlight, $unlink);
+    }
+
     public static function mrkdwnText(?string $text = null, ?bool $verbatim = null): Parts\MrkdwnText
     {
         return new Parts\MrkdwnText($text, $verbatim);
@@ -488,6 +606,15 @@ abstract class Kit
     public static function plainText(?string $text = null, ?bool $emoji = null): Parts\PlainText
     {
         return new Parts\PlainText($text, $emoji);
+    }
+
+    public static function style(
+        ?bool $bold = null,
+        ?bool $italic = null,
+        ?bool $strike = null,
+        ?bool $code = null,
+    ): Parts\Style {
+        return new Parts\Style($bold, $italic, $strike, $code);
     }
     #endregion
 
@@ -538,6 +665,38 @@ abstract class Kit
     public static function optionSet(array $options = []): Collections\OptionSet
     {
         return new Collections\OptionSet($options);
+    }
+
+    /**
+     * @param array<Elements\RichTexts\RichTextElement|Collections\RichTextCollection|string|null> $elements
+     */
+    public static function richTextCollection(array $elements = []): Collections\RichTextCollection
+    {
+        return new Collections\RichTextCollection($elements);
+    }
+
+    /**
+     * @param array<Elements\RichTexts\RichTextSection|Collections\RichTextSectionCollection|string|null> $sections
+     */
+    public static function richTextSectionCollection(array $sections = []): Collections\RichTextSectionCollection
+    {
+        return new Collections\RichTextSectionCollection($sections);
+    }
+
+    /**
+     * @param array<Elements\RichTexts\RichTextSubElement|Collections\RichTextSubCollection|null> $elements
+     */
+    public static function richTextSubCollection(array $elements = []): Collections\RichTextSubCollection
+    {
+        return new Collections\RichTextSubCollection($elements);
+    }
+
+    /**
+     * @param array<Elements\RichTexts\Text|Collections\TextCollection|string|null> $elements
+     */
+    public static function textCollection(array $elements = []): Collections\TextCollection
+    {
+        return new Collections\TextCollection($elements);
     }
     #endregion
 

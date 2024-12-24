@@ -1,0 +1,21 @@
+{
+    "type": "rich_text",
+    "elements": [
+        {
+            "type": "rich_text_section",
+            "elements": [
+                {
+                    "type": "text",
+                    "text": "Hello there, "
+                },
+                {
+                    "type": "text",
+                    "text": "I am an italic rich text block!",
+                    "style": {
+                        "italic": true
+                    }
+                }
+            ]
+        }
+    ]
+}

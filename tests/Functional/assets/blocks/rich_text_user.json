@@ -1,0 +1,14 @@
+{
+    "type": "rich_text",
+    "elements": [
+        {
+            "type": "rich_text_section",
+            "elements": [
+                {
+                    "type": "user",
+                    "user_id": "U123ABC456"
+                }
+            ]
+        }
+    ]
+}

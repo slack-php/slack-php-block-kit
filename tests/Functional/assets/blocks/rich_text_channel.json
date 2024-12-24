@@ -1,0 +1,14 @@
+{
+    "type": "rich_text",
+    "elements": [
+        {
+            "type": "rich_text_section",
+            "elements": [
+                {
+                    "type": "channel",
+                    "channel_id": "C123ABC456"
+                }
+            ]
+        }
+    ]
+}
