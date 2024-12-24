@@ -9,6 +9,9 @@ use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Validation\RequiresAllOf;
 use SlackPhp\BlockKit\Validation\ValidString;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#text-element-type
+ */
 #[RequiresAllOf('text')]
 class Text extends RichTextElement
 {

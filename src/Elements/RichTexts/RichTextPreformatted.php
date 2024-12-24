@@ -10,6 +10,9 @@ use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Validation\RequiresAllOf;
 use SlackPhp\BlockKit\Validation\ValidCollection;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#rich_text_preformatted
+ */
 #[RequiresAllOf('elements')]
 class RichTextPreformatted extends RichTextSubElement
 {

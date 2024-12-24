@@ -8,6 +8,9 @@ use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Validation\RequiresAllOf;
 use SlackPhp\BlockKit\Validation\ValidString;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#color-element-type
+ */
 #[RequiresAllOf('value')]
 class Color extends RichTextElement
 {

@@ -11,6 +11,9 @@ use SlackPhp\BlockKit\Validation\RequiresAllOf;
 use SlackPhp\BlockKit\Validation\ValidCollection;
 use SlackPhp\BlockKit\Validation\ValidInt;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#rich_text_list
+ */
 #[RequiresAllOf('elements', 'style')]
 class RichTextList extends RichTextSubElement
 {

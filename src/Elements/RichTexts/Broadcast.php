@@ -7,6 +7,9 @@ namespace SlackPhp\BlockKit\Elements\RichTexts;
 use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#broadcast-element-type
+ */
 #[RequiresAllOf('range')]
 class Broadcast extends RichTextElement
 {

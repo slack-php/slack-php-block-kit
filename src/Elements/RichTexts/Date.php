@@ -9,6 +9,9 @@ use SlackPhp\BlockKit\Validation\RequiresAllOf;
 use SlackPhp\BlockKit\Validation\ValidString;
 use SlackPhp\BlockKit\Validation\ValidUrl;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#date-element-type
+ */
 #[RequiresAllOf('timestamp', 'format')]
 class Date extends RichTextElement
 {

@@ -10,6 +10,9 @@ use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Validation\RequiresAllOf;
 use SlackPhp\BlockKit\Validation\ValidString;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#channel-element-type
+ */
 #[RequiresAllOf('channel_id')]
 class Channel extends RichTextElement
 {

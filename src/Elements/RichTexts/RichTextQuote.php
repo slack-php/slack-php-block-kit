@@ -9,6 +9,9 @@ use SlackPhp\BlockKit\Elements\RichTexts\Traits\HasBorder;
 use SlackPhp\BlockKit\Elements\RichTexts\Traits\HasRichTextElements;
 use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#rich_text_quote
+ */
 #[RequiresAllOf('elements')]
 class RichTextQuote extends RichTextSubElement
 {

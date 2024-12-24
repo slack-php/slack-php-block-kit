@@ -10,6 +10,9 @@ use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Validation\RequiresAllOf;
 use SlackPhp\BlockKit\Validation\ValidString;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#user-group-element-type
+ */
 #[RequiresAllOf('usergroup_id')]
 class Usergroup extends RichTextElement
 {

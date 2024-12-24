@@ -10,6 +10,9 @@ use SlackPhp\BlockKit\Validation\RequiresAllOf;
 use SlackPhp\BlockKit\Validation\ValidString;
 use SlackPhp\BlockKit\Validation\ValidUrl;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#link-element-type
+ */
 #[RequiresAllOf('url')]
 class Link extends RichTextElement
 {

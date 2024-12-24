@@ -8,6 +8,9 @@ use SlackPhp\BlockKit\Collections\RichTextCollection;
 use SlackPhp\BlockKit\Elements\RichTexts\Traits\HasRichTextElements;
 use SlackPhp\BlockKit\Validation\RequiresAllOf;
 
+/**
+ * @see https://api.slack.com/reference/block-kit/blocks#rich_text_section
+ */
 #[RequiresAllOf('elements')]
 class RichTextSection extends RichTextSubElement
 {

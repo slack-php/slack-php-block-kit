@@ -143,6 +143,9 @@ abstract class Kit
         return new Blocks\Input($label, $element, $optional, $hint, $dispatchAction, $blockId);
     }
 
+    /**
+     * @see https://api.slack.com/reference/block-kit/blocks#rich_text
+     */
     public static function richText(
         Collections\RichTextSubCollection|array $elements = [],
         ?string $blockId = null,
@@ -176,6 +179,9 @@ abstract class Kit
     #endregion
 
     #region Elements
+    /**
+     * @see https://api.slack.com/reference/block-kit/blocks#broadcast-element-type
+     */
     public static function broadcast(
         Elements\RichTexts\Range|string|null $range = null,
     ): Elements\RichTexts\Broadcast {
@@ -194,6 +200,9 @@ abstract class Kit
         return new Elements\Button($actionId, $text, $value, $style, $url, $confirm, $accessibilityLabel);
     }
 
+    /**
+     * @see https://api.slack.com/reference/block-kit/blocks#channel-element-type
+     */
     public static function channel(
         ?string $channelId = null,
         ?Parts\MentionStyle $style = null,
@@ -226,6 +235,9 @@ abstract class Kit
         return new Elements\Checkboxes($actionId, $options, $initialOptions, $confirm, $focusOnLoad);
     }
 
+    /**
+     * @see https://api.slack.com/reference/block-kit/blocks#color-element-type
+     */
     public static function color(?string $value = null): Elements\RichTexts\Color
     {
         return new Elements\RichTexts\Color($value);
@@ -244,6 +256,9 @@ abstract class Kit
         return new Elements\Selects\ConversationSelectMenu($actionId, $placeholder, $initialConversation, $responseUrlEnabled, $defaultToCurrentConversation, $filter, $confirm, $focusOnLoad);
     }
 
+    /**
+     * @see https://api.slack.com/reference/block-kit/blocks#date-element-type
+     */
     public static function date(
         ?int $timestamp = null,
         ?string $format = null,
@@ -263,6 +278,9 @@ abstract class Kit
         return new Elements\DatePicker($actionId, $initialDate, $placeholder, $confirm, $focusOnLoad);
     }
 
+    /**
+     * @see https://api.slack.com/reference/block-kit/blocks#emoji-element-type
+     */
     public static function emoji(?string $name = null, ?string $unicode = null): Elements\RichTexts\Emoji
     {
         return new Elements\RichTexts\Emoji($name, $unicode);
@@ -284,6 +302,9 @@ abstract class Kit
         return new Elements\Image($imageUrl, $altText);
     }
 
+    /**
+     * @see https://api.slack.com/reference/block-kit/blocks#link-element-type
+     */
     public static function link(
         ?string $url = null,
         ?string $text = null,
@@ -422,6 +443,8 @@ abstract class Kit
 
     /**
      * @param Collections\RichTextSectionCollection|array<Collections\RichTextSectionCollection|Elements\RichTexts\RichTextSection|string|null> $elements
+     *
+     * @see https://api.slack.com/reference/block-kit/blocks#rich_text_list
      */
     public static function richTextList(
         Collections\RichTextSectionCollection|array $elements = [],
@@ -435,6 +458,8 @@ abstract class Kit
 
     /**
      * @param Collections\TextCollection|array<Collections\TextCollection|Elements\RichTexts\Text|string|null> $elements
+     *
+     * @see https://api.slack.com/reference/block-kit/blocks#rich_text_preformatted
      */
     public static function richTextPreformatted(
         Collections\TextCollection|array $elements = [],
@@ -445,6 +470,8 @@ abstract class Kit
 
     /**
      * @param Collections\RichTextCollection|array<Collections\RichTextCollection|Elements\RichTexts\RichTextElement|string|null> $elements
+     *
+     * @see https://api.slack.com/reference/block-kit/blocks#rich_text_quote
      */
     public static function richTextQuote(
         Collections\RichTextCollection|array $elements = [],
@@ -455,6 +482,8 @@ abstract class Kit
 
     /**
      * @param Collections\RichTextCollection|array<Collections\RichTextCollection|Elements\RichTexts\RichTextElement|string|null> $elements
+     *
+     * @see https://api.slack.com/reference/block-kit/blocks#rich_text_section
      */
     public static function richTextSection(
         Collections\RichTextCollection|array $elements = [],
@@ -478,6 +507,9 @@ abstract class Kit
         return new Elements\Selects\StaticSelectMenu($actionId, $placeholder, $options, $optionGroups, $initialOption, $confirm, $focusOnLoad);
     }
 
+    /**
+     * @see https://api.slack.com/reference/block-kit/blocks#text-element-type
+     */
     public static function text(?string $text = null, ?Parts\Style $style = null): Elements\RichTexts\Text
     {
         return new Elements\RichTexts\Text($text, $style);
@@ -493,11 +525,17 @@ abstract class Kit
         return new Elements\TimePicker($actionId, $initialTime, $placeholder, $confirm, $focusOnLoad);
     }
 
+    /**
+     * @see https://api.slack.com/reference/block-kit/blocks#user-element-type
+     */
     public static function user(?string $userId = null, ?Parts\MentionStyle $style = null): Elements\RichTexts\User
     {
         return new Elements\RichTexts\User($userId, $style);
     }
 
+    /**
+     * @see https://api.slack.com/reference/block-kit/blocks#user-group-element-type
+     */
     public static function usergroup(
         ?string $usergroupId = null,
         ?Parts\MentionStyle $style = null,
