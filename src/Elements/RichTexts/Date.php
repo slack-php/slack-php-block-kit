@@ -6,6 +6,7 @@ namespace SlackPhp\BlockKit\Elements\RichTexts;
 
 use SlackPhp\BlockKit\Property;
 use SlackPhp\BlockKit\Validation\RequiresAllOf;
+use SlackPhp\BlockKit\Validation\ValidDateFormat;
 use SlackPhp\BlockKit\Validation\ValidString;
 use SlackPhp\BlockKit\Validation\ValidUrl;
 
@@ -18,7 +19,7 @@ class Date extends RichTextElement
     #[Property]
     public ?int $timestamp;
 
-    #[Property, ValidString]
+    #[Property, ValidDateFormat]
     public ?string $format;
 
     #[Property, ValidUrl]
