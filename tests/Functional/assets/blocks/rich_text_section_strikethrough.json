@@ -1,0 +1,21 @@
+{
+    "type": "rich_text",
+    "elements": [
+        {
+            "type": "rich_text_section",
+            "elements": [
+                {
+                    "type": "text",
+                    "text": "Hello there, "
+                },
+                {
+                    "type": "text",
+                    "text": "I am a strikethrough rich text block!",
+                    "style": {
+                        "strike": true
+                    }
+                }
+            ]
+        }
+    ]
+}
