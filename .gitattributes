@@ -1,6 +1,7 @@
 # Directories
-/.github export-ignore
-/tests   export-ignore
+/.devcontainer export-ignore
+/.github       export-ignore
+/tests         export-ignore
 
 # Files
 /.editorconfig            export-ignore
