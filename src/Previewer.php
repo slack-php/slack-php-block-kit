@@ -27,7 +27,9 @@ final class Previewer
         if ($surface instanceof Surfaces\Message) {
             // Block Kit Builder doesn't support message directives or fallback text.
             $surface = (clone $surface)
-                ->directive(null)
+                ->responseType(null)
+                ->deleteOriginal(null)
+                ->replaceOriginal(null)
                 ->text(null)
                 ->mrkdwn(null)
                 ->threadTs(null);
