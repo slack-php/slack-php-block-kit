@@ -120,7 +120,7 @@ abstract class Kit
     }
 
     public static function file(
-        string $externalId = null,
+        ?string $externalId = null,
         ?string $source = 'remote',
         ?string $blockId = null,
     ): Blocks\File {
