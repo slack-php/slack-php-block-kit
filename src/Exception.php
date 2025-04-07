@@ -14,7 +14,7 @@ class Exception extends RuntimeException
     /**
      * @param array<string|int> $args
      */
-    public function __construct(string $message, array $args = [], Throwable $previous = null)
+    public function __construct(string $message, array $args = [], ?Throwable $previous = null)
     {
         $message = $args ? vsprintf($message, $args) : $message;
 
