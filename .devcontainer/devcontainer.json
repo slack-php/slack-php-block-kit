@@ -1,0 +1,9 @@
+{
+    "name": "PHP",
+    "image": "mcr.microsoft.com/devcontainers/php:8.1",
+    "customizations": {
+        "jetbrains": {
+            "backend": "PhpStorm"
+        }
+    }
+}

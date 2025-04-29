@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Tests\Functional;
 
+use SlackPhp\BlockKit\Blocks\Input;
 use SlackPhp\BlockKit\Blocks\Virtual\VirtualBlock;
 use SlackPhp\BlockKit\Collections\ComponentCollection;
 use SlackPhp\BlockKit\Component;
+use SlackPhp\BlockKit\Elements\NumberInput;
+use SlackPhp\BlockKit\Surfaces\Modal;
 use SlackPhp\BlockKit\Type;
 use SlackPhp\BlockKit\Kit;
 use SlackPhp\BlockKit\PrivateMetadata;
@@ -17,9 +20,6 @@ class CreateTest extends TestCase
     public function testCreatedComponentsMatchExpectedOutputJson(): void
     {
         $modal = Kit::modal(
-            title: 'My App',
-            submit: 'Submit',
-            close: 'Cancel',
             blocks: [
                 Kit::input(
                     label: 'Choose a letter',
@@ -45,6 +45,9 @@ class CreateTest extends TestCase
                     ),
                 )
             ],
+            title: 'My App',
+            submit: 'Submit',
+            close: 'Cancel',
         );
 
         $modal->validate();
@@ -63,22 +66,25 @@ class CreateTest extends TestCase
         $message = Kit::message(
             blocks: [
                 Kit::twoColumnTable(
-                    blockId: 'foo',
-                    cols: ['left', 'right'],
                     rows: [
                         ['a', 'b'],
                         ['c', 'd'],
                     ],
+                    cols: ['left', 'right'],
                     borders: true,
+                    blockId: 'foo',
                 ),
                 Kit::codeBlock(
-                    blockId: 'bar',
-                    caption: 'my-code.txt',
                     code: <<<CODE
                     This is
                     my code
                     CODE,
+                    caption: 'my-code.txt',
+                    blockId: 'bar',
                 ),
+                Kit::codeBlock(
+                    code: 'Code block without blockId'
+                )
             ],
         );
 
@@ -91,12 +97,12 @@ class CreateTest extends TestCase
     public function testCreateModalWithPrivateMetadata(): void
     {
         $modal = Kit::modal(
+            blocks: [
+                Kit::section('Hello, world!'),
+            ],
             title: 'My App',
             privateMetadata: [
                 'foo' => 'bar',
-            ],
-            blocks: [
-                Kit::section('Hello, world!'),
             ],
         );
 
@@ -186,5 +192,24 @@ class CreateTest extends TestCase
                 $this->assertInstanceOf(Component::class, $result);
             }
         }
+    }
+
+    // @TODO This should be moved to a unit test eventually.
+    public function testNumberInput(): void
+    {
+        $modal = Modal::new()
+            ->title('Modal test')
+            ->submit('Click me')
+            ->blocks(
+                Input::new()->label('Input')->element(
+                    NumberInput::new()->minValue(1)->maxValue(50)->allowDecimal(true)
+                )
+            );
+        $modal->validate();
+        $numberInput = $modal->toArray()['blocks'][0]['element'];
+        self::assertSame('number_input', $numberInput['type']);
+        self::assertTrue($numberInput['is_decimal_allowed']);
+        self::assertSame('1', $numberInput['min_value']);
+        self::assertSame('50', $numberInput['max_value']);
     }
 }

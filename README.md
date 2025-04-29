@@ -46,7 +46,7 @@ You may want to review the following concepts in the Slack documentation:
 - [Surfaces](https://api.slack.com/surfaces) – There are 3 main types: Message, Modal, and App Home
 - [Blocks](https://api.slack.com/reference/block-kit/blocks) – Includes _section_, _context_, _actions_, and more
 - [Block Elements](https://api.slack.com/reference/block-kit/block-elements) – Includes buttons, menus, text inputs, and other interactive components. We call all of these "Elements" in this library.
-- [Composition Objects](https://api.slack.com/reference/block-kit/composition-objects) – We call these "Parts" ion the library
+- [Composition Objects](https://api.slack.com/reference/block-kit/composition-objects) – We call these "Parts" in the library
 
 In general, we refer to ALL of these different things in Block Kit collectively as "components".
 
