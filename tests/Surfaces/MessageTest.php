@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace SlackPhp\BlockKit\Tests\Surfaces;
 
-use SlackPhp\BlockKit\Surfaces\MessageDirective;
 use SlackPhp\BlockKit\Exception;
 use SlackPhp\BlockKit\Surfaces\Attachment;
 use SlackPhp\BlockKit\Surfaces\Message;
+use SlackPhp\BlockKit\Surfaces\MessageDirective\ResponseType;
 use SlackPhp\BlockKit\Tests\TestCase;
 
 /**
@@ -37,7 +37,7 @@ class MessageTest extends TestCase
         ['blocks' => self::TEST_BLOCKS],
     ];
 
-    public function testCanApplyEphemeralDirectives(): void
+    public function testCanApplyEphemeralMessageType(): void
     {
         $msg = new Message(['foo', 'bar']);
         $msg->ephemeral();
@@ -48,7 +48,7 @@ class MessageTest extends TestCase
         ], $msg);
     }
 
-    public function testCanApplyInChannelDirectives(): void
+    public function testCanApplyInChannelMessageType(): void
     {
         $msg = new Message(['foo', 'bar']);
         $msg->inChannel();
@@ -59,7 +59,7 @@ class MessageTest extends TestCase
         ], $msg);
     }
 
-    public function testCanApplyReplaceOriginalDirectives(): void
+    public function testCanApplyReplaceOriginal(): void
     {
         $msg = new Message(['foo', 'bar']);
         $msg->replaceOriginal();
@@ -68,6 +68,27 @@ class MessageTest extends TestCase
             'replace_original' => 'true',
             'blocks' => self::TEST_BLOCKS,
         ], $msg);
+    }
+
+    public function testCanApplyDontReplaceOriginal(): void
+    {
+        $msg = new Message(['foo', 'bar']);
+        $msg->replaceOriginal(false);
+
+        $this->assertJsonData([
+            'replace_original' => 'false',
+            'blocks' => self::TEST_BLOCKS,
+        ], $msg);
+    }
+
+    public function testCanRemoveReplaceOriginal(): void
+    {
+        $msg = new Message(['foo', 'bar']);
+        $msg->replaceOriginal()
+            ->replaceOriginal(null);
+        $data = $msg->toArray();
+
+        $this->assertArrayNotHasKey('replace_original', $data);
     }
 
     public function testCanApplyDeleteOriginalDirectives(): void
@@ -81,6 +102,27 @@ class MessageTest extends TestCase
         ], $msg);
     }
 
+    public function testCanApplyDontDeleteOriginalDirectives(): void
+    {
+        $msg = new Message(['foo', 'bar']);
+        $msg->deleteOriginal(false);
+
+        $this->assertJsonData([
+            'delete_original' => 'false',
+            'blocks' => self::TEST_BLOCKS,
+        ], $msg);
+    }
+
+    public function testCanRemoveDeleteOriginalDirectives(): void
+    {
+        $msg = new Message(['foo', 'bar']);
+        $msg->deleteOriginal()
+            ->deleteOriginal(null);
+        $data = $msg->toArray();
+
+        $this->assertArrayNotHasKey('delete_original', $data);
+    }
+
     public function testDoesNotApplyDirectivesWhenNotSet(): void
     {
         $msg = new Message(['foo', 'bar']);
@@ -91,20 +133,34 @@ class MessageTest extends TestCase
         $this->assertArrayNotHasKey('delete_original', $data);
     }
 
-    public function testCanOnlyApplyOneDirective(): void
+    public function testCanOnlyApplyOneResponseType(): void
     {
         $msg = new Message(['foo', 'bar']);
         $msg->ephemeral()
-            ->inChannel()
-            ->replaceOriginal()
-            ->deleteOriginal();
+            ->inChannel();
 
         $data = $msg->toArray();
 
-        $this->assertArrayNotHasKey('response_type', $data);
-        $this->assertArrayNotHasKey('replace_original', $data);
+        $this->assertArrayHasKey('response_type', $data);
+        $this->assertEquals('in_channel', $data['response_type']);
+    }
+
+    public function testCanApplyMoreDirectives(): void
+    {
+        $msg = new Message(['foo', 'bar']);
+        $msg->ephemeral()
+            ->replaceOriginal()
+            ->deleteOriginal()
+            ->inChannel();
+
+        $data = $msg->toArray();
+
+        $this->assertArrayHasKey('response_type', $data);
         $this->assertArrayHasKey('delete_original', $data);
+        $this->assertArrayHasKey('replace_original', $data);
+        $this->assertEquals('in_channel', $data['response_type']);
         $this->assertEquals('true', $data['delete_original']);
+        $this->assertEquals('true', $data['replace_original']);
     }
 
     public function testCanAddAttachments(): void
@@ -147,7 +203,7 @@ class MessageTest extends TestCase
 
     public function testCanConvertToAnArray(): void
     {
-        $msg = new Message(['foo', 'bar'], MessageDirective::EPHEMERAL, 'foo bar');
+        $msg = new Message(['foo', 'bar'], ResponseType::EPHEMERAL, 'foo bar');
         $data = $msg->toArray();
 
         $this->assertArrayHasKey('blocks', $data);
